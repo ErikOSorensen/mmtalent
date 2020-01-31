@@ -1,0 +1,193 @@
+---
+title: "survey-results"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{survey-results}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.width = 7,
+  fig.height = 4.5,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(mmtalent)
+library(tidyverse)
+library(stargazer)
+library(multiwayvcov)
+library(here)
+library(multcomp)
+df <- prepare_data(mmtalent_df)
+```
+
+# Graphs on attitudes and belief
+To have the main result on attitudes and belief, we would like to have aggregate patterns 
+before going into the individual level data.
+```{r}
+attitude_dt <- prepare_data(mmtalent_df) %>%  
+  mutate(AL=luck_fair,
+         AT=talent_fair,
+         AE=effort_fair,
+         CL=luck_control,
+         CT=talent_control,
+         CE=effort_control) %>%
+  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, left) %>%
+  gather(key = "outcome", value="value", AL, AT, AE, CL, CT, CE)
+```
+
+Now for creating the first graph: unconditional on political position:
+```{r}
+attitude_dt %>%
+  mutate(outcometype = factor( ifelse(outcome %in% c("AL","AT", "AE"),"Attitude (unfairness)", "Belief on control")),
+         f = fct_collapse(outcome,
+                        Luck = c("AL","CL"),
+                        Talent = c("AT","CT"),
+                        Effort = c("AE", "CE")),
+         fo = fct_relevel(f, c("Luck", "Talent", "Effort"))) %>%
+  group_by(outcometype, fo, outcome) %>% summarize(m = mean(value), se = sd(value)/sqrt(n())) %>%
+  ggplot(aes(x=fo, y=m)) +
+  geom_bar(stat="identity") + facet_grid(.~ outcometype) + 
+  geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
+  xlab("Factor considered") + ylab("Mean outcome \u00B1 s.e.m.") +
+  theme_bw()
+ggsave(here::here("graphs","attitudes_beliefs.pdf"))
+```
+
+Now, interacting with political position:
+```{r}
+attitude_dt %>%
+  mutate(outcometype = factor( ifelse(outcome %in% c("AL","AT", "AE"),"Attitude (unfairness)", "Belief on control")),
+         f = fct_collapse(outcome,
+                        Luck = c("AL","CL"),
+                        Talent = c("AT","CT"),
+                        Effort = c("AE", "CE")),
+         fo = fct_relevel(f, c("Luck", "Talent", "Effort"))) %>%
+  group_by(outcometype, left, fo, outcome) %>% summarize(m = mean(value), se = sd(value)/sqrt(n()))  %>%
+  ggplot(aes(x=fo, y=m)) +
+  geom_bar(stat="identity") + facet_grid(left ~ outcometype) + 
+  geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
+  xlab("Factor considered") + ylab("Mean outcome \u00B1 s.e.m.") +
+  theme_bw()
+ggsave(here::here("graphs","attitudes_beliefs_pol.pdf"))
+```
+
+# Regression table
+We want to put attitudes on the left hand side and try to
+explain it by the type of attitude and the perception of control
+in the situation.
+
+Now, we need to turn the data around a bit first:
+```{r}
+subjectives_dt <- prepare_data(mmtalent_df)  %>% 
+  mutate(AL=luck_fair,
+         AT=talent_fair,
+         AE=effort_fair,
+         CL=luck_control,
+         CT=talent_control,
+         CE=effort_control,
+         id = row_number()) %>%
+  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, gender, age, left, income, edu, id) %>%
+  gather(key="key", value="y", AL, AT, AE, CL, CT, CE) %>%
+  mutate(key = factor(key),
+         fct = fct_collapse(key,
+                            luck = c("AL","CL"),
+                            talent = c("AT", "CT"),
+                            effort = c("AE", "CE")),
+         outcome = fct_collapse(key,
+                                attitude = c("AL", "AT", "AE"),
+                                controlbelief = c("CL","CT","CE"))) %>% 
+  dplyr::select(-key) %>%
+  spread( key = outcome, value=y) %>%
+  mutate(Luck = 1.*( fct=="luck"), 
+         Effort = 1.*(fct=="effort"), 
+         Talent = 1.*(fct=="talent"))
+subjectives_dt %>% sample_n(3) 
+```
+
+Now, it should be possible to run the regression 
+$$ A_{i,t} = \beta_0 + \beta_1 B_{i,t} + \beta_2 X_i +  \phi_t + \epsilon_{i,t}, $$
+where $i$ index the individual, and $t\in\{ \mathrm{effort}, \mathrm{talent}, \mathrm{luck}\}$, 
+$A_{i,t}\in[0,10]$ is the fairness attitude, $B_{i,t}\in[0,10]$ is the control belief, 
+$X_i$ is a set of individual controls, and $\phi_t$ is a set of fixed effect for each factor.
+
+```{r}
+AB1 <- lm( attitude ~ Talent + Effort, data=subjectives_dt)
+AB2 <- lm( attitude ~ Talent + Effort + controlbelief, data=subjectives_dt)
+
+AB3 <- lm( attitude ~ Talent + Effort +
+             age + left + as.factor(income) + as.factor(edu) + as.factor(gender), data=subjectives_dt)
+AB4 <- lm( attitude ~ Talent + Effort + controlbelief + 
+             age + left + as.factor(income) + as.factor(edu) + as.factor(gender), data=subjectives_dt)
+subjectives_left <- subjectives_dt %>% filter(left==1)
+subjectives_right <- subjectives_dt %>% filter(left!=1)
+
+AB5 <- lm( attitude ~ Talent + Effort + controlbelief + 
+             age + as.factor(income) + as.factor(edu) + as.factor(gender), data = subjectives_left)
+AB6 <- lm( attitude ~ Talent + Effort + controlbelief + 
+             age + as.factor(income) + as.factor(edu) + as.factor(gender), data = subjectives_right)
+
+stargazer( AB1, AB2, AB3, AB4, AB5, AB6,
+           se = list(sqrt(diag(cluster.vcov(AB1, cluster=subjectives_dt$id))),
+                     sqrt(diag(cluster.vcov(AB2, cluster=subjectives_dt$id))),
+                     sqrt(diag(cluster.vcov(AB3, cluster=subjectives_dt$id))),
+                     sqrt(diag(cluster.vcov(AB4, cluster=subjectives_dt$id))),
+                     sqrt(diag(cluster.vcov(AB5, cluster=subjectives_left$id))),
+                     sqrt(diag(cluster.vcov(AB6, cluster=subjectives_right$id)))),
+           style="aer", type="text", keep.stat=c("rsq", "n"),
+           column.labels=c("All participants", "Left-wing", "Non-left"),
+           column.separate=c(4,1,1))
+```
+
+
+
+# Are there treatment effects on attitudes?
+The survey came after the experiment.
+Are there any treatment effect on the survey outcomes? We test for joint significance of the treatment
+effects for each of the 6 outcomes.
+```{r}
+A1 <- lm(luck_fair ~ treatment, data = df)
+A1w <- glht(A1, linfct= c("`treatmentEx Ante Impersonal` = 0",
+                          "`treatmentEx Post Personal` = 0",
+                          "`treatmentEx Post Impersonal` = 0"))
+A2 <- lm(talent_fair ~ treatment, data = df)
+A2w <- glht(A2, linfct= c("`treatmentEx Ante Impersonal` = 0",
+                          "`treatmentEx Post Personal` = 0",
+                          "`treatmentEx Post Impersonal` = 0"))
+A3 <- lm(effort_fair ~ treatment, data = df)
+A3w <- glht(A3, linfct= c("`treatmentEx Ante Impersonal` = 0",
+                          "`treatmentEx Post Personal` = 0",
+                          "`treatmentEx Post Impersonal` = 0"))
+B1 <- lm(luck_control ~ treatment, data = df)
+B1w <- glht(B1, linfct= c("`treatmentEx Ante Impersonal` = 0",
+                          "`treatmentEx Post Personal` = 0",
+                          "`treatmentEx Post Impersonal` = 0"))
+B2 <- lm(talent_control ~ treatment, data = df)
+B2w <- glht(B2, linfct= c("`treatmentEx Ante Impersonal` = 0",
+                          "`treatmentEx Post Personal` = 0",
+                          "`treatmentEx Post Impersonal` = 0"))
+B3 <- lm(effort_control ~ treatment, data = df)
+B3w <- glht(B3, linfct= c("`treatmentEx Ante Impersonal` = 0",
+                          "`treatmentEx Post Personal` = 0",
+                          "`treatmentEx Post Impersonal` = 0"))
+
+wrow <- c("Joint p-value on treatment:", 
+          sprintf("%4.3f", summary(A1w)$test$pvalue[1]),
+          sprintf("%4.3f", summary(A2w)$test$pvalue[1]),
+          sprintf("%4.3f", summary(A3w)$test$pvalue[1]),
+          sprintf("%4.3f", summary(B1w)$test$pvalue[1]),
+          sprintf("%4.3f", summary(B2w)$test$pvalue[1]),
+          sprintf("%4.3f", summary(B3w)$test$pvalue[1]))
+
+stargazer(A1, A2, A3, B1, B2, B3,
+          style="aer", type="text", add.lines=list(wrow),
+          keep.stat=c("n","rsq"))
+```
+
+We see that 3 out of 18 treatment effects are significant at the 10% level, which is not surprising
+even under the null of no true effect.

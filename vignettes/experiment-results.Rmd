@@ -1,0 +1,81 @@
+---
+title: "experiment-results"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{experiment-results}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.width = 7,
+  fig.height = 4.5,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(tidyverse)
+library(mmtalent)
+library(stargazer)
+df <- prepare_data(mmtalent_df)
+```
+
+# Histogram of distributions
+```{r}
+df %>% ggplot(aes(x=paymentlowworker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) + 
+  geom_bar() +
+  theme_bw() +
+  facet_wrap(. ~ treatment) +
+  scale_x_discrete(limits=c(0,1,2,3,4,5,6)) +
+  labs(x = "Transfer to loser",
+       y = "Fraction")
+ggsave(here::here("graphs","histogram_transfers.pdf"))
+
+```
+
+
+# Graph with average outcomes
+```{r}
+dtm <- df %>% group_by(treatment) %>% summarize(se_gini = sd(gini)/sqrt(n()),
+                                         mean_gini = mean(gini))
+dtm %>% ggplot(aes(x=treatment, y=mean_gini)) + 
+  geom_point() + 
+  geom_errorbar(aes(ymin=mean_gini - se_gini, ymax=mean_gini + se_gini), width=0.2) + 
+  ylab("Mean gini \u00B1 s.e.m.") + xlab("Treatment") + theme_bw()
+ggsave(here::here("graphs","average_ginis.pdf"))
+```
+
+# Regressions
+
+We look at two different outcomes. The first is the gini coefficient, which (as before) is between 0 and 0.6 (there is a
+base income of (2,2) that cannot be lowered, so max inequality is (8,2) or (2,8)). 
+The second outcome is a dummy indicator for maximum inequality (or giving nothing to the 
+worst off, "nothingtw" in the table below). 
+
+
+```{r}
+R1 <- lm(gini ~ treatment, data = df)
+R2 <- lm(gini ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df)
+R3 <- lm(nothingtw ~ treatment, data = df)
+R4 <- lm(nothingtw ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df)
+df_left <- df %>% filter(left==1)
+df_right <- df %>% filter(left==0)
+R5 <- lm(gini ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_left)
+R6 <- lm(gini ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_right)
+R7 <- lm(nothingtw ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_left)
+R8 <- lm(nothingtw ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_right)
+
+
+```
+
+Table:
+```{r}
+stargazer(R1, R2, R5, R6, R3, R4, R7, R8,
+          column.labels = c("All", "Left","Right","All", "Left","Right"), column.separate = c(2,1,1,2,1,1),
+          style="aer", type="text", keep.stat=c("rsq", "n")) 
+```
+
+

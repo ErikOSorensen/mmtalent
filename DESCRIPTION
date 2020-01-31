@@ -6,11 +6,12 @@ Authors@R: person("Erik Ø.", "Sørensen", email="erik.sorensen@nhh.no",
   role=c("aut","cre"))
 Description: Replication package for the paper "Talent and luck - An 
     experimental study on inequality acceptance" by Björn Bartling,
-    Alexander W. Cappelen, Erik Ø. Sørensen and Bertil Tungodden. Includes
-    data and code
+    Alexander W. Cappelen, Ingvild L. Skarpeid, Erik Ø. Sørensen and 
+    Bertil Tungodden. Includes data and code
 License: MIT
 Encoding: UTF-8
 LazyData: true
 Suggests:
     knitr,
     rmarkdown
+VignetteBuilder: knitr
