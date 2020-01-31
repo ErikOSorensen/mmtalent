@@ -67,10 +67,11 @@ attitude_dt %>%
                         Luck = c("AL","CL"),
                         Talent = c("AT","CT"),
                         Effort = c("AE", "CE")),
-         fo = fct_relevel(f, c("Luck", "Talent", "Effort"))) %>%
-  group_by(outcometype, left, fo, outcome) %>% summarize(m = mean(value), se = sd(value)/sqrt(n()))  %>%
+         fo = fct_relevel(f, c("Luck", "Talent", "Effort")),
+         left_description = c("Right", "Left")[left+1]) %>%
+  group_by(outcometype, left_description, fo, outcome) %>% summarize(m = mean(value), se = sd(value)/sqrt(n()))  %>%
   ggplot(aes(x=fo, y=m)) +
-  geom_bar(stat="identity") + facet_grid(left ~ outcometype) + 
+  geom_bar(stat="identity") + facet_grid(left_description ~ outcometype) + 
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
   xlab("Factor considered") + ylab("Mean outcome \u00B1 s.e.m.") +
   theme_bw()
