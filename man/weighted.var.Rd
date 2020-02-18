@@ -26,15 +26,6 @@ Compute a weighted variance or standard deviation of a vector.
 Note that unlike the base R \code{\link{var}} function, these functions only
 work with individual vectors not matrices or data frames.  Borrowed from hadley/bigvis
 }
-\examples{
-x <- c(1:5)
-w <- rpois(5, 5) + 1
-y <- x[rep(seq_along(x), w)]
-weighted.var(x, w)
-var(y)
-
-stopifnot(all.equal(weighted.var(x, w), var(y)))
-}
 \seealso{
 \code{\link[stats]{weighted.mean}}
 }

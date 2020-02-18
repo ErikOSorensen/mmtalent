@@ -13,9 +13,13 @@ prepare_data <- function(df, df_popweights) {
     left = (polpref < 3),
     nothingtw = 1*(payment_low_worker %in% c(2, 8)),
     gini = abs(payment_low_worker - payment_high_worker)/10) %>%
-    left_join(wgts, by=c("age_category", "region", "gender"))
+    left_join(wgts, by=c("age_category", "region", "gender")) %>%
+    mutate(high_income = income_category %in% c("60k - 99 999", "100k - 149 999","150k +"),
+           high_edu = edu_category %in% c("PhD", "Professional (JD/MD)", "Masters", "Bachelor"))
   transformed_data
 }
+
+
 
 #' Calculate population weights
 #'

@@ -89,10 +89,10 @@ edulevels <- tribble(~edu, ~edu_category,
 
 incomelevels <- tribble(~income, ~income_category,
                         1, "Less than 29 999",
-                        2, " 30 k- 59 999",
-                        3, "60 k - 99 999",
+                        2, "30k- 59 999",
+                        3, "60k - 99 999",
                         4, "100k - 149 999",
-                        5, " 150 k +")
+                        5, "150k +")
 
 
 mmtalent_df <- all_data %>%

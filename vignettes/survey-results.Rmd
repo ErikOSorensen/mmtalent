@@ -93,7 +93,8 @@ subjectives_dt <- df  %>%
          CT=talent_control,
          CE=effort_control,
          id = row_number()) %>%
-  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, gender, age, left, income_category, edu_category, id, wgt) %>%
+  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, gender, age, left, high_income, income_category, 
+                high_edu, edu_category, id, wgt) %>%
   gather(key="key", value="y", AL, AT, AE, CL, CT, CE) %>%
   mutate(key = factor(key),
          fct = fct_collapse(key,
@@ -121,28 +122,21 @@ $X_i$ is a set of individual controls, and $\phi_t$ is a set of fixed effect for
 AB1 <- lm( attitude ~ Talent + Effort, data=subjectives_dt, weights=wgt)
 AB2 <- lm( attitude ~ Talent + Effort + controlbelief, data=subjectives_dt, weights=wgt)
 
-AB3 <- lm( attitude ~ Talent + Effort +
-             age + left + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data=subjectives_dt, weights=wgt)
-AB4 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + left + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data=subjectives_dt, weights=wgt)
-subjectives_left <- subjectives_dt %>% filter(left==1)
-subjectives_right <- subjectives_dt %>% filter(left!=1)
-
+AB3 <- lm( attitude ~ Talent + Effort + Talent*controlbelief + Effort*controlbelief + controlbelief, 
+           data=subjectives_dt, weights=wgt)
+AB4 <- lm( attitude ~ Talent + Effort + Talent*controlbelief + Effort*controlbelief + controlbelief + 
+             age + left + high_income + high_edu + as.factor(gender), data=subjectives_dt, weights=wgt)
 AB5 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = subjectives_left, weights=wgt)
-AB6 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = subjectives_right, weights=wgt)
-
-stargazer( AB1, AB2, AB3, AB4, AB5, AB6,
+             age + left + high_income + high_edu + as.factor(gender), data=subjectives_dt, weights=wgt)
+stargazer( AB1, AB2, AB3, AB4, AB5,
            se = list(sqrt(diag(cluster.vcov(AB1, cluster=subjectives_dt$id))),
                      sqrt(diag(cluster.vcov(AB2, cluster=subjectives_dt$id))),
                      sqrt(diag(cluster.vcov(AB3, cluster=subjectives_dt$id))),
                      sqrt(diag(cluster.vcov(AB4, cluster=subjectives_dt$id))),
-                     sqrt(diag(cluster.vcov(AB5, cluster=subjectives_left$id))),
-                     sqrt(diag(cluster.vcov(AB6, cluster=subjectives_right$id)))),
+                     sqrt(diag(cluster.vcov(AB5, cluster=subjectives_dt$id)))),
            style="aer", type="text", keep.stat=c("rsq", "n"),
-           column.labels=c("All participants", "Left-wing", "Non-left"),
-           column.separate=c(4,1,1))
+           column.labels=c("All participants"),
+           column.separate=c(5))
 ```
 
 
