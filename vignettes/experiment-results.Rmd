@@ -39,7 +39,7 @@ ggsave(here::here("graphs","histogram_transfers.pdf"))
 
 # Graph with average outcomes
 ```{r}
-dtm <- df %>% group_by(treatment) %>% summarize(se_gini = sd(gini, wgt)/sqrt(n()),
+dtm <- df %>% group_by(treatment) %>% summarize(se_gini = weighted.sd(gini, wgt)/sqrt(n()),
                                          mean_gini = weighted.mean(gini, wgt))
 dtm %>% ggplot(aes(x=treatment, y=mean_gini)) + 
   geom_point() + 

@@ -2,3 +2,5 @@
 
 export(find_population_weights)
 export(prepare_data)
+export(weighted.sd)
+export(weighted.var)

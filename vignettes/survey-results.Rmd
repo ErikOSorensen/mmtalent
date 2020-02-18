@@ -50,7 +50,7 @@ attitude_dt %>%
                         Talent = c("AT","CT"),
                         Effort = c("AE", "CE")),
          fo = fct_relevel(f, c("Luck", "Talent", "Effort"))) %>%
-  group_by(outcometype, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = sd(value)/sqrt(n())) %>%
+  group_by(outcometype, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = weighted.sd(value,wgt)/sqrt(n())) %>%
   ggplot(aes(x=fo, y=m)) +
   geom_bar(stat="identity") + facet_grid(.~ outcometype) + 
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
@@ -69,7 +69,7 @@ attitude_dt %>%
                         Effort = c("AE", "CE")),
          fo = fct_relevel(f, c("Luck", "Talent", "Effort")),
          left_description = c("Right", "Left")[left+1]) %>%
-  group_by(outcometype, left_description, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = sd(value)/sqrt(n()))  %>%
+  group_by(outcometype, left_description, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = weighted.sd(value,wgt)/sqrt(n()))  %>%
   ggplot(aes(x=fo, y=m)) +
   geom_bar(stat="identity") + facet_grid(left_description ~ outcometype) + 
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
