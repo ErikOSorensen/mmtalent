@@ -36,7 +36,9 @@ census_df <- census_df %>% select(region, gender, age_category, n2016)
 This dataframe now has the data needed to reweigth the "Research Now" data. I save it to 
 a file.
 ```{r}
-populationweights2016 <- census_df
+populationweights2016 <- census_df %>% mutate(region = as.character(region),
+                                              gender = as.character(gender),
+                                              age_category = as.character(age_category))
 save(populationweights2016, file="../data/populationweights2016.rda")
 head(populationweights2016)
 ```

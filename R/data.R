@@ -4,7 +4,7 @@
 #' acceptance" by Björn Bartling, Alexander W. Cappelen,
 #' Ingvild L. Skarpeid, Erik Ø. Sørensen and Bertil Tungodden.
 #'
-#' @format A data frame with 2001 observations and 21 variables:
+#' @format A data frame with 2001 observations and 23 variables:
 #' \describe{
 #' \item{treatment}{Treatment (factor) \itemize{
 #'  \item Ex Ante Impersonal
@@ -38,6 +38,8 @@
 #' \item{redist_pref}{}
 #' \item{polpref}{Political preference on a 1-5 numeric scale, with 1: most left, 5: most right.}
 #' \item{redistribute}{Redistribution choice: How many dollars (0-6) to redistribute from winner to loser.}
+#' \item{payment_low_worker}{Payment to worker (low), including baseline of 2, (numeric in [2-8])}
+#' \item{payment_high_worker}{Payment to worker (high), including baseline of 2, (numeric in [2-8])}
 #' }
 #' @source Based on experiment by the authors.
 "mmtalent_df"

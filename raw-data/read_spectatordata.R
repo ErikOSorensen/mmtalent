@@ -104,6 +104,7 @@ mmtalent_df <- all_data %>%
            2*(residence %in% c(15,14,23,36,51,16,17,24,26,28,35,43)) +
            3*(residence %in% c(3,6,13,27,32,46,29,52,2,5,12,38,49)),
          region = ifelse(residence!=53, c("South", "Northeast","Midwest","West")[region+1], NA),
+         region = ifelse(residence==53, "South", region), # Assigning largest region to one missing value
          treatment = factor( case_when(ex_ante_personal==1 ~ "Ex Ante Personal",
                                ex_ante_impersonal==1 ~ "Ex Ante Impersonal",
                                ex_post_personal==1 ~ "Ex Post Personal",
@@ -116,7 +117,7 @@ mmtalent_df <- all_data %>%
          start_date, duration_in_seconds, gender, age, age_category, state_residence, region,
          edu_category, income_category,
          luck_fair, talent_fair, effort_fair, luck_control, talent_control, effort_control,
-         redist_pref, polpref, redistribute)
+         redist_pref, polpref, redistribute, payment_low_worker, payment_high_worker)
 
 save(mmtalent_df, file=here::here("data", "mmtalent_df.rda"))
 
