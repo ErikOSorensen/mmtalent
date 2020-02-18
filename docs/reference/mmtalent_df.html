@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • mmtalent</title>
+<title>Data from "mmtalent" — mmtalent_df • mmtalent</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,13 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Data from "mmtalent" — mmtalent_df" />
+<meta property="og:description" content="Data from mmtalent, an online experiment
+A dataset from the online experiment used in the paper
+&quot;Talent and luck - An experimental study on inequality
+acceptance&quot; by Björn Bartling, Alexander W. Cappelen,
+Ingvild L. Skarpeid, Erik Ø. Sørensen and Bertil Tungodden." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +60,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -111,60 +117,75 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Data from "mmtalent"</h1>
+    
+    <div class="hidden name"><code>mmtalent_df.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Data from mmtalent, an online experiment
+A dataset from the online experiment used in the paper
+"Talent and luck - An experimental study on inequality
+acceptance" by Björn Bartling, Alexander W. Cappelen,
+Ingvild L. Skarpeid, Erik Ø. Sørensen and Bertil Tungodden.</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>mmtalent_df</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="find_population_weights.html">find_population_weights()</a></code> </p>
-        </td>
-        <td><p>Calculate population weights</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mmtalent_df.html">mmtalent_df</a></code> </p>
-        </td>
-        <td><p>Data from "mmtalent"</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="populationweights2016.html">populationweights2016</a></code> </p>
-        </td>
-        <td><p>Census data on population in Agegroup x region x gender cells</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="prepare_data.html">prepare_data()</a></code> </p>
-        </td>
-        <td><p>Do basic data transforms</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 2001 observations and 23 variables:</p><dl class='dl-horizontal'>
+<dt>treatment</dt><dd><p>Treatment (factor) <ul>
+<li><p>Ex Ante Impersonal</p></li>
+<li><p>Ex Ante Personal</p></li>
+<li><p>Ex Post Impersonal</p></li>
+<li><p>Ex Post Personal</p></li>
+</ul></p></dd>
+<dt>timing</dt><dd><p>Ex Ante or Ex Post (factor)</p></dd>
+<dt>personal</dt><dd><p>Impersonal or Personal (factor)</p></dd>
+<dt>startdate</dt><dd><p>Starting data for individual</p></dd>
+<dt>durationinseconds</dt><dd><p>How long did participants take to complete study? (s)</p></dd>
+<dt>gender</dt><dd><p>"male" or "female" (characters)</p></dd>
+<dt>age</dt><dd><p>Age in years</p></dd>
+<dt>age_category</dt><dd><p>(characters) <ul>
+<li><p>[18,35)</p></li>
+<li><p>[35,45),</p></li>
+<li><p>[45,55),</p></li>
+<li><p>[55,65),</p></li>
+<li><p>[65, 120)</p></li>
+</ul></p></dd>
+<dt>state_residence</dt><dd><p>State in which participant resides (characters)</p></dd>
+<dt>region</dt><dd><p>Census region in which participant resides ("Midwest", "Northeast","South", "West"; characters)</p></dd>
+<dt>edu_category</dt><dd><p>Education categories (characters)</p></dd>
+<dt>income_category</dt><dd><p>Income categories (characters)</p></dd>
+<dt>luck_fair</dt><dd><p>Are income differences due to luck unfair? Not incentivized. Numeric 0-10 scale, with 10 most unfair.</p></dd>
+<dt>talent_fair</dt><dd><p>Are income differences due to talent unfair? Not incentivized. Numeric 0-10 scale, with 10 most unfair.</p></dd>
+<dt>effort_fair</dt><dd><p>Are income differences due to effort unfair? Not incentivized. Numeric 0-10 scale, with 10 most unfair.</p></dd>
+<dt>luck_control</dt><dd><p>Is Luck within control? Not incentivized. Numeric 0-10 scale, with 10 completely under control.</p></dd>
+<dt>talent_control</dt><dd><p>Is Luck within control? Not incentivized. Numeric 0-10 scale, with 10 completely under control.</p></dd>
+<dt>effort_control</dt><dd><p>Is Luck within control? Not incentivized. Numeric 0-10 scale, with 10 completely under control.</p></dd>
+<dt>redist_pref</dt><dd><p></p></dd>
+<dt>polpref</dt><dd><p>Political preference on a 1-5 numeric scale, with 1: most left, 5: most right.</p></dd>
+<dt>redistribute</dt><dd><p>Redistribution choice: How many dollars (0-6) to redistribute from winner to loser.</p></dd>
+<dt>payment_low_worker</dt><dd><p>Payment to worker (low), including baseline of 2, (numeric in [2-8])</p></dd>
+<dt>payment_high_worker</dt><dd><p>Payment to worker (high), including baseline of 2, (numeric in [2-8])</p></dd>
+
+</dl>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Based on experiment by the authors.</p>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
     </ul>
+
   </div>
 </div>
 

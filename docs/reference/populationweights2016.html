@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • mmtalent</title>
+<title>Census data on population in Agegroup x region x gender cells — populationweights2016 • mmtalent</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,9 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Census data on population in Agegroup x region x gender cells — populationweights2016" />
+<meta property="og:description" content="Census data on population in Agegroup x region x gender cells" />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -54,7 +56,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -111,60 +113,47 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Census data on population in Agegroup x region x gender cells</h1>
+    
+    <div class="hidden name"><code>populationweights2016.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Census data on population in Agegroup x region x gender cells</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='no'>populationweights2016</span></pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="find_population_weights.html">find_population_weights()</a></code> </p>
-        </td>
-        <td><p>Calculate population weights</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="mmtalent_df.html">mmtalent_df</a></code> </p>
-        </td>
-        <td><p>Data from "mmtalent"</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="populationweights2016.html">populationweights2016</a></code> </p>
-        </td>
-        <td><p>Census data on population in Agegroup x region x gender cells</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="prepare_data.html">prepare_data()</a></code> </p>
-        </td>
-        <td><p>Do basic data transforms</p></td>
-      </tr>
-    </tbody>
-    </table>
+
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
+
+    <p>A data frame with 40 observations and 4 variables:</p><dl class='dl-horizontal'>
+<dt>region</dt><dd><p>The four census regions</p></dd>
+<dt>gender</dt><dd><p>"male" or "female", characters</p></dd>
+<dt>age_category</dt><dd><p>(characters) <ul>
+<li><p>[18,35)</p></li>
+<li><p>[35,45),</p></li>
+<li><p>[45,55),</p></li>
+<li><p>[55,65),</p></li>
+<li><p>[65, 120)</p></li>
+</ul></p></dd>
+<dt>n2016</dt><dd><p>Population in 2016 (numeric)</p></dd>
+
+</dl>
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p>Based on the sc-est2016-alldata6.csv file from &lt;https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/&gt; downloaded November 28, 2017.</p>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#format">Format</a></li>
+      <li><a href="#source">Source</a></li>
     </ul>
+
   </div>
 </div>
 

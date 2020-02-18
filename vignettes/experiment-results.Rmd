@@ -20,12 +20,12 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(mmtalent)
 library(stargazer)
-df <- prepare_data(mmtalent_df)
+df <- prepare_data(mmtalent_df, populationweights2016)
 ```
 
 # Histogram of distributions
 ```{r}
-df %>% ggplot(aes(x=paymentlowworker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) + 
+df %>% ggplot(aes(x=payment_low_worker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) + 
   geom_bar() +
   theme_bw() +
   facet_wrap(. ~ treatment) +
@@ -39,8 +39,8 @@ ggsave(here::here("graphs","histogram_transfers.pdf"))
 
 # Graph with average outcomes
 ```{r}
-dtm <- df %>% group_by(treatment) %>% summarize(se_gini = sd(gini)/sqrt(n()),
-                                         mean_gini = mean(gini))
+dtm <- df %>% group_by(treatment) %>% summarize(se_gini = sd(gini, wgt)/sqrt(n()),
+                                         mean_gini = weighted.mean(gini, wgt))
 dtm %>% ggplot(aes(x=treatment, y=mean_gini)) + 
   geom_point() + 
   geom_errorbar(aes(ymin=mean_gini - se_gini, ymax=mean_gini + se_gini), width=0.2) + 
@@ -57,16 +57,16 @@ worst off, "nothingtw" in the table below).
 
 
 ```{r}
-R1 <- lm(gini ~ treatment, data = df)
-R2 <- lm(gini ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df)
+R1 <- lm(gini ~ treatment, data = df, weights=wgt)
+R2 <- lm(gini ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df, weights=wgt)
 R3 <- lm(nothingtw ~ treatment, data = df)
-R4 <- lm(nothingtw ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df)
+R4 <- lm(nothingtw ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df, weights=wgt)
 df_left <- df %>% filter(left==1)
 df_right <- df %>% filter(left==0)
-R5 <- lm(gini ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_left)
-R6 <- lm(gini ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_right)
-R7 <- lm(nothingtw ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_left)
-R8 <- lm(nothingtw ~ treatment + age + as.factor(income) + as.factor(edu) + as.factor(gender), data = df_right)
+R5 <- lm(gini ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_left, weights=wgt)
+R6 <- lm(gini ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_right, weights=wgt)
+R7 <- lm(nothingtw ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_left, weights=wgt)
+R8 <- lm(nothingtw ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_right, weights=wgt)
 
 
 ```

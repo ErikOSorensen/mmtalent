@@ -1,3 +1,5 @@
+#' Data from "mmtalent"
+#'
 #' Data from mmtalent, an online experiment
 #' A dataset from the online experiment used in the paper
 #' "Talent and luck - An experimental study on inequality
@@ -24,7 +26,7 @@
 #'  \item [45,55),
 #'  \item [55,65),
 #'  \item [65, 120)
-#'  }
+#'  }}
 #' \item{state_residence}{State in which participant resides (characters)}
 #' \item{region}{Census region in which participant resides ("Midwest", "Northeast","South", "West"; characters)}
 #' \item{edu_category}{ Education categories (characters) }
@@ -60,5 +62,5 @@
 #'  }}
 #' \item{n2016}{Population in 2016 (numeric)}
 #' }
-#' @source Based on the sc-est2016-alldata6.csv file from https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/ downloaded November 28, 2017.
+#' @source Based on the sc-est2016-alldata6.csv file from <https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/> downloaded November 28, 2017.
 "populationweights2016"

@@ -17,27 +17,27 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(mmtalent)
 library(tidyverse)
 library(stargazer)
 library(multiwayvcov)
 library(here)
 library(multcomp)
-df <- prepare_data(mmtalent_df)
+library(mmtalent)
+df <- prepare_data(mmtalent_df, populationweights2016)
 ```
 
 # Graphs on attitudes and belief
 To have the main result on attitudes and belief, we would like to have aggregate patterns 
 before going into the individual level data.
 ```{r}
-attitude_dt <- prepare_data(mmtalent_df) %>%  
+attitude_dt <- df %>%  
   mutate(AL=luck_fair,
          AT=talent_fair,
          AE=effort_fair,
          CL=luck_control,
          CT=talent_control,
          CE=effort_control) %>%
-  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, left) %>%
+  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, left, wgt) %>%
   gather(key = "outcome", value="value", AL, AT, AE, CL, CT, CE)
 ```
 
@@ -50,7 +50,7 @@ attitude_dt %>%
                         Talent = c("AT","CT"),
                         Effort = c("AE", "CE")),
          fo = fct_relevel(f, c("Luck", "Talent", "Effort"))) %>%
-  group_by(outcometype, fo, outcome) %>% summarize(m = mean(value), se = sd(value)/sqrt(n())) %>%
+  group_by(outcometype, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = sd(value)/sqrt(n())) %>%
   ggplot(aes(x=fo, y=m)) +
   geom_bar(stat="identity") + facet_grid(.~ outcometype) + 
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
@@ -69,7 +69,7 @@ attitude_dt %>%
                         Effort = c("AE", "CE")),
          fo = fct_relevel(f, c("Luck", "Talent", "Effort")),
          left_description = c("Right", "Left")[left+1]) %>%
-  group_by(outcometype, left_description, fo, outcome) %>% summarize(m = mean(value), se = sd(value)/sqrt(n()))  %>%
+  group_by(outcometype, left_description, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = sd(value)/sqrt(n()))  %>%
   ggplot(aes(x=fo, y=m)) +
   geom_bar(stat="identity") + facet_grid(left_description ~ outcometype) + 
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
@@ -85,7 +85,7 @@ in the situation.
 
 Now, we need to turn the data around a bit first:
 ```{r}
-subjectives_dt <- prepare_data(mmtalent_df)  %>% 
+subjectives_dt <- df  %>% 
   mutate(AL=luck_fair,
          AT=talent_fair,
          AE=effort_fair,
@@ -93,7 +93,7 @@ subjectives_dt <- prepare_data(mmtalent_df)  %>%
          CT=talent_control,
          CE=effort_control,
          id = row_number()) %>%
-  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, gender, age, left, income, edu, id) %>%
+  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, gender, age, left, income_category, edu_category, id, wgt) %>%
   gather(key="key", value="y", AL, AT, AE, CL, CT, CE) %>%
   mutate(key = factor(key),
          fct = fct_collapse(key,
@@ -118,20 +118,20 @@ $A_{i,t}\in[0,10]$ is the fairness attitude, $B_{i,t}\in[0,10]$ is the control b
 $X_i$ is a set of individual controls, and $\phi_t$ is a set of fixed effect for each factor.
 
 ```{r}
-AB1 <- lm( attitude ~ Talent + Effort, data=subjectives_dt)
-AB2 <- lm( attitude ~ Talent + Effort + controlbelief, data=subjectives_dt)
+AB1 <- lm( attitude ~ Talent + Effort, data=subjectives_dt, weights=wgt)
+AB2 <- lm( attitude ~ Talent + Effort + controlbelief, data=subjectives_dt, weights=wgt)
 
 AB3 <- lm( attitude ~ Talent + Effort +
-             age + left + as.factor(income) + as.factor(edu) + as.factor(gender), data=subjectives_dt)
+             age + left + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data=subjectives_dt, weights=wgt)
 AB4 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + left + as.factor(income) + as.factor(edu) + as.factor(gender), data=subjectives_dt)
+             age + left + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data=subjectives_dt, weights=wgt)
 subjectives_left <- subjectives_dt %>% filter(left==1)
 subjectives_right <- subjectives_dt %>% filter(left!=1)
 
 AB5 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + as.factor(income) + as.factor(edu) + as.factor(gender), data = subjectives_left)
+             age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = subjectives_left, weights=wgt)
 AB6 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + as.factor(income) + as.factor(edu) + as.factor(gender), data = subjectives_right)
+             age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = subjectives_right, weights=wgt)
 
 stargazer( AB1, AB2, AB3, AB4, AB5, AB6,
            se = list(sqrt(diag(cluster.vcov(AB1, cluster=subjectives_dt$id))),
@@ -153,27 +153,27 @@ Are there any treatment effect on the survey outcomes? We test for joint signifi
 effects for each of the 6 outcomes.
 ```{r}
 A1 <- lm(luck_fair ~ treatment, data = df)
-A1w <- glht(A1, linfct= c("`treatmentEx Ante Impersonal` = 0",
+A1w <- glht(A1, linfct= c("`treatmentEx Ante Personal` = 0",
                           "`treatmentEx Post Personal` = 0",
                           "`treatmentEx Post Impersonal` = 0"))
 A2 <- lm(talent_fair ~ treatment, data = df)
-A2w <- glht(A2, linfct= c("`treatmentEx Ante Impersonal` = 0",
+A2w <- glht(A2, linfct= c("`treatmentEx Ante Personal` = 0",
                           "`treatmentEx Post Personal` = 0",
                           "`treatmentEx Post Impersonal` = 0"))
 A3 <- lm(effort_fair ~ treatment, data = df)
-A3w <- glht(A3, linfct= c("`treatmentEx Ante Impersonal` = 0",
+A3w <- glht(A3, linfct= c("`treatmentEx Ante Personal` = 0",
                           "`treatmentEx Post Personal` = 0",
                           "`treatmentEx Post Impersonal` = 0"))
 B1 <- lm(luck_control ~ treatment, data = df)
-B1w <- glht(B1, linfct= c("`treatmentEx Ante Impersonal` = 0",
+B1w <- glht(B1, linfct= c("`treatmentEx Ante Personal` = 0",
                           "`treatmentEx Post Personal` = 0",
                           "`treatmentEx Post Impersonal` = 0"))
 B2 <- lm(talent_control ~ treatment, data = df)
-B2w <- glht(B2, linfct= c("`treatmentEx Ante Impersonal` = 0",
+B2w <- glht(B2, linfct= c("`treatmentEx Ante Personal` = 0",
                           "`treatmentEx Post Personal` = 0",
                           "`treatmentEx Post Impersonal` = 0"))
 B3 <- lm(effort_control ~ treatment, data = df)
-B3w <- glht(B3, linfct= c("`treatmentEx Ante Impersonal` = 0",
+B3w <- glht(B3, linfct= c("`treatmentEx Ante Personal` = 0",
                           "`treatmentEx Post Personal` = 0",
                           "`treatmentEx Post Impersonal` = 0"))
 

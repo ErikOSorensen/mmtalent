@@ -18,7 +18,7 @@
 \item{n2016}{Population in 2016 (numeric)}
 }}
 \source{
-Based on the sc-est2016-alldata6.csv file from https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/ downloaded November 28, 2017.
+Based on the sc-est2016-alldata6.csv file from <https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/> downloaded November 28, 2017.
 }
 \usage{
 populationweights2016

@@ -36,6 +36,6 @@ find_population_weights <- function(df_experiment, df_popweights) {
     mutate(share_in_sample = n_exp / total_n_exp,
            share_in_pop = n2016 / ncensus,
            wgt = share_in_pop / share_in_sample) %>%
-    select(age_category, region, gender, wgt)
+    dplyr::select(age_category, region, gender, wgt)
   weights
 }
