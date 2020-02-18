@@ -405,7 +405,18 @@ summary {
 <pre class="r"><code>census_df$region = factor(census_df$REGION, labels=c(&quot;Northeast&quot;, &quot;Midwest&quot;, &quot;South&quot;, &quot;West&quot;))
 census_df &lt;- census_df %&gt;% select(region, gender, age_category, n2016)</code></pre>
 <p>This dataframe now has the data needed to reweigth the “Research Now” data. I save it to a file.</p>
-<pre class="r"><code>save(census_df, file=&quot;../data/populationweights2016.rda&quot;)</code></pre>
+<pre class="r"><code>populationweights2016 &lt;- census_df
+save(populationweights2016, file=&quot;../data/populationweights2016.rda&quot;)
+head(populationweights2016)</code></pre>
+<pre><code>## # A tibble: 6 x 4
+##   region    gender age_category   n2016
+##   &lt;fct&gt;     &lt;fct&gt;  &lt;fct&gt;          &lt;dbl&gt;
+## 1 Northeast male   [18,35)      6567496
+## 2 Northeast female [18,35)      6446401
+## 3 Northeast male   [35,45)      3371597
+## 4 Northeast female [35,45)      3461744
+## 5 Northeast male   [45,55)      3829349
+## 6 Northeast female [45,55)      4018247</code></pre>
 
 
 

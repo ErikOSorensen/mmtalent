@@ -77,16 +77,46 @@ states <- c("Alabama",
             "Wyoming" ,
             "I do not live in the United States")
 
-cleaned_data <- all_data %>%
+edulevels <- tribble(~edu, ~edu_category,
+                     1, "No High School",
+                     2, "High School/GED",
+                     3, "Some college",
+                     4, "Associate's Degree",
+                     5, "Bachelor",
+                     6, "Masters",
+                     7, "Professional (JD/MD)",
+                     8, "PhD")
+
+incomelevels <- tribble(~income, ~income_category,
+                        1, "Less than 29 999",
+                        2, " 30 k- 59 999",
+                        3, "60 k - 99 999",
+                        4, "100k - 149 999",
+                        5, " 150 k +")
+
+
+mmtalent_df <- all_data %>%
   mutate(age_category = cut(age, breaks=c(18, 35, 45, 55, 65, 120), right=FALSE),
+         age_category = as.character(age_category),
+         gender = c("male", "female")[gender+1],
          state_residence = states[residence],
          region = 1*(residence %in% c(7,20,22,30,41,47,31,33,39)) +
            2*(residence %in% c(15,14,23,36,51,16,17,24,26,28,35,43)) +
            3*(residence %in% c(3,6,13,27,32,46,29,52,2,5,12,38,49)),
-         region_description = ifelse(residence!=53, c("South", "Northeast","Midwest","West")[region+1], NA),
+         region = ifelse(residence!=53, c("South", "Northeast","Midwest","West")[region+1], NA),
          treatment = factor( case_when(ex_ante_personal==1 ~ "Ex Ante Personal",
                                ex_ante_impersonal==1 ~ "Ex Ante Impersonal",
                                ex_post_personal==1 ~ "Ex Post Personal",
                                ex_post_impersonal==1 ~ "Ex Post Impersonal")),
-         timing = factor( c("Ex Ante", "Ex Post")[ 1 +(ex_post_personal==1 || ex_post_impersonal==1) ]),
-         personal = factor( c("Impersonal", "Personal")[1 + (ex_post_personal==1 || ex_ante_personal==1) ]))
+         timing = factor( c("Ex Ante", "Ex Post")[ 1 + treatment %in% c("Ex Post Personal", "Ex Post Impersonal")]),
+         personal = factor( c("Impersonal", "Personal")[1 + treatment %in% c("Ex Ante Personal", "Ex Post Personal")])) %>%
+  left_join(incomelevels, by="income") %>%
+  left_join(edulevels, by="edu") %>%
+  select(treatment, timing, personal,
+         start_date, duration_in_seconds, gender, age, age_category, state_residence, region,
+         edu_category, income_category,
+         luck_fair, talent_fair, effort_fair, luck_control, talent_control, effort_control,
+         redist_pref, polpref, redistribute)
+
+save(mmtalent_df, file=here::here("data", "mmtalent_df.rda"))
+
