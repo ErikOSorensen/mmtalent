@@ -58,24 +58,18 @@ worst off, "nothingtw" in the table below).
 
 ```{r}
 R1 <- lm(gini ~ treatment, data = df, weights=wgt)
-R2 <- lm(gini ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df, weights=wgt)
-R3 <- lm(nothingtw ~ treatment, data = df)
-R4 <- lm(nothingtw ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df, weights=wgt)
-df_left <- df %>% filter(left==1)
-df_right <- df %>% filter(left==0)
-R5 <- lm(gini ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_left, weights=wgt)
-R6 <- lm(gini ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_right, weights=wgt)
-R7 <- lm(nothingtw ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_left, weights=wgt)
-R8 <- lm(nothingtw ~ treatment + age + as.factor(income_category) + as.factor(edu_category) + as.factor(gender), data = df_right, weights=wgt)
-
-
+R2 <- lm(gini ~ treatment + age + left + high_edu + high_income + as.factor(gender), 
+         data = df, weights=wgt)
+R3 <- lm(nothingtw ~ treatment, data = df, weights=wgt)
+R4 <- lm(nothingtw ~ treatment + age + left + high_edu + high_income + as.factor(gender), 
+         data = df, weights=wgt)
 ```
 
 Table:
 ```{r}
-stargazer(R1, R2, R5, R6, R3, R4, R7, R8,
-          column.labels = c("All", "Left","Right","All", "Left","Right"), column.separate = c(2,1,1,2,1,1),
-          style="aer", type="text", keep.stat=c("rsq", "n")) 
+stargazer(R1, R2, R3, R4,
+          style="aer", type="text", keep.stat=c("rsq", "n"), 
+          out = here::here("tables","inequality_treatment_regression.tex")) 
 ```
 
 

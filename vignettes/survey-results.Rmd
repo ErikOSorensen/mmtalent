@@ -136,6 +136,7 @@ stargazer( AB1, AB2, AB3, AB4, AB5,
                      sqrt(diag(cluster.vcov(AB5, cluster=subjectives_dt$id)))),
            style="aer", type="text", keep.stat=c("rsq", "n"),
            column.labels=c("All participants"),
+           out = here::here("tables","attitudes_controlbelief_regression.tex"),
            column.separate=c(5))
 ```
 

@@ -201,9 +201,9 @@
 <a class="sourceLine" id="cb7-26" data-line-number="26"><span class="co">#&gt; # A tibble: 3 x 16</span></a>
 <a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">#&gt;   treatment gender   age left  high_income income_category high_edu edu_category</span></a>
 <a class="sourceLine" id="cb7-28" data-line-number="28"><span class="co">#&gt;   &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;       &lt;chr&gt;           &lt;lgl&gt;    &lt;chr&gt;       </span></a>
-<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt; 1 Ex Ante … male      38 TRUE  FALSE       30k- 59 999     FALSE    High School…</span></a>
-<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt; 2 Ex Ante … female    52 FALSE FALSE       30k- 59 999     FALSE    Some college</span></a>
-<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt; 3 Ex Post … male      71 FALSE TRUE        60k - 99 999    FALSE    High School…</span></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29"><span class="co">#&gt; 1 Ex Post … female    46 FALSE TRUE        100k - 149 999  TRUE     Bachelor    </span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30"><span class="co">#&gt; 2 Ex Post … female    38 FALSE FALSE       30k- 59 999     FALSE    Associate's…</span></a>
+<a class="sourceLine" id="cb7-31" data-line-number="31"><span class="co">#&gt; 3 Ex Ante … male      72 FALSE FALSE       Less than 29 9… TRUE     Bachelor    </span></a>
 <a class="sourceLine" id="cb7-32" data-line-number="32"><span class="co">#&gt; # … with 8 more variables: id &lt;int&gt;, wgt &lt;dbl&gt;, fct &lt;fct&gt;, attitude &lt;dbl&gt;,</span></a>
 <a class="sourceLine" id="cb7-33" data-line-number="33"><span class="co">#&gt; #   controlbelief &lt;dbl&gt;, Luck &lt;dbl&gt;, Effort &lt;dbl&gt;, Talent &lt;dbl&gt;</span></a></code></pre></div>
 <p>Now, it should be possible to run the regression <span class="math display">\[ A_{i,t} = \beta_0 + \beta_1 B_{i,t} + \beta_2 X_i +  \phi_t + \epsilon_{i,t}, \]</span> where <span class="math inline">\(i\)</span> index the individual, and <span class="math inline">\(t\in\{ \mathrm{effort}, \mathrm{talent}, \mathrm{luck}\}\)</span>, <span class="math inline">\(A_{i,t}\in[0,10]\)</span> is the fairness attitude, <span class="math inline">\(B_{i,t}\in[0,10]\)</span> is the control belief, <span class="math inline">\(X_i\)</span> is a set of individual controls, and <span class="math inline">\(\phi_t\)</span> is a set of fixed effect for each factor.</p>
@@ -224,52 +224,53 @@
 <a class="sourceLine" id="cb8-15" data-line-number="15">                     <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/diag.html">diag</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/multiwayvcov/man/cluster.vcov.html">cluster.vcov</a></span>(AB5, <span class="dt">cluster=</span>subjectives_dt<span class="op">$</span>id)))),</a>
 <a class="sourceLine" id="cb8-16" data-line-number="16">           <span class="dt">style=</span><span class="st">"aer"</span>, <span class="dt">type=</span><span class="st">"text"</span>, <span class="dt">keep.stat=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"rsq"</span>, <span class="st">"n"</span>),</a>
 <a class="sourceLine" id="cb8-17" data-line-number="17">           <span class="dt">column.labels=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"All participants"</span>),</a>
-<a class="sourceLine" id="cb8-18" data-line-number="18">           <span class="dt">column.separate=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">5</span>))</a>
-<a class="sourceLine" id="cb8-19" data-line-number="19"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; =======================================================================</span></a>
-<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt;                                           attitude                     </span></a>
-<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;                                       All participants                 </span></a>
-<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;                          (1)       (2)       (3)       (4)       (5)   </span></a>
-<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt; -----------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; Talent                -3.728*** -3.375*** -3.370*** -3.478*** -3.394***</span></a>
-<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt;                        (0.106)   (0.109)   (0.206)   (0.208)   (0.109) </span></a>
-<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt; Effort                -4.074*** -3.582*** -3.270*** -3.459*** -3.608***</span></a>
-<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt;                        (0.111)   (0.120)   (0.225)   (0.232)   (0.121) </span></a>
-<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt; controlbelief                   -0.125*** -0.104*** -0.115*** -0.119***</span></a>
-<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt;                                  (0.019)   (0.027)   (0.028)   (0.019) </span></a>
-<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt; age                                                 -0.014*** -0.014***</span></a>
-<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt;                                                      (0.003)   (0.003) </span></a>
-<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt; left                                                  0.125     0.122  </span></a>
-<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt;                                                      (0.115)   (0.115) </span></a>
-<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt; high_income                                          -0.148    -0.148  </span></a>
-<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt;                                                      (0.108)   (0.108) </span></a>
-<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt; high_edu                                             -0.179    -0.180  </span></a>
-<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt;                                                      (0.110)   (0.110) </span></a>
-<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt; as.factor(gender)male                                0.166*    0.169*  </span></a>
-<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt;                                                      (0.100)   (0.100) </span></a>
-<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt; Talent:controlbelief                       -0.011     0.012            </span></a>
-<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt;                                            (0.035)   (0.035)           </span></a>
-<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt; Effort:controlbelief                       -0.054    -0.022            </span></a>
-<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt;                                            (0.033)   (0.035)           </span></a>
-<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-55" data-line-number="55"><span class="co">#&gt; Constant              6.944***  7.379***  7.304***  8.001***  8.021*** </span></a>
-<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt;                        (0.074)   (0.101)   (0.120)   (0.191)   (0.164) </span></a>
-<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt;                                                                        </span></a>
-<a class="sourceLine" id="cb8-58" data-line-number="58"><span class="co">#&gt; Observations            6,003     6,003     6,003     6,003     6,003  </span></a>
-<a class="sourceLine" id="cb8-59" data-line-number="59"><span class="co">#&gt; R2                      0.276     0.287     0.288     0.294     0.294  </span></a>
-<a class="sourceLine" id="cb8-60" data-line-number="60"><span class="co">#&gt; -----------------------------------------------------------------------</span></a>
-<a class="sourceLine" id="cb8-61" data-line-number="61"><span class="co">#&gt; Notes:                ***Significant at the 1 percent level.           </span></a>
-<a class="sourceLine" id="cb8-62" data-line-number="62"><span class="co">#&gt;                       **Significant at the 5 percent level.            </span></a>
-<a class="sourceLine" id="cb8-63" data-line-number="63"><span class="co">#&gt;                       *Significant at the 10 percent level.</span></a></code></pre></div>
+<a class="sourceLine" id="cb8-18" data-line-number="18">           <span class="dt">out =</span> here<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(<span class="st">"tables"</span>,<span class="st">"attitudes_controlbelief_regression.tex"</span>),</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">           <span class="dt">column.separate=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">5</span>))</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"><span class="co">#&gt; =======================================================================</span></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"><span class="co">#&gt;                                           attitude                     </span></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23"><span class="co">#&gt;                                       All participants                 </span></a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"><span class="co">#&gt;                          (1)       (2)       (3)       (4)       (5)   </span></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25"><span class="co">#&gt; -----------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"><span class="co">#&gt; Talent                -3.728*** -3.375*** -3.370*** -3.478*** -3.394***</span></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27"><span class="co">#&gt;                        (0.106)   (0.109)   (0.206)   (0.208)   (0.109) </span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29"><span class="co">#&gt; Effort                -4.074*** -3.582*** -3.270*** -3.459*** -3.608***</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"><span class="co">#&gt;                        (0.111)   (0.120)   (0.225)   (0.232)   (0.121) </span></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"><span class="co">#&gt; controlbelief                   -0.125*** -0.104*** -0.115*** -0.119***</span></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"><span class="co">#&gt;                                  (0.019)   (0.027)   (0.028)   (0.019) </span></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35"><span class="co">#&gt; age                                                 -0.014*** -0.014***</span></a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"><span class="co">#&gt;                                                      (0.003)   (0.003) </span></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"><span class="co">#&gt; left                                                  0.125     0.122  </span></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39"><span class="co">#&gt;                                                      (0.115)   (0.115) </span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41"><span class="co">#&gt; high_income                                          -0.148    -0.148  </span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"><span class="co">#&gt;                                                      (0.108)   (0.108) </span></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"><span class="co">#&gt; high_edu                                             -0.179    -0.180  </span></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45"><span class="co">#&gt;                                                      (0.110)   (0.110) </span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47"><span class="co">#&gt; as.factor(gender)male                                0.166*    0.169*  </span></a>
+<a class="sourceLine" id="cb8-48" data-line-number="48"><span class="co">#&gt;                                                      (0.100)   (0.100) </span></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"><span class="co">#&gt; Talent:controlbelief                       -0.011     0.012            </span></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51"><span class="co">#&gt;                                            (0.035)   (0.035)           </span></a>
+<a class="sourceLine" id="cb8-52" data-line-number="52"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-53" data-line-number="53"><span class="co">#&gt; Effort:controlbelief                       -0.054    -0.022            </span></a>
+<a class="sourceLine" id="cb8-54" data-line-number="54"><span class="co">#&gt;                                            (0.033)   (0.035)           </span></a>
+<a class="sourceLine" id="cb8-55" data-line-number="55"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-56" data-line-number="56"><span class="co">#&gt; Constant              6.944***  7.379***  7.304***  8.001***  8.021*** </span></a>
+<a class="sourceLine" id="cb8-57" data-line-number="57"><span class="co">#&gt;                        (0.074)   (0.101)   (0.120)   (0.191)   (0.164) </span></a>
+<a class="sourceLine" id="cb8-58" data-line-number="58"><span class="co">#&gt;                                                                        </span></a>
+<a class="sourceLine" id="cb8-59" data-line-number="59"><span class="co">#&gt; Observations            6,003     6,003     6,003     6,003     6,003  </span></a>
+<a class="sourceLine" id="cb8-60" data-line-number="60"><span class="co">#&gt; R2                      0.276     0.287     0.288     0.294     0.294  </span></a>
+<a class="sourceLine" id="cb8-61" data-line-number="61"><span class="co">#&gt; -----------------------------------------------------------------------</span></a>
+<a class="sourceLine" id="cb8-62" data-line-number="62"><span class="co">#&gt; Notes:                ***Significant at the 1 percent level.           </span></a>
+<a class="sourceLine" id="cb8-63" data-line-number="63"><span class="co">#&gt;                       **Significant at the 5 percent level.            </span></a>
+<a class="sourceLine" id="cb8-64" data-line-number="64"><span class="co">#&gt;                       *Significant at the 10 percent level.</span></a></code></pre></div>
 </div>
 <div id="are-there-treatment-effects-on-attitudes" class="section level1">
 <h1 class="hasAnchor">
