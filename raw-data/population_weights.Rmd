@@ -39,7 +39,7 @@ a file.
 populationweights2016 <- census_df %>% mutate(region = as.character(region),
                                               gender = as.character(gender),
                                               age_category = as.character(age_category))
-save(populationweights2016, file="../data/populationweights2016.rda")
+saveRDS(populationweights2016, file=here::here("data", "populationweights2016.rds"))
 head(populationweights2016)
 ```
 

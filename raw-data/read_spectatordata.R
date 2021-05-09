@@ -1,6 +1,6 @@
 # Reading spectator data from qualtrics file and saving as R data.
-library(tidyverse)
-library(janitor)
+require(tidyverse)
+require(janitor)
 
 headers <- read_csv(here::here("raw-data", "2017+mmtalent+spectators_December+4%2C+2017_14.06.csv"),
                     n_max=1,
@@ -119,5 +119,5 @@ mmtalent_df <- all_data %>%
          luck_fair, talent_fair, effort_fair, luck_control, talent_control, effort_control,
          redist_pref, polpref, redistribute, payment_low_worker, payment_high_worker)
 
-save(mmtalent_df, file=here::here("data", "mmtalent_df.rda"))
+saveRDS(mmtalent_df, file=here::here("data", "mmtalent_df.rds"))
 

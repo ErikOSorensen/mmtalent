@@ -7,8 +7,7 @@
 #' @export
 #'
 #' @examples
-prepare_data <- function(df, df_popweights) {
-  wgts <- find_population_weights(df, df_popweights)
+prepare_data <- function(df, wgts) {
   transformed_data <- df %>% mutate(
     left = (polpref < 3),
     nothingtw = 1*(payment_low_worker %in% c(2, 8)),
