@@ -1,0 +1,52 @@
+---
+title: "Descriptive and balance tables"
+author: "Erik Ø. Sørensen"
+date: "5/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(targets)
+require(tidyverse)
+require(gt)
+```
+
+
+
+# Descriptive table
+
+```{r}
+tar_load(descriptive_table_formatted)
+descriptive_table_formatted
+descriptive_table_formatted %>% as_latex() %>%
+  as.character() %>%
+  cat(file=here::here("tables","descriptive_table.tex"))
+```
+
+# Balance table (background characteristics)
+
+```{r}
+tar_load(background_balance_formatted)
+background_balance_formatted
+background_balance_formatted %>% as_latex() %>%
+  as.character() %>%
+  cat(file=here::here("tables","background_balance_table.tex"))
+```
+
+# Balance on survey outcomes
+The survey was run after the experiment, so should not be influenced to any great degree
+by treatment assignment.
+
+```{r}
+tar_load(survey_balance_formatted)
+survey_balance_formatted
+survey_balance_formatted %>% 
+  as_latex() %>%
+  as.character() %>%
+  cat(file=here::here("tables","survey_balance_table.tex"))
+```
+
+
+
+
