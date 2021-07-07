@@ -32,7 +32,7 @@ survey_bars <- function(mmtalent_long, gtitle = NULL, numobs = TRUE, ylimits = c
     labs(x = element_blank(),
          y = "Mean outcome \u00B1 s.e.m.",
          title = gtitle,
-         caption = ifelse(numobs, sprintf("n=%4g", nrow(mmtalent_long)), element_blank())) +
+         caption = ifelse(numobs, sprintf("n=%4g", nrow(mmtalent_long)/6), element_blank())) +
     theme_minimal() +
     coord_cartesian(ylim = ylimits) +
     theme(plot.title.position = "plot")
