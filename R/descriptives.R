@@ -139,26 +139,26 @@ background_balance_rows <- function(df) {
   colnames(bt.T) <- as.character(bt$treatment)
   rwn <- rownames(bt.T)
   bt.T <- bt.T %>% mutate(Outcome = rwn) %>%
-    dplyr::select(Outcome, `Ex Ante Impersonal`, `Ex Ante Personal`, `Ex Post Impersonal`, `Ex Post Personal`)
+    dplyr::select(Outcome, ExAnteImpersonal, ExAntePersonal, ExPostImpersonal, ExPostPersonal)
   bt.T
 }
 
 format_background_balance_table <- function(rows) {
   rows %>% gt() %>%
-    fmt_number(columns = c("Ex Ante Impersonal", "Ex Ante Personal",
-                           "Ex Post Impersonal", "Ex Post Personal"),
+    fmt_number(columns = c("ExAnteImpersonal", "ExAntePersonal",
+                           "ExPostImpersonal", "ExPostPersonal"),
                n_sigfig=3) %>%
     tab_spanner(
-      label = "Ex Ante",
-      columns = c("Ex Ante Impersonal", "Ex Ante Personal")) %>%
+      label = "ExAnte",
+      columns = c("ExAnteImpersonal", "ExAntePersonal")) %>%
     tab_spanner(
-      label = "Ex Post",
-      columns = c("Ex Post Impersonal", "Ex Post Personal")
+      label = "ExPost",
+      columns = c("ExPostImpersonal", "ExPostPersonal")
     ) %>%
-    cols_label( "Ex Ante Impersonal" = "Impersonal",
-                "Ex Ante Personal" = "Personal",
-                "Ex Post Impersonal" = "Impersonal",
-                "Ex Post Personal" = "Personal")
+    cols_label( "ExAnteImpersonal" = "Impersonal",
+                "ExAntePersonal" = "Personal",
+                "ExPostImpersonal" = "Impersonal",
+                "ExPostPersonal" = "Personal")
 }
 
 
@@ -175,7 +175,7 @@ survey_balance_rows <- function(df) {
   colnames(at.T) <- as.character(at$treatment)
   rwn <- rownames(at.T)
   at.T <- at.T %>% mutate(Outcome = rwn) %>%
-    dplyr::select(Outcome, `Ex Ante Impersonal`, `Ex Ante Personal`, `Ex Post Impersonal`, `Ex Post Personal`)
+    dplyr::select(Outcome, ExAnteImpersonal, ExAntePersonal, ExPostImpersonal, ExPostPersonal)
 
   pvals <- tibble(Outcome = c("Luck (unfair)",
                                "Talent (unfair)",
@@ -184,33 +184,72 @@ survey_balance_rows <- function(df) {
                                "Talent (control)",
                                "Effort (control)",
                                "Should society aim to equalize incomes"),
-                   "P-value (F)" = c(summary(aov(df$luck_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                   "P-value (F)" = c(p.adjust(c(summary(aov(df$luck_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
                                      summary(aov(df$talent_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$effort_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$luck_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                     summary(aov(df$effort_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
+                                     p.adjust(c(summary(aov(df$luck_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
                                      summary(aov(df$talent_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$effort_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                     summary(aov(df$effort_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
                                      summary(aov(df$redist_pref~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1])
                                      )
   at.T %>% left_join(pvals, by="Outcome")
 }
 
+survey_balance_rows_timing <- function(df) {
+  at <- df %>% group_by(timing) %>%
+    summarize( "Luck (unfair)" = weighted.mean(luck_fair, wgt, na.rm=TRUE),
+               "Talent (unfair)" = weighted.mean(talent_fair, wgt, na.rm=TRUE),
+               "Effort (unfair)" = weighted.mean(effort_fair, wgt, na.rm=TRUE),
+               "Luck (control)" = weighted.mean(luck_control, wgt, na.rm=TRUE),
+               "Talent (control)" = weighted.mean(talent_control, wgt, na.rm=TRUE),
+               "Effort (control)" = weighted.mean(effort_control, wgt, na.rm=TRUE),
+               "Should society aim to equalize incomes" = weighted.mean(redist_pref, wgt, na.rm=TRUE))
+  at.T <- as.data.frame(as.matrix(t(at[,-1])))
+  colnames(at.T) <- as.character(at$timing)
+  rwn <- rownames(at.T)
+  at.T <- at.T %>% mutate(Outcome = rwn) %>%
+    dplyr::select(Outcome, ExAnte, ExPost)
+
+  pvals <- tibble(Outcome = c("Luck (unfair)",
+                              "Talent (unfair)",
+                              "Effort (unfair)",
+                              "Luck (control)",
+                              "Talent (control)",
+                              "Effort (control)",
+                              "Should society aim to equalize incomes"),
+                  "P-value (F)" = c(p.adjust(c(summary(aov(df$luck_fair~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                               summary(aov(df$talent_fair~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                               summary(aov(df$effort_fair~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
+                                    p.adjust(c(summary(aov(df$luck_control~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                               summary(aov(df$talent_control~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                               summary(aov(df$effort_control~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
+                                    summary(aov(df$redist_pref~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1])
+  )
+  at.T %>% left_join(pvals, by="Outcome")
+}
 
 format_survey_balance_table <- function(rows) {
   rows %>% gt() %>%
-    fmt_number(columns = c("Ex Ante Impersonal", "Ex Ante Personal",
-                           "Ex Post Impersonal", "Ex Post Personal"),
+    fmt_number(columns = c("ExAnteImpersonal", "ExAntePersonal",
+                           "ExPostImpersonal", "ExPostPersonal"),
                n_sigfig = 3) %>%
     fmt_number(columns = c("P-value (F)"), decimals = 3) %>%
     tab_spanner(
-      label = "Ex Ante",
-      columns = c("Ex Ante Impersonal", "Ex Ante Personal")) %>%
+      label = "ExAnte",
+      columns = c("ExAnteImpersonal", "ExAntePersonal")) %>%
     tab_spanner(
-      label = "Ex Post",
-      columns = c("Ex Post Impersonal", "Ex Post Personal")
+      label = "ExPost",
+      columns = c("ExPostImpersonal", "ExPostPersonal")
     ) %>%
-    cols_label( "Ex Ante Impersonal" = "Impersonal",
-                "Ex Ante Personal" = "Personal",
-                "Ex Post Impersonal" = "Impersonal",
-                "Ex Post Personal" = "Personal")
+    cols_label( "ExAnteImpersonal" = "Impersonal",
+                "ExAntePersonal" = "Personal",
+                "ExPostImpersonal" = "Impersonal",
+                "ExPostPersonal" = "Personal")
+}
+
+format_survey_balance_table_timing <- function(rows) {
+  rows %>% gt() %>%
+    fmt_number(columns = c("ExAnte", "ExPost"),
+               n_sigfig = 3) %>%
+    fmt_number(columns = c("P-value (F)"), decimals = 3)
 }

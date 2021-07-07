@@ -1,12 +1,10 @@
 library("targets")
-require("tidyverse")
-require("multcomp")
-require("gt")
 source(here::here("R","data.R"))
 source(here::here("R","data_transforms.R"))
 source(here::here("R","utility.R"))
 source(here::here("R","descriptives.R"))
 options(tidyverse.quiet = TRUE)
+tar_option_set(packages = c("tidyverse", "multcomp","gt"))
 
 list(
   tar_target(
@@ -48,6 +46,10 @@ list(
     survey_balance_rows(mmtalent)
   ),
   tar_target(
+    survey_balance_rows_timing_df,
+    survey_balance_rows_timing(mmtalent)
+  ),
+  tar_target(
     descriptive_table_formatted,
     format_descriptive_table(descriptive_rows_df)
   ),
@@ -58,6 +60,10 @@ list(
   tar_target(
     survey_balance_formatted,
     format_survey_balance_table(survey_balance_rows_df)
+  ),
+  tar_target(
+    survey_balance_formatted_timing,
+    format_survey_balance_table_timing(survey_balance_rows_timing_df)
   )
 )
 

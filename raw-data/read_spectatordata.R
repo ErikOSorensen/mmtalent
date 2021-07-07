@@ -17,10 +17,10 @@ all_data <- raw_data %>% filter(progress == 100) %>%
   filter(!is.na(luck_fair), !is.na(talent_fair), !is.na(effort_fair)) %>%
   filter(!is.na(luck_control),!is.na(talent_control), !is.na(effort_control)) %>%
   filter(!is.na(polpref), !is.na(redist_pref)) %>%
-  select(start_date, duration_in_seconds, gender, age, residence, edu, income, epp, eap, epi, eai,
+  dplyr::select(c(start_date, duration_in_seconds, gender, age, residence, edu, income, epp, eap, epi, eai,
          luck_fair, talent_fair, effort_fair, luck_control, talent_control, effort_control,
          redist_pref, polpref, ex_ante_personal, ex_ante_impersonal, ex_post_personal, ex_post_impersonal,
-         payment_high_worker, payment_low_worker, redistribute)
+         payment_high_worker, payment_low_worker, redistribute))
 
 # For coding residence:
 states <- c("Alabama",
@@ -105,12 +105,12 @@ mmtalent_df <- all_data %>%
            3*(residence %in% c(3,6,13,27,32,46,29,52,2,5,12,38,49)),
          region = ifelse(residence!=53, c("South", "Northeast","Midwest","West")[region+1], NA),
          region = ifelse(residence==53, "South", region), # Assigning largest region to one missing value
-         treatment = factor( case_when(ex_ante_personal==1 ~ "Ex Ante Personal",
-                               ex_ante_impersonal==1 ~ "Ex Ante Impersonal",
-                               ex_post_personal==1 ~ "Ex Post Personal",
-                               ex_post_impersonal==1 ~ "Ex Post Impersonal")),
-         timing = factor( c("Ex Ante", "Ex Post")[ 1 + treatment %in% c("Ex Post Personal", "Ex Post Impersonal")]),
-         personal = factor( c("Impersonal", "Personal")[1 + treatment %in% c("Ex Ante Personal", "Ex Post Personal")])) %>%
+         treatment = factor( case_when(ex_ante_personal==1 ~ "ExAntePersonal",
+                               ex_ante_impersonal==1 ~ "ExAnteImpersonal",
+                               ex_post_personal==1 ~ "ExPostPersonal",
+                               ex_post_impersonal==1 ~ "ExPostImpersonal")),
+         timing = factor( c("ExAnte", "ExPost")[ 1 + treatment %in% c("ExPostPersonal", "ExPostImpersonal")]),
+         personal = factor( c("Impersonal", "Personal")[1 + treatment %in% c("ExAntePersonal", "ExPostPersonal")])) %>%
   left_join(incomelevels, by="income") %>%
   left_join(edulevels, by="edu") %>%
   select(treatment, timing, personal,

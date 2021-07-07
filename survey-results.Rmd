@@ -23,9 +23,10 @@ library(multiwayvcov)
 library(here)
 library(multcomp)
 require(targets)
-#library(mmtalent)
+require(patchwork)
 source(here::here("R","utility.R"))
 source(here::here("R","data_transforms.R"))
+source(here::here("R","survey_functions.R"))
 tar_load(mmtalent)
 ```
 
@@ -33,45 +34,14 @@ tar_load(mmtalent)
 To have the main result on attitudes and belief, we would like to have aggregate patterns 
 before going into the individual level data.
 ```{r}
-attitude_dt <- mmtalent %>%  
-  mutate(AL=luck_fair,
-         AT=talent_fair,
-         AE=effort_fair,
-         CL=luck_control,
-         CT=talent_control,
-         CE=effort_control) %>%
-  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, left, wgt) %>%
-  gather(key = "outcome", value="value", AL, AT, AE, CL, CT, CE)
-```
-
-Now for creating the first graph: unconditional on political position:
-```{r}
-attitudes_df <- attitude_dt %>%
-  mutate(outcometype = factor( ifelse(outcome %in% c("AL","AT", "AE"),
-                                      "Unfair inequality", 
-                                      "Belief about individual control"),
-                               levels = c("Unfair inequality","Belief about individual control" )),
-         f = fct_collapse(outcome,
-                        Luck = c("AL","CL"),
-                        Talent = c("AT","CT"),
-                        Effort = c("AE", "CE")),
-         fo = fct_relevel(f, c("Luck", "Talent", "Effort"))) 
-
-attitudes_df %>%
-  group_by(outcometype, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), 
-                                                   se = weighted.se(value, wgt)) %>%
-  ggplot(aes(x=fo, y=m)) +
-  geom_col() + facet_wrap(.~ outcometype) + 
-  geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
-    labs(x = element_blank(), 
-         y = "Mean outcome \u00B1 s.e.m.") +
-  theme_minimal()
+long_attitudes(mmtalent) %>% survey_bars()
 ggsave(here::here("graphs","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
 ```
 
 And the corresponding histograms:
 ```{r}
-attitudes_df %>% group_by(outcometype, fo) %>% 
+long_attitudes(mmtalent) %>% 
+  group_by(outcometype, fo) %>% 
   summarize(weighted.bars(value, wgt)) %>%
   ggplot(aes(x=v, y=proportion)) +
   geom_col() + 
@@ -82,24 +52,27 @@ attitudes_df %>% group_by(outcometype, fo) %>%
 ggsave(here::here("graphs","attitude_histograms.pdf"), width = 16, height = 10, units = "cm")
 ```
 
+# Subgroups
+
+```{r}
+long_attitudes(mmtalent) %>% 
+  survey_bars_by_subgroup() %>% 
+  patchwork::wrap_plots() + plot_layout(ncol=2) + plot_annotation(tag_levels = "a")
+ggsave(here::here("graphs","attitudes_beliefs_by_subgroups.pdf"), width = 30, height = 50, units="cm")
+```
+
 
 
 Now, interacting with political position:
 ```{r}
-attitude_dt %>%
-  mutate(outcometype = factor( ifelse(outcome %in% c("AL","AT", "AE"),"Attitude (unfairness)", "Belief on control")),
-         f = fct_collapse(outcome,
-                        Luck = c("AL","CL"),
-                        Talent = c("AT","CT"),
-                        Effort = c("AE", "CE")),
-         fo = fct_relevel(f, c("Luck", "Talent", "Effort")),
-         left_description = c("Right", "Left")[left+1]) %>%
+long_attitudes(mmtalent) %>%
+  mutate(left_description = c("Right", "Left")[left+1]) %>%
   group_by(outcometype, left_description, fo, outcome) %>% summarize(m = weighted.mean(value, wgt), se = weighted.sd(value,wgt)/sqrt(n()))  %>%
   ggplot(aes(x=fo, y=m)) +
   geom_bar(stat="identity") + facet_grid(left_description ~ outcometype) + 
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
-  xlab("Factor considered") + ylab("Mean outcome \u00B1 s.e.m.") +
-  theme_bw()
+  labs(x=element_blank(), y="Mean outcome \u00B1 s.e.m.") +
+  theme_minimal()
 ggsave(here::here("graphs","attitudes_beliefs_pol.pdf"))
 ```
 
@@ -110,30 +83,8 @@ in the situation.
 
 Now, we need to turn the data around a bit first:
 ```{r}
-subjectives_dt <- df  %>% 
-  mutate(AL=luck_fair,
-         AT=talent_fair,
-         AE=effort_fair,
-         CL=luck_control,
-         CT=talent_control,
-         CE=effort_control,
-         id = row_number()) %>%
-  dplyr::select(AL, AT, AE, CL, CT, CE, treatment, gender, age, left, high_income, income_category, 
-                high_edu, edu_category, id, wgt) %>%
-  gather(key="key", value="y", AL, AT, AE, CL, CT, CE) %>%
-  mutate(key = factor(key),
-         fct = fct_collapse(key,
-                            luck = c("AL","CL"),
-                            talent = c("AT", "CT"),
-                            effort = c("AE", "CE")),
-         outcome = fct_collapse(key,
-                                attitude = c("AL", "AT", "AE"),
-                                controlbelief = c("CL","CT","CE"))) %>% 
-  dplyr::select(-key) %>%
-  spread( key = outcome, value=y) %>%
-  mutate(Luck = 1.*( fct=="luck"), 
-         Effort = 1.*(fct=="effort"), 
-         Talent = 1.*(fct=="talent"))
+subjectives_dt <- long_attitudes(mmtalent) %>%
+  subjectives()
 subjectives_dt %>% sample_n(3) 
 ```
 
@@ -144,70 +95,132 @@ $A_{i,t}\in[0,10]$ is the fairness attitude, $B_{i,t}\in[0,10]$ is the control b
 $X_i$ is a set of individual controls, and $\phi_t$ is a set of fixed effect for each factor.
 
 ```{r}
-AB1 <- lm( attitude ~ Talent + Effort, data=subjectives_dt, weights=wgt)
-AB2 <- lm( attitude ~ Talent + Effort + controlbelief, data=subjectives_dt, weights=wgt)
+survey_regressions_list <- survey_regressions(subjectives_dt)
+subjectives_dt %>% janitor::clean_names() %>% haven::write_dta("subjectives.dta")
+survey_names <- c('Talent'='Talent (d)',
+                  'Effort'='Effort (d)',
+                   '`Belief about individual control`'='Belief about control (0-10)',
+                  'Talent:`Belief about individual control`' = 'Talent x Belief about control',
+                  'Effort:`Belief about individual control`' = 'Effort x Belief about control',
+                  'age' = 'Age (years)',
+                  'leftTRUE' = 'Left (d)',
+                  'high_incomeTRUE' = 'High income (d)',
+                  'high_eduTRUE' = 'High education (d)',
+                  'as.factor(gender)male' = 'Male (d)',
+                  'treatmentExAntePersonal' = "Treatment: Ex Ante Personal (d)",
+                  'treatmentExPostImpersonal'	= "Treatment: Ex Post Impersonal (d)",
+                  'treatmentExPostPersonal' = "Treatment: Ex Post Personal (d)",
+                  '(Intercept)'='(Intercept)')
 
-AB3 <- lm( attitude ~ Talent + Effort + Talent*controlbelief + Effort*controlbelief + controlbelief, 
-           data=subjectives_dt, weights=wgt)
-AB4 <- lm( attitude ~ Talent + Effort + Talent*controlbelief + Effort*controlbelief + controlbelief + 
-             age + left + high_income + high_edu + as.factor(gender), data=subjectives_dt, weights=wgt)
-AB5 <- lm( attitude ~ Talent + Effort + controlbelief + 
-             age + left + high_income + high_edu + as.factor(gender), data=subjectives_dt, weights=wgt)
-stargazer( AB1, AB2, AB3, AB4, AB5,
-           se = list(sqrt(diag(cluster.vcov(AB1, cluster=subjectives_dt$id))),
-                     sqrt(diag(cluster.vcov(AB2, cluster=subjectives_dt$id))),
-                     sqrt(diag(cluster.vcov(AB3, cluster=subjectives_dt$id))),
-                     sqrt(diag(cluster.vcov(AB4, cluster=subjectives_dt$id))),
-                     sqrt(diag(cluster.vcov(AB5, cluster=subjectives_dt$id)))),
-           style="aer", type="text", keep.stat=c("rsq", "n"),
-           column.labels=c("All participants"),
-           out = here::here("tables","attitudes_controlbelief_regression.tex"),
-           column.separate=c(5))
+```
+
+```{r echo=FALSE}
+modelsummary::modelsummary(survey_regressions_list$without_treatment,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           gof_omit = "R2 Adj.|se_type",
+                           coef_map = survey_names)
+modelsummary::modelsummary(survey_regressions_list$without_treatment,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           gof_omit = "R2 Adj.|se_type",
+                           coef_map = survey_names,
+                           output=here::here("tables","attitudes_controlbelief_regression_withT.tex"))
+```
+
+
+# Are there treatment effects on attitudes?
+The survey came after the experiment. Are there any treatment effect on the survey outcomes? 
+
+The simplest is to repeat the main regression table with dummies for treatment. 
+We test for joint significance of the treatment dummies.
+
+```{r}
+surv_joint_tests <- c(car::linearHypothesis(survey_regressions_list$with_treatment[[1]], 
+                            c("treatmentExAntePersonal = 0",
+                              "treatmentExPostPersonal = 0",
+                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                      car::linearHypothesis(survey_regressions_list$with_treatment[[2]], 
+                            c("treatmentExAntePersonal = 0",
+                              "treatmentExPostPersonal = 0",
+                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                      car::linearHypothesis(survey_regressions_list$with_treatment[[3]], 
+                            c("treatmentExAntePersonal = 0",
+                              "treatmentExPostPersonal = 0",
+                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                      car::linearHypothesis(survey_regressions_list$with_treatment[[4]], 
+                            c("treatmentExAntePersonal = 0",
+                              "treatmentExPostPersonal = 0",
+                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                      car::linearHypothesis(survey_regressions_list$with_treatment[[5]], 
+                            c("treatmentExAntePersonal = 0",
+                              "treatmentExPostPersonal = 0",
+                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2])
+surv_joint_tests_wrow <- tibble::tribble(~v, ~p1, ~p2, ~p3, ~p4, ~p5,
+                        "Joint p-value on treatment dummies:",
+                        sprintf("%4.3f", surv_joint_tests[1]),
+                        sprintf("%4.3f", surv_joint_tests[2]),
+                        sprintf("%4.3f", surv_joint_tests[3]),
+                        sprintf("%4.3f", surv_joint_tests[4]),
+                        sprintf("%4.3f", surv_joint_tests[5]))
 ```
 
 
 
-# Are there treatment effects on attitudes?
-The survey came after the experiment.
-Are there any treatment effect on the survey outcomes? We test for joint significance of the treatment
+```{r echo=FALSE}
+modelsummary::modelsummary(survey_regressions_list$with_treatment,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           gof_omit = "R2 Adj.|se_type",
+                           coef_map = survey_names,
+                           add_rows = surv_joint_tests_wrow)
+modelsummary::modelsummary(survey_regressions_list$with_treatment,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           gof_omit = "R2 Adj.|se_type",
+                           coef_map = survey_names,
+                           add_rows = surv_joint_tests_wrow,
+                           output=here::here("tables","attitudes_controlbelief_regression_withT.tex"))
+```
+
+
+We test for joint significance of the treatment
 effects for each of the 6 outcomes.
 ```{r}
-A1 <- lm(luck_fair ~ treatment, data = df)
-A1w <- glht(A1, linfct= c("`treatmentEx Ante Personal` = 0",
-                          "`treatmentEx Post Personal` = 0",
-                          "`treatmentEx Post Impersonal` = 0"))
-A2 <- lm(talent_fair ~ treatment, data = df)
-A2w <- glht(A2, linfct= c("`treatmentEx Ante Personal` = 0",
-                          "`treatmentEx Post Personal` = 0",
-                          "`treatmentEx Post Impersonal` = 0"))
-A3 <- lm(effort_fair ~ treatment, data = df)
-A3w <- glht(A3, linfct= c("`treatmentEx Ante Personal` = 0",
-                          "`treatmentEx Post Personal` = 0",
-                          "`treatmentEx Post Impersonal` = 0"))
-B1 <- lm(luck_control ~ treatment, data = df)
-B1w <- glht(B1, linfct= c("`treatmentEx Ante Personal` = 0",
-                          "`treatmentEx Post Personal` = 0",
-                          "`treatmentEx Post Impersonal` = 0"))
-B2 <- lm(talent_control ~ treatment, data = df)
-B2w <- glht(B2, linfct= c("`treatmentEx Ante Personal` = 0",
-                          "`treatmentEx Post Personal` = 0",
-                          "`treatmentEx Post Impersonal` = 0"))
-B3 <- lm(effort_control ~ treatment, data = df)
-B3w <- glht(B3, linfct= c("`treatmentEx Ante Personal` = 0",
-                          "`treatmentEx Post Personal` = 0",
-                          "`treatmentEx Post Impersonal` = 0"))
+A1 <- lm(luck_fair ~ treatment, data = mmtalent)
+A1w <- car::linearHypothesis(A1, c("treatmentExAntePersonal = 0",
+                          "treatmentExPostPersonal = 0",
+                          "treatmentExPostImpersonal = 0"))
+A2 <- lm(talent_fair ~ treatment, data = mmtalent)
+A2w <- car::linearHypothesis(A2, c("treatmentExAntePersonal = 0",
+                          "treatmentExPostPersonal = 0",
+                          "treatmentExPostImpersonal = 0"))
+A3 <- lm(effort_fair ~ treatment, data = mmtalent)
+A3w <- car::linearHypothesis(A3, c("treatmentExAntePersonal = 0",
+                          "treatmentExPostPersonal = 0",
+                          "treatmentExPostImpersonal = 0"))
+B1 <- lm(luck_control ~ treatment, data = mmtalent)
+B1w <- car::linearHypothesis(B1, c("treatmentExAntePersonal = 0",
+                          "treatmentExPostPersonal = 0",
+                          "treatmentExPostImpersonal = 0"))
+B2 <- lm(talent_control ~ treatment, data = mmtalent)
+B2w <- car::linearHypothesis(B2, c("treatmentExAntePersonal = 0",
+                          "treatmentExPostPersonal = 0",
+                          "treatmentExPostImpersonal = 0"))
+B3 <- lm(effort_control ~ treatment, data = mmtalent)
+B3w <- car::linearHypothesis(B3, c("treatmentExAntePersonal = 0",
+                          "treatmentExPostPersonal = 0",
+                          "treatmentExPostImpersonal = 0"))
 
-wrow <- c("Joint p-value on treatment:", 
-          sprintf("%4.3f", summary(A1w)$test$pvalue[1]),
-          sprintf("%4.3f", summary(A2w)$test$pvalue[1]),
-          sprintf("%4.3f", summary(A3w)$test$pvalue[1]),
-          sprintf("%4.3f", summary(B1w)$test$pvalue[1]),
-          sprintf("%4.3f", summary(B2w)$test$pvalue[1]),
-          sprintf("%4.3f", summary(B3w)$test$pvalue[1]))
+wrow <- tibble::tribble(~v, ~p1, ~p2, ~p3, ~p4, ~p5, ~p6,
+                        "Joint p-value on treatment dummies:", 
+          sprintf("%4.3f", A1w$`Pr(>F)`[2]),
+          sprintf("%4.3f", A2w$`Pr(>F)`[2]),
+          sprintf("%4.3f", A3w$`Pr(>F)`[2]),
+          sprintf("%4.3f", B1w$`Pr(>F)`[2]),
+          sprintf("%4.3f", B2w$`Pr(>F)`[2]),
+          sprintf("%4.3f", B3w$`Pr(>F)`[2]))
 
-stargazer(A1, A2, A3, B1, B2, B3,
-          style="aer", type="text", add.lines=list(wrow),
-          keep.stat=c("n","rsq"))
+modelsummary::modelsummary(list("A.luck"=A1, "A.talent"=A2, "A.effort"=A3, "B.luck"=B1, "B.talent"=B2, "B.effort"=B3),
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           gof_omit = "R2 Adj.|AIC|BIC|Log.Lik.|F",
+                           add_rows = wrow) %>% kableExtra::add_header_above(c(" "=1, "Unfair inequality"=3, "Belief about individual control"=3))
 ```
 
 We see that 3 out of 18 treatment effects are significant at the 10% level, which is not surprising

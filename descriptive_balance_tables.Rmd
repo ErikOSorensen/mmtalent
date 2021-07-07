@@ -47,6 +47,16 @@ survey_balance_formatted %>%
   cat(file=here::here("tables","survey_balance_table.tex"))
 ```
 
+What happens if we merge the personal/impersonal treatment?
+
+```{r}
+tar_load(survey_balance_formatted_timing)
+survey_balance_formatted_timing
+survey_balance_formatted_timing %>% 
+  as_latex() %>%
+  as.character() %>%
+  cat(file=here::here("tables","survey_balance_table_timing.tex"))
+```
 
 
 

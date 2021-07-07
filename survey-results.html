@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>survey-results</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+<script src="data:application/javascript;base64,JChkb2N1bWVudCkucmVhZHkoZnVuY3Rpb24oKXsKICAgIGlmICh0eXBlb2YgJCgnW2RhdGEtdG9nZ2xlPSJ0b29sdGlwIl0nKS50b29sdGlwID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgJCgnW2RhdGEtdG9nZ2xlPSJ0b29sdGlwIl0nKS50b29sdGlwKCk7CiAgICB9CiAgICBpZiAoJCgnW2RhdGEtdG9nZ2xlPSJwb3BvdmVyIl0nKS5wb3BvdmVyID09PSAnZnVuY3Rpb24nKSB7CiAgICAgICAgJCgnW2RhdGEtdG9nZ2xlPSJwb3BvdmVyIl0nKS5wb3BvdmVyKCk7CiAgICB9Cn0pOwo="></script>
+<link href="data:text/css,%0A%2Elightable%2Dminimal%20%7B%0Aborder%2Dcollapse%3A%20separate%3B%0Aborder%2Dspacing%3A%2016px%201px%3B%0Awidth%3A%20100%25%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%2Elightable%2Dminimal%20td%20%7B%0Amargin%2Dleft%3A%205px%3B%0Amargin%2Dright%3A%205px%3B%0A%7D%0A%2Elightable%2Dminimal%20th%20%7B%0Amargin%2Dleft%3A%205px%3B%0Amargin%2Dright%3A%205px%3B%0A%7D%0A%2Elightable%2Dminimal%20thead%20tr%3Alast%2Dchild%20th%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%2300000050%3B%0Aempty%2Dcells%3A%20hide%3B%0A%7D%0A%2Elightable%2Dminimal%20tbody%20tr%3Afirst%2Dchild%20td%20%7B%0Apadding%2Dtop%3A%200%2E5em%3B%0A%7D%0A%2Elightable%2Dminimal%2Elightable%2Dhover%20tbody%20tr%3Ahover%20%7B%0Abackground%2Dcolor%3A%20%23f5f5f5%3B%0A%7D%0A%2Elightable%2Dminimal%2Elightable%2Dstriped%20tbody%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%23f5f5f5%3B%0A%7D%0A%2Elightable%2Dclassic%20%7B%0Aborder%2Dtop%3A%200%2E16em%20solid%20%23111111%3B%0Aborder%2Dbottom%3A%200%2E16em%20solid%20%23111111%3B%0Awidth%3A%20100%25%3B%0Amargin%2Dbottom%3A%2010px%3B%0Amargin%3A%2010px%205px%3B%0A%7D%0A%2Elightable%2Dclassic%20tfoot%20tr%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dclassic%20tfoot%20tr%3Afirst%2Dchild%20td%20%7B%0Aborder%2Dtop%3A%200%2E14em%20solid%20%23111111%3B%0A%7D%0A%2Elightable%2Dclassic%20caption%20%7B%0Acolor%3A%20%23222222%3B%0A%7D%0A%2Elightable%2Dclassic%20td%20%7B%0Apadding%2Dleft%3A%205px%3B%0Apadding%2Dright%3A%205px%3B%0Acolor%3A%20%23222222%3B%0A%7D%0A%2Elightable%2Dclassic%20th%20%7B%0Apadding%2Dleft%3A%205px%3B%0Apadding%2Dright%3A%205px%3B%0Afont%2Dweight%3A%20normal%3B%0Acolor%3A%20%23222222%3B%0A%7D%0A%2Elightable%2Dclassic%20thead%20tr%3Alast%2Dchild%20th%20%7B%0Aborder%2Dbottom%3A%200%2E10em%20solid%20%23111111%3B%0A%7D%0A%2Elightable%2Dclassic%2Elightable%2Dhover%20tbody%20tr%3Ahover%20%7B%0Abackground%2Dcolor%3A%20%23F9EEC1%3B%0A%7D%0A%2Elightable%2Dclassic%2Elightable%2Dstriped%20tbody%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%23f5f5f5%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20%7B%0Aborder%2Dtop%3A%203px%20double%20%23111111%3B%0Aborder%2Dbottom%3A%203px%20double%20%23111111%3B%0Awidth%3A%20100%25%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20tfoot%20tr%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20tfoot%20tr%3Afirst%2Dchild%20td%20%7B%0Aborder%2Dtop%3A%203px%20double%20%23111111%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20caption%20%7B%0Acolor%3A%20%23222222%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20td%20%7B%0Apadding%2Dleft%3A%205px%3B%0Apadding%2Dright%3A%205px%3B%0Acolor%3A%20%23222222%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20th%20%7B%0Apadding%2Dleft%3A%205px%3B%0Apadding%2Dright%3A%205px%3B%0Afont%2Dweight%3A%20normal%3B%0Acolor%3A%20%23222222%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20tbody%20tr%3Alast%2Dchild%20td%20%7B%0Aborder%2Dbottom%3A%203px%20double%20%23111111%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%20thead%20tr%3Alast%2Dchild%20th%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23111111%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%2Elightable%2Dhover%20tbody%20tr%3Ahover%20%7B%0Abackground%2Dcolor%3A%20%23F9EEC1%3B%0A%7D%0A%2Elightable%2Dclassic%2D2%2Elightable%2Dstriped%20tbody%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%23f5f5f5%3B%0A%7D%0A%2Elightable%2Dmaterial%20%7B%0Amin%2Dwidth%3A%20100%25%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Atable%2Dlayout%3A%20fixed%3B%0Afont%2Dfamily%3A%20Roboto%2C%20sans%2Dserif%3B%0Aborder%3A%201px%20solid%20%23EEE%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0Amargin%2Dbottom%3A%2010px%3B%0A%7D%0A%2Elightable%2Dmaterial%20tfoot%20tr%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dmaterial%20tfoot%20tr%3Afirst%2Dchild%20td%20%7B%0Aborder%2Dtop%3A%201px%20solid%20%23EEE%3B%0A%7D%0A%2Elightable%2Dmaterial%20th%20%7B%0Aheight%3A%2056px%3B%0Apadding%2Dleft%3A%2016px%3B%0Apadding%2Dright%3A%2016px%3B%0A%7D%0A%2Elightable%2Dmaterial%20td%20%7B%0Aheight%3A%2052px%3B%0Apadding%2Dleft%3A%2016px%3B%0Apadding%2Dright%3A%2016px%3B%0Aborder%2Dtop%3A%201px%20solid%20%23eeeeee%3B%0A%7D%0A%2Elightable%2Dmaterial%2Elightable%2Dhover%20tbody%20tr%3Ahover%20%7B%0Abackground%2Dcolor%3A%20%23f5f5f5%3B%0A%7D%0A%2Elightable%2Dmaterial%2Elightable%2Dstriped%20tbody%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%23f5f5f5%3B%0A%7D%0A%2Elightable%2Dmaterial%2Elightable%2Dstriped%20tbody%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dmaterial%2Elightable%2Dstriped%20thead%20tr%3Alast%2Dchild%20th%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ddd%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%20%7B%0Amin%2Dwidth%3A%20100%25%3B%0Awhite%2Dspace%3A%20nowrap%3B%0Atable%2Dlayout%3A%20fixed%3B%0Afont%2Dfamily%3A%20Roboto%2C%20sans%2Dserif%3B%0Aborder%3A%201px%20solid%20%23FFFFFF12%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0Amargin%2Dbottom%3A%2010px%3B%0Abackground%2Dcolor%3A%20%23363640%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%20tfoot%20tr%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%20tfoot%20tr%3Afirst%2Dchild%20td%20%7B%0Aborder%2Dtop%3A%201px%20solid%20%23FFFFFF12%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%20th%20%7B%0Aheight%3A%2056px%3B%0Apadding%2Dleft%3A%2016px%3B%0Apadding%2Dright%3A%2016px%3B%0Acolor%3A%20%23FFFFFF60%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%20td%20%7B%0Aheight%3A%2052px%3B%0Apadding%2Dleft%3A%2016px%3B%0Apadding%2Dright%3A%2016px%3B%0Acolor%3A%20%23FFFFFF%3B%0Aborder%2Dtop%3A%201px%20solid%20%23FFFFFF12%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%2Elightable%2Dhover%20tbody%20tr%3Ahover%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF12%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%2Elightable%2Dstriped%20tbody%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF12%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%2Elightable%2Dstriped%20tbody%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dmaterial%2Ddark%2Elightable%2Dstriped%20thead%20tr%3Alast%2Dchild%20th%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23FFFFFF12%3B%0A%7D%0A%2Elightable%2Dpaper%20%7B%0Awidth%3A%20100%25%3B%0Amargin%2Dbottom%3A%2010px%3B%0Acolor%3A%20%23444%3B%0A%7D%0A%2Elightable%2Dpaper%20tfoot%20tr%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A%2Elightable%2Dpaper%20tfoot%20tr%3Afirst%2Dchild%20td%20%7B%0Aborder%2Dtop%3A%201px%20solid%20%2300000020%3B%0A%7D%0A%2Elightable%2Dpaper%20thead%20tr%3Alast%2Dchild%20th%20%7B%0Acolor%3A%20%23666%3B%0Avertical%2Dalign%3A%20bottom%3B%0Aborder%2Dbottom%3A%201px%20solid%20%2300000020%3B%0Aline%2Dheight%3A%201%2E15em%3B%0Apadding%3A%2010px%205px%3B%0A%7D%0A%2Elightable%2Dpaper%20td%20%7B%0Avertical%2Dalign%3A%20middle%3B%0Aborder%2Dbottom%3A%201px%20solid%20%2300000010%3B%0Aline%2Dheight%3A%201%2E15em%3B%0Apadding%3A%207px%205px%3B%0A%7D%0A%2Elightable%2Dpaper%2Elightable%2Dhover%20tbody%20tr%3Ahover%20%7B%0Abackground%2Dcolor%3A%20%23F9EEC1%3B%0A%7D%0A%2Elightable%2Dpaper%2Elightable%2Dstriped%20tbody%20tr%3Anth%2Dchild%28even%29%20%7B%0Abackground%2Dcolor%3A%20%2300000008%3B%0A%7D%0A%2Elightable%2Dpaper%2Elightable%2Dstriped%20tbody%20td%20%7B%0Aborder%3A%200%3B%0A%7D%0A" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">survey-results</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ✓ ggplot2 3.3.5     ✓ purrr   0.3.4</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ✓ tibble  3.1.2     ✓ dplyr   1.0.7</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ✓ tidyr   1.1.3     ✓ stringr 1.4.0</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ✓ readr   1.4.0     ✓ forcats 0.5.1</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stargazer)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Please cite as:</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  Hlavac, Marek (2018). stargazer: Well-Formatted Regression and Summary Statistics Tables.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multiwayvcov)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; here() starts at /g4pool/eos/Documents/gits/mmtalent</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: mvtnorm</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: survival</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: TH.data</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: MASS</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;MASS&#39;</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:dplyr&#39;:</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     select</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;TH.data&#39;</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:MASS&#39;:</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     geyser</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(targets)</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: targets</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">require</span>(patchwork)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: patchwork</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Attaching package: &#39;patchwork&#39;</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; The following object is masked from &#39;package:MASS&#39;:</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; </span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;     area</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;R&quot;</span>,<span class="st">&quot;utility.R&quot;</span>))</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;R&quot;</span>,<span class="st">&quot;data_transforms.R&quot;</span>))</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;R&quot;</span>,<span class="st">&quot;survey_functions.R&quot;</span>))</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="fu">tar_load</span>(mmtalent)</span></code></pre></div>
+<div id="graphs-on-attitudes-and-belief" class="section level1">
+<h1>Graphs on attitudes and belief</h1>
+<p>To have the main result on attitudes and belief, we would like to have aggregate patterns before going into the individual level data.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">long_attitudes</span>(mmtalent) <span class="sc">%&gt;%</span> <span class="fu">survey_bars</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAqAAAAGwCAMAAABB3CfxAAAC+lBMVEUAAAABAQECAgIDAwMEBAQFBQUGBgYHBwcICAgJCQkKCgoLCwsMDAwNDQ0ODg4PDw8QEBARERESEhITExMUFBQVFRUWFhYXFxcYGBgZGRkaGhobGxscHBwdHR0eHh4fHx8gICAhISEiIiIjIyMkJCQlJSUmJiYnJycoKCgpKSkqKiorKyssLCwtLS0uLi4vLy8wMDAxMTEyMjIzMzM0NDQ1NTU2NjY3Nzc4ODg5OTk6Ojo7Ozs8PDw9PT0+Pj4/Pz9AQEBBQUFCQkJDQ0NERERFRUVGRkZHR0dISEhJSUlKSkpLS0tMTExNTU1OTk5PT09QUFBRUVFSUlJTU1NUVFRVVVVWVlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1eXl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhpaWlqampra2tsbGxtbW1ubm5vb29wcHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+BgYGCgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKTk5OUlJSVlZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWmpqanp6epqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vMzMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///+R5MdPAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAdQElEQVR4nO2de5gU1Z2G2zBm1U2Mm3UXg4rK6nqNIkKI6AZxQxQVDRkRGi8RI2gEjSZqVEAMERFFQQhRxChBYzCSXRcv2XghCprgGkVRIIAiogYbZ2BgZmC6Z87zbFVX9VDn9HRVV9X5umsO3/sHT0131/er852XnntPShCSYFLVvgBC/KCgJNFQUJJoKChJNBSUJBoKShINBSWJhoKSRENBSaKhoCTRUFCSaCgoSTQUlCQaCkoSTUIFzXWrs/6dPLHw9h0n55yDZbWFm3Yd+bH8HPuBraM1X1/VqOt26GE9Bq9233JW59LekcWCn3ZwrtOC3NuqQbtucA+sm2SsKSWQey39uBh0EkEPb3EPGlba/7a0HwVhlWY9MHeY9iusEnXdciJ77fnuW87qXNo7EiUEdVqQe7NsbL/BPQghqJPYEvi4GCRc0HdrL+tVu0KMOXBgbmafo2s3ib/WiuUXTxhm3WkdufeKP53+jR/vFGLuSSffMUi8at256GohnMdbpVkPHHngWdfOF+L6udVeV2xsQcWf+rlrdlbnHNsdicKyF1xx0XEXfCLEwn4nXttYqMRqQUi9zT7xlKmD7BuGPinExCl2lHNTUYc2C/r1+lnOTXQTrMT8bjg37paCdlvYNmGsEIeJdf/+UcuV9+UF7THf3gm7aOfezNErc9feLJb12dBwTnu57uOdLbT+p//PSNHW86Nqrys2tqBNV0901+yszl1//tnMXfaCg1/JTrhYvH/82uzoOwqVOM93u3pbYhV2Vl7QuWOEOPk968C9qahDi5W9P870f9lNdBOsRHs33Bt3S0GPyIrFl9iCZutF5oeT84L2yj/ELtq597HLrXcvx4kJs6xW28t1H98u6Najsm+cUd1F6cD+GLT7kWvcNTurc9ef189d9oILrPfY3bP3jxPinf7Fgjq93WIV9lRe0I+ObV19qn3g3lTUocXddwrx9mo30U2wBbV2w71xtxT0TCFecQS99aRzznMEPSv/ELto595pPQcOHPgdMeq/rX3aVa7z+HZBxZCld0yv7qJ0YD+Dtj57RJOzZmd17vodQZ1lL7jOOj7qs9t+YZ1xVLGgTm92YW/mBRXffmPmnfaBe1NRhxbXz7f/dRPdBFvQs9pv3J0EFUd+YP1zw73vDioI+sR5W8VsR1CnB7to595544VoelvcZNX0nFXuUCFmXF14/C5BZ04asKqqS9JC/mNQ0fcvzpqd1bnrz+vnLnuBZdi6Q1p/ad3z3rcKlewS1OltnFXYfEfQu6YOXmkfuDcVdWgx5R4hXn3ZTXQTbEGtO90bdytBx45alXvl6Hd2CTrnstbPB9zWoaAf9VzZ8tMfi+f7frL9u4PE20d+3nj61YXHu4J2bxXvnnBKldekA1vQthcO3eSs2Vmdu/68fu6yFxz8Wm78D8WaE9Znr/p5oRK7BW9vS/p+0niuI+jbJ/fP3+PeVNShxZvf3FR3+iI3sSBo91b7TvfG3UrQhpt6HTnoebFL0Por+l0wv+fyjgQVi079+qX11kdJPU+5c5Bou7X30ddeXXi8+3lu+jQhev28ymvSQV23w4/o0Wehu2Z3dc7684K6y17wg7OPvzhjPaH263XN9kIl+Ra8vc3q1W+eI6joPTV/j3tTUYc2877Zc2Kbm1hISJ+Wv9O5cbcSNCJFX8PzcPoblbsOogvTBB1e6p7s673aKnklRA+GCdq0o9Q9T3/jqUpeCNGEYYIS06CgJNFQUJJoKChJNHBBWzK54AfFYetWbH4u0xL8IBCZZmx+42ZsvtjcGDeBggZBQWNAQSloHCgoBY0FBaWggVDQGFBQChoHCkpBY0FBKWggFDQGFJSCxoGCUtBYUFAKGggFjQEFpaBx6OSCvnz5iLtiN0RBY0BB/QStr32nYdxv4g6goDGgoH6Cvne5EE9NiTuAgsaAgvoJ2njRq5tufDruAAoaAwrq+zHok4PPv7LwS2hNGRKaJqe7lmpfR2ek8LTjI+hbl/99568muW9kmyOyPdMY9dTyqK/H5jdmtkc9Net01xp5dqYh8qllsXUzNr9589aoZ+4MFnT+bCE2DvV9/i0DvouPAd/F+wn6l5EbmueMjzuAgsaAgvp+DPr7yy6clIk7gILGgILyO0mBUNAYUFAKGgcKSkFjQUEpaCAUNAYUlILGgYJS0FhQUAoaCAWNAQWloHGgoBQ0FhSUggZCQWNAQSloHCgoBY0FBaWggVDQGFBQChoHCkpBY0FBKWggFDQGFJSCxoGCUtBYdFZBZ09xuXVS4ej/IkZR0CAoaHi+/k8uNfsUjuZEjKKgQVDQGOw7MW4CBQ2CgsaAglLQOEQTNF0+ex5f/mM7HkZBg6CgKhQ0FBQ0OihB+/Vx6XJQ4egsCgqCgqoEC7pPqoiTKCgICqoSLGgkOh5GQYOgoCoUNBQUNDoUlILGgoJS0EAoqAoFDQUFjQ4FpaCxoKAUNBAKqkJBQ0FBo0NBKWgsKCgFDYSCqhgh6BvF341NbYBMoqDRMUjQnQ3h+GCGy5jUzYXDT0NmlMfnn0Ni29ma2RL1VPePUeUiz87URz61LOoyUc4CCSoPaQopaGT+N/U2dgCfQaNj0DNoZChoDChoVEHLH3t6KvhHVQOu0R8KGh0KSkFjQUFhgp79VZd99/hK4XBIxGv0h4JGZzcW9LzDi6mNeI3+UNDo7MaC6rxGfyhodCiolmv0h4JGh4JquUZ/KGh0KKiWa/SHgkaHgmq5Rn8oaHQoqJZr9IeCRoeCarlGfyhodCiolmv0h4JGh4JquUZ/KGh0KKiWa/SHgkaHgmq5Rn8oaHQoqJZr9IeCRoeCarlGfyhodCiolmv0h4JGh4JquUZ/KGh0KKiWa/SHgkaHgmq5Rn8oaHQoqJZr9IeCRoeCarlGfyhodCiolmv0h4KGZsUDLjPvKRw9FuL0im4+BQ3CQEFnFr9uVvcQp1d08yloEAYK2s7EfaOcVdHNp6BBUFCVim4+BQ2i8wlaft/H7xllc0Jva8h8CQoaBAVVNyf0tobMl6CgQRgo6DmnuBzSpXDUP8TmaNho33wJChqEgYKeVPxZ/D4hNkfDRvvmS1DQIAwU9PzBRZwXYnM0bLRvvgQFDcJAQWNuDjpfgoIGQUHVzUHnS1DQICioujnofAk/Qf8+fsT4bdXpIAQUVAW9Oeh8CR9B265clv3lo9XpIAQUVAW9Oeh8CR9B37xJiJa66nQQAgqqgt4cdL6Ej6DPTL7zinsa3DeyTRKga2yKQF1dlLPKpzGzLeqpWae71sizMw1RzkJvDjo/z85gQRec+3rjPXe5bzRtlgBd4+YoZCKdVYl896+lZSs8Gr056Pw8hWdGH0EX3SDE34Z1fB/oGktfTGn4Ll4FvTnofAkfQZdZgq4bUZ0OQkBBVdCbg86X8BG0ZcTKthn3VqeDEFBQFfTmoPMl/L4O+s7Yi6c0dHxXRa/RHwqqgt4cdL4Ev5MUBAVVNwedL0FBg6Cg6uag8yUoaBAUVN0cdL4EBQ2Cgqqbg86XKBJ0du8kdBACCqqC3hx0vkSRoA9/OwkdhICCqqA3B50vwXfxQVBQdXPQ+RJeQetX5ElCByGgoCrozUHnS3gEnd7F+QW/JHQQAgqqgt4cdL6ER8f9R32wxSYJHYSAgqqgNwedL+ERtOuq5HQQAgqqgt4cdL6ER9BrJiSngxBQUBX05qDzJTyCbtz7qDPOtEhCByGgoCrozUHnS3gEPa3bmPE2SeggBBRUBb056HwJj6B7L05OByGgoCrozUHnS3gE7bYkOR2EgIKqoDcHnS/hEXRWj/mLbZLQQQgoqAp6c9D5Eh5Ba1yS0EEIKKgKenPQ+RL8XnwQFFTdHHS+BAUNgoKqm4POl+DPgwZBQdXNQedL8OdBg6Cg6uag8yX4Lj4ICqpuDjpfQvp50LmTxPJcIjoIAQVVQW8OOl/CI+iGY7qmRN9j1yehgxBQUBX05qDzJTyCnn1hrkZs7D8kCR2EgIKqoDcHnS/hEfTLy0SNEM/vl4QOQkBBVdCbg86X8Ah60Mu2oM8cnIQOQkBBVdCbg86X8Ag6ekB9jXjviDFJ6CAEFFQFvTnofAmPoFsG7Jk6YI/vNSahgxBQUBX05qDzJaSvg/754YV/S0YHIaCgKujNQedL8Av1QVBQdXPQ+RL8XnwQFFTdHHS+BL8XHwQFVTcHnS/Bd/FBUFB1c9D5El5Bl64Xvx9yezYJHYSAgqqgNwedL+ER9J7Uog+/eN5+4zp8XLZZAnSNzRGor49yVvk0ZrZHPbXwl+Yiz840RDkLvTno/Dwd/KW5Q+4SM04Uvz20Q0FzOyRA17gjAvX1Uc4qn6ZMY9RT3Z8Ma408O7MtylnozUHn5ym82/L+Xvzr4rzxYsVeJd5xSICusZzRKnwXr4LeHHS+hEfQnjet+Ycl4r5/S0IHIaCgKujNQedLeAR9as89+rVN/sKMJHQQAgqqgt4cdL6E97P4D59vEi+8mIgOQkBBVdCbg86X4NdBg6Cg6uag8yUoaBAUVN0cdL4EBQ2Cgqqbg86XoKBBUFB1c9D5EhQ0CAqqbg46X8IraO64wj9V7yAEFFQFvTnofAlJ0FThn6p3EAIKqoLeHHS+BAUNgoKqm4POl2jXcVvv3ielevceTEEVKKi6Oeh8iXYdc0uWLE4tWfI6BVWgoOrmoPMl+C4+CAqqbg46X4KCBkFB1c1B50t4dWx7rvBP1TsIAQVVQW8OOl+CX6gPgoKqm4POl6CgQVBQdXPQ+RIUNAgKqm4OOl+CggZBQdXNQedL8DXqg6Cg6uag8yX4GvVBUFB1c9D5EnyN+iAoqLo56HwJvkZ9EBRU3Rx0vgRfoz4ICqpuDjpfgq9RHwQFVTcHnS/B16gPgoKqm4POl+Br1AdBQdXNQedLSF8HXZEnCR2EgIKqoDcHnS/hEXR6l1SeJHQQAgqqgt4cdL6ER8f9R32wxSYJHYSAgqqgNwedL+ERtOuq5HQQAgqqgt4cdL6ER9BrJiSngxBQUBX05qDzJTyCbtz7qDPOtEhCByGgoCrozUHnS3gEPa3bmPE2SeggBBRUBb056HwJ72vULy66t3lRlToIAQVVQW8OOl/CI2i3JUX33je6Sh2EgIKqoDcHnS/hEXRWj/mLbXbd8tqPKCgFLdocdL6ER9Aal/Yb6q5ZQUEpaNHmoPMlfL5v1DbxzQ/bBW3KSICuMWMWTU53LRUei94cdH6ewtOO9MINi++f9VJb+5uL5ohdgmabJEDX2BSBurooZ5VPY2Zb1FMLfwox8uxMQ5Sz0JuDzs/TwZ9CzPTu0uPwmj6bC2/fO3z4BecO7/g7n6BrLP10Xhq+i1dBbw46X8Ij6Ii+Hwqx4ZsXe+79kB+DUtCizUHnS3i/F5///P2VAzz3UlAKWrw56HyJYkG7JqGDEFBQFfTmoPMlpHfxG+x38RcmoYMQUFAV9Oag8yW8nyT16XL44TW9M0noIAQUVAW9Oeh8CenLTC/94hcvtnX8uAp3EAIKqoLeHHS+hEfQ7I8vE6LP9WV1UtFr9IeCqqA3B50v4RH05q6PCDHnwOuS0EEIKKgKenPQ+RIeQQ97zP738W5J6CAEFFQFvTnofAnvL829av+77J+T0EEIKKgKenPQ+RIeQS84o16IhsHfS0IHIaCgKujNQedLeAT97IR/7Ntv3yM/TkIHIaCgKujNQedLeL/M1Pr0lElPZhPRQQgoqAp6c9D5Eh5BnV/nrK9NQgchoKAq6M1B50sUBN12992pu22u4idJMhRU3Rx0vkRB0M9OPTV1qs235iahgxAYKGh9ncuaTwtHO4PPage9Oeh8Cc+7+N4J6iAEBgq6d6qIx0Ocjt4cdL6E9wVsXZLQQQgMFPShBxxmp4a7Rw+sDXE6enPQ+RIeQQv/WZPQQQgMFLRAS2pmlNPQm4POl/DouMrinUe7P5CEDkJAQVXQm4POlyh6vny+piEBHYSg0wlafh3DUn2idBe+93AD0PkSRYKu+MIOrSVruEZ/KKjaXfjeww1A50t4BM2/QP2Ss4/WW7KGa/THQEG7HeDQNbWve3TAf4boTsNG+A5A50sUfZL0r8/pKVnjNfpjoKCHdi9iYIjuNGyE7wB0voRH0O15dJWs8Rr9MVDQmN2hB6DzJXxe+qaqJZcPBVW7Qw9A50v4vPRNVUsO5LUFLvPmFY7+HOL08qGg6gB0voT/S99Ur+RAhhd/OzDSE3AgFFQdgM6X8H/pm+qVHMj2wo9RnHZ64ajMj59DQkHVAeh8ic7/0jcDz4hyVvlQUHUAOl8iqS99U/45X+sWJb98KKg6AJ0vkdSXvin/HAqqrg09AJ0vkdSXvgl86NBal64HFI6GhsgvHwqqDkDnS5T1w3VJLPmQ4s/iDwmRXz4UVB2AzpfotIIOPKWI74TILx8Kqg5A50t0WkFj5pcPBVUHoPMlKGgQFFQdgM6X8AravDaPwSWH8agABVUHoPMlPII+sVeCficJnV8+FFQdgM6X8OjYY/jqzTYdPm7HFgnQNaIHbIlCpj7SaRbu7ybkjOguXbkF2DQWC7rXu8Y/C5S/wF3wGVQdgM6X8Ah6zJPGl1z+AsXHPVwOO/DQwmGI/8HmdVd9QRceOPkP8p/jNq7kEBrV/9TlstTwwmFZr0xpanfVF7Toz3GbV3IokVyWp/4Y5bTSYJa2Gwi6G5QcZakUVB2AzpcoEjTTx+CSo+SflQr+ld8OBhjXXfUFfavP/hb7HGNwyRRUxwB0filBv9X/1/s98ughqwwuOUT+kMJLJuyf+mrh8JwQA4zrrvqCfuklUbtI/G6owSVHEdQDBa2qoP/ygrhlqtiQjJcA75z5FFRHfilBBw94/7d96h/8msElU1AdA9D5pQRdc/TdzSd8MXW7wSVTUB0D0PmlBBWiTWx7amk5HXfWkiu4AOO6S4Cg9XMnieW5cjrurCVXcAHGdVd9QTcc0zUl+h673uCSKaiOAej8UoKefWGuRmzsP8TgkimojgHo/FKCfnmZqBHi+f0MLpmC6hiAzi8l6EEv24I+c7DBJVNQHQPQ+aUEHT2gvka8d8QYg0umoDoGoPNLCbplwJ6pA/b4XmPHDzSiZAqqYwA6v5SgQvz54YV/K6fiTltyBRdgXHdVFnTVLgwumYLqGIDO71BQz2twGVwyBdUxAJ3foaAHfuE/pq9cn8fgkimojgHo/A4FbXvt+sO+NPx3ZX2G1HlLpqA6BqDzOxTU5q/jjtqn9vFy/pZsZy2ZguoYgM4vKajFuz87aC+DS67gAozrLhGCrruzT5cBBpdcwQUY1131BV1zx0k1Ax/4rJyOO2vJFFTHAHR+h4Kuvv3EPc+cW9afQezEJVNQHQPQ+R0Kmtrj1KlzHQwumYLqGIDO71BQzy/XGlwyBdUxAJ3foaAhgV9j58ynoDryJSgoaIBx3VHQNAXVMxo9AJ0vQUFBA4zrjoKmKaie0egB6HwJP0FfGztiQomv28OvsXPmU1Ad+RI+gm4atrp51m1GlVzBBZQGPho9AJ0v4SPoS7cL8dEIo0qu4AJKAx+NHoDOl/ARtHmbEIsnuG9kmyRA14geUMEF2GSd7lqN6C5duQXY7AwW1OLl7690j5o2S4CuET2ggguwaXL/cxvRXbpyC7Ap/Fiyn6ANk35U6vc/QNeIHlDBBZQGPho9AJ0v4SNoy7UPtRlWcgUXUBr4aPQAdL6Ej6B/utm4kiu4AOO6S56gDw22uNCokiu4gNLAR6MHoPMl+J0k0ADjuqOgaQqqZzR6ADpfgoKCBhjXHQVNU1A9o9ED0PkSFBQ0wLjuKGiaguoZjR6AzpegoKABxnVHQdMUVM9o9AB0vgQFBQ0wrjsKmqagekajB6DzJSgoaIBx3VHQNAXVMxo9AJ0vQUFBA4zrjoKmKaie0egB6HwJCgoaYFx3FDRNQfWMRg9A50tQUNAA47qjoGkKqmc0egA6X4KCggYY1x0FTVNQPaPRA9D5EhQUNMC47ihomoLqGY0egM6XoKCgAcZ1R0HTFFTPaPQAdL4EBQUNMK47CpqmoHpGoweg8yUoKGiAcd1R0DQF1TMaPQCdL0FBQQOM646CpimontHoAeh8CQoKGmBcdxQ0TUH1jEYPQOdLUFDQAOO6o6BpCqpnNHoAOl+CgoIGGNcdBU1TUD2j0QPQ+RLlCprbIQG6RvSACi7AJud012pEd+nKLcCmhYJiB1DQyPmRBFUAXSN6QAUXYFx3CX8Xb0bJFVyAcd1R0DQF1TMaPQCdL0FBQQOM646CpimontHoAeh8CQoKGmBcdxQ0TUH1jEYPQOdLUFDQAOO6o6BpCqpnNHoAOl+CgoIGGNcdBU1TUD2j0QPQ+RIUFDTAuO4oaJqC6hmNHoDOl6CgoAHGdUdB0xRUz2j0AHS+BAUFDTCuOwqapqB6RqMHoPMlKChogHHdUdA0BdUzGj0AnS9BQUEDjOuOgqYpqJ7R6AHofAkKChpgXHcUNE1B9YxGD0DnS1BQ0ADjuqOgaQqqZzR6ADpfgoKCBhjXHQVNU1A9o9ED0PkSFBQ0wLjuKGiaguoZjR6AzpegoKABxnVHQdMUVM9o9AB0vgQFBQ0wrjsKmqagekajB6DzJSgoaIBx3VHQNAXVMxo9AJ0vQUFBA4zrLoGCrhh7yYOtRpVcwQWUBj4aPQCdL+EjaG7k8uYbXzKq5AouoDTw0egB6HwJH0HfuEGIVyYaVXIFF1Aa+Gj0AHS+hI+gz94nxPqrjCq5ggsoDXw0egA6X8JH0AUPCrHpIveNps0SoGtED6jgAmyanO6yRnSXrtwCbBqCBX1mpvUMeqX7RrYpItsyjVFPLY+6Omx+Y2Zb1FOzTnetkWdnGiKfWhZbMtj8psyWqGfuDBb0jZuEeLXEx6Dl05LJxY3wZ+tWbH4u0xL8IBCZZmx+42ZsvtjcGDfB77P4769rvfWFuAMoaAwoqO/XQVdec8VDbXEHUNAYUNCo30kqHwoaAwpKQQOhoDGgoBQ0DhSUgsaCglLQQChoDCgoBY0DBaWgsaCgFDQQChoDCkpB40BBKWgsKCgFDYSCxoCCUtA4UFD7hyFL/N6dLnbswObDF+BD4SdKUWSbsPkaFgAXlJA4UFCSaCgoSTQUlCQaCkoSDQUliQYjaOPgoi/NLJ2mKXtcbe3gIbUjnDfWXK/c2zZFx4yhQ2pra4cJ8eionX8ctUF7vC/I7ipRnubuOp+gFsM/LRwVddxaq2PAUHfAsB3iJ2s9t2f1xPsC7g5enubukIK+M97p9oXRl/6q1TpYOfITPfF2x09clr6lLt/xm2N/MKNFvH/L7Zfesk78/NyfaBjgljz93Gseqb1yg1g8+vvTm8Wa2+aM1xPvC7g7eHmau6uAoOtHZrZc9dbSaR+PXKUp3up44wWbslOfsDvekl7fOv2X4v3Bi9vmTNP8DDq0VVz3ofj4oo25KfPEmtpnWyv2DArrDl6e5u4qIOhvHhVi7Yalt456WFe81XGuQWyZOs/u+A+TrXdWF4r3h+bEX3+mS1D746gbCiX//n4h1l0l1lyq6yMIX8DdwcvT3B1a0CXTxMzn7JuWnjvnIl0/+mB3PGfk9TfmO/7NJT+yEO9fJ8Rb2gSVngUeelKIhuFizU8qLCikO3h5mruDCjpOiN9OE79+3Dp8a+lkcdtjmuKtjl+8cbt4Mt/xMw8IsWMtUtCF1oQPfpj/kK1ygqK6g5enuTukoGuHbW0eO02svryuYewS6/3VhmF1euKtjv/r9ratYx6yF77pkvXZ2TPaO/5u7BfrEWrJH138ae6uh52StcT7Au4OXp7m7lCCDrVYMWdkerr1megzl1/yYJv9KemsWXrirY4b7hw9/rlL1tgLX3rlRZMaCh2LW0u85G4ohp5vX/96t2Tx4uhL7212viqjJd4XcHfw8jR3x+8kkURDQUmioaAk0VBQkmgoKEk0FJQkGgpKEg0FJYmGgpJEQ0FJoqGgJNFQUJJoKChJNBSUJBoKShINBSWJhoKSRENBSaL5f1vT1iRC5Nf6AAAAAElFTkSuQmCC" /><!-- --></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;graphs&quot;</span>,<span class="st">&quot;attitudes_beliefs.pdf&quot;</span>), <span class="at">width =</span> <span class="dv">16</span>, <span class="at">height =</span><span class="dv">10</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
+<p>And the corresponding histograms:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">long_attitudes</span>(mmtalent) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(outcometype, fo) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="fu">weighted.bars</span>(value, wgt)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>v, <span class="at">y=</span>proportion)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Response (on 0-10 scale)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>,<span class="dv">7</span>,<span class="dv">8</span>,<span class="dv">9</span>,<span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(outcometype <span class="sc">~</span> fo)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;graphs&quot;</span>,<span class="st">&quot;attitude_histograms.pdf&quot;</span>), <span class="at">width =</span> <span class="dv">16</span>, <span class="at">height =</span> <span class="dv">10</span>, <span class="at">units =</span> <span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
+</div>
+<div id="subgroups" class="section level1">
+<h1>Subgroups</h1>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">long_attitudes</span>(mmtalent) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">survey_bars_by_subgroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  patchwork<span class="sc">::</span><span class="fu">wrap_plots</span>() <span class="sc">+</span> <span class="fu">plot_layout</span>(<span class="at">ncol=</span><span class="dv">2</span>) <span class="sc">+</span> <span class="fu">plot_annotation</span>(<span class="at">tag_levels =</span> <span class="st">&quot;a&quot;</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Registered S3 method overwritten by &#39;spatstat.geom&#39;:</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   method     from</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   print.boxx cli</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;graphs&quot;</span>,<span class="st">&quot;attitudes_beliefs_by_subgroups.pdf&quot;</span>), <span class="at">width =</span> <span class="dv">30</span>, <span class="at">height =</span> <span class="dv">50</span>, <span class="at">units=</span><span class="st">&quot;cm&quot;</span>)</span></code></pre></div>
+<p>Now, interacting with political position:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">long_attitudes</span>(mmtalent) <span class="sc">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">left_description =</span> <span class="fu">c</span>(<span class="st">&quot;Right&quot;</span>, <span class="st">&quot;Left&quot;</span>)[left<span class="sc">+</span><span class="dv">1</span>]) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(outcometype, left_description, fo, outcome) <span class="sc">%&gt;%</span> <span class="fu">summarize</span>(<span class="at">m =</span> <span class="fu">weighted.mean</span>(value, wgt), <span class="at">se =</span> <span class="fu">weighted.sd</span>(value,wgt)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>()))  <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>fo, <span class="at">y=</span>m)) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">&quot;identity&quot;</span>) <span class="sc">+</span> <span class="fu">facet_grid</span>(left_description <span class="sc">~</span> outcometype) <span class="sc">+</span> </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>m<span class="sc">-</span>se, <span class="at">ymax=</span>m<span class="sc">+</span>se), <span class="at">width=</span><span class="fl">0.2</span>) <span class="sc">+</span> </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x=</span><span class="fu">element_blank</span>(), <span class="at">y=</span><span class="st">&quot;Mean outcome \u00B1 s.e.m.&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; `summarise()` has grouped output by &#39;outcometype&#39;, &#39;left_description&#39;, &#39;fo&#39;. You can override using the `.groups` argument.</span></span></code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsave</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">&quot;graphs&quot;</span>,<span class="st">&quot;attitudes_beliefs_pol.pdf&quot;</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Saving 7 x 4.5 in image</span></span></code></pre></div>
+</div>
+<div id="regression-table" class="section level1">
+<h1>Regression table</h1>
+<p>We want to put attitudes on the left hand side and try to explain it by the type of attitude and the perception of control in the situation.</p>
+<p>Now, we need to turn the data around a bit first:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>subjectives_dt <span class="ot">&lt;-</span> <span class="fu">long_attitudes</span>(mmtalent) <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subjectives</span>()</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>subjectives_dt <span class="sc">%&gt;%</span> <span class="fu">sample_n</span>(<span class="dv">3</span>) </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 16</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      id fo     treatment gender   age left  high_income income_category high_edu</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;       &lt;chr&gt;           &lt;lgl&gt;   </span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   442 Talent ExPostIm… female    43 TRUE  FALSE       Less than 29 9… FALSE   </span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   634 Talent ExPostIm… female    55 TRUE  FALSE       30k- 59 999     TRUE    </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   338 Talent ExPostPe… female    37 FALSE TRUE        150k +          FALSE   </span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 7 more variables: edu_category &lt;chr&gt;, wgt &lt;dbl&gt;,</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   Unfair inequality &lt;dbl&gt;, Belief about individual control &lt;dbl&gt;, Luck &lt;dbl&gt;,</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   Effort &lt;dbl&gt;, Talent &lt;dbl&gt;</span></span></code></pre></div>
+<p>Now, it should be possible to run the regression <span class="math display">\[ A_{i,t} = \beta_0 + \beta_1 B_{i,t} + \beta_2 X_i +  \phi_t + \epsilon_{i,t}, \]</span> where <span class="math inline">\(i\)</span> index the individual, and <span class="math inline">\(t\in\{ \mathrm{effort}, \mathrm{talent}, \mathrm{luck}\}\)</span>, <span class="math inline">\(A_{i,t}\in[0,10]\)</span> is the fairness attitude, <span class="math inline">\(B_{i,t}\in[0,10]\)</span> is the control belief, <span class="math inline">\(X_i\)</span> is a set of individual controls, and <span class="math inline">\(\phi_t\)</span> is a set of fixed effect for each factor.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>survey_regressions_list <span class="ot">&lt;-</span> <span class="fu">survey_regressions</span>(subjectives_dt)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>subjectives_dt <span class="sc">%&gt;%</span> janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span> haven<span class="sc">::</span><span class="fu">write_dta</span>(<span class="st">&quot;subjectives.dta&quot;</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>survey_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Talent&#39;</span><span class="ot">=</span><span class="st">&#39;Talent (d)&#39;</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;Effort&#39;</span><span class="ot">=</span><span class="st">&#39;Effort (d)&#39;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>                   <span class="st">&#39;`Belief about individual control`&#39;</span><span class="ot">=</span><span class="st">&#39;Belief about control (0-10)&#39;</span>,</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;Talent:`Belief about individual control`&#39;</span> <span class="ot">=</span> <span class="st">&#39;Talent x Belief about control&#39;</span>,</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;Effort:`Belief about individual control`&#39;</span> <span class="ot">=</span> <span class="st">&#39;Effort x Belief about control&#39;</span>,</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;age&#39;</span> <span class="ot">=</span> <span class="st">&#39;Age (years)&#39;</span>,</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;leftTRUE&#39;</span> <span class="ot">=</span> <span class="st">&#39;Left (d)&#39;</span>,</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;high_incomeTRUE&#39;</span> <span class="ot">=</span> <span class="st">&#39;High income (d)&#39;</span>,</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;high_eduTRUE&#39;</span> <span class="ot">=</span> <span class="st">&#39;High education (d)&#39;</span>,</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;as.factor(gender)male&#39;</span> <span class="ot">=</span> <span class="st">&#39;Male (d)&#39;</span>,</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;treatmentExAntePersonal&#39;</span> <span class="ot">=</span> <span class="st">&quot;Treatment: Ex Ante Personal (d)&quot;</span>,</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;treatmentExPostImpersonal&#39;</span>   <span class="ot">=</span> <span class="st">&quot;Treatment: Ex Post Impersonal (d)&quot;</span>,</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;treatmentExPostPersonal&#39;</span> <span class="ot">=</span> <span class="st">&quot;Treatment: Ex Post Personal (d)&quot;</span>,</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                  <span class="st">&#39;(Intercept)&#39;</span><span class="ot">=</span><span class="st">&#39;(Intercept)&#39;</span>)</span></code></pre></div>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="3" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="4" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="5" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Talent (d)
+</td>
+<td style="text-align:center;">
+-3.728***
+</td>
+<td style="text-align:center;">
+-3.375***
+</td>
+<td style="text-align:center;">
+-3.370***
+</td>
+<td style="text-align:center;">
+-3.478***
+</td>
+<td style="text-align:center;">
+-3.394***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.106)
+</td>
+<td style="text-align:center;">
+(0.113)
+</td>
+<td style="text-align:center;">
+(0.222)
+</td>
+<td style="text-align:center;">
+(0.224)
+</td>
+<td style="text-align:center;">
+(0.113)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Effort (d)
+</td>
+<td style="text-align:center;">
+-4.074***
+</td>
+<td style="text-align:center;">
+-3.582***
+</td>
+<td style="text-align:center;">
+-3.270***
+</td>
+<td style="text-align:center;">
+-3.459***
+</td>
+<td style="text-align:center;">
+-3.608***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.105)
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+<td style="text-align:center;">
+(0.238)
+</td>
+<td style="text-align:center;">
+(0.243)
+</td>
+<td style="text-align:center;">
+(0.121)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Belief about control (0-10)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.125***
+</td>
+<td style="text-align:center;">
+-0.104***
+</td>
+<td style="text-align:center;">
+-0.115***
+</td>
+<td style="text-align:center;">
+-0.119***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.027)
+</td>
+<td style="text-align:center;">
+(0.028)
+</td>
+<td style="text-align:center;">
+(0.016)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Talent x Belief about control
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.011
+</td>
+<td style="text-align:center;">
+0.012
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.039)
+</td>
+<td style="text-align:center;">
+(0.039)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Effort x Belief about control
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.054
+</td>
+<td style="text-align:center;">
+-0.022
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.037)
+</td>
+<td style="text-align:center;">
+(0.039)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age (years)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.014***
+</td>
+<td style="text-align:center;">
+-0.014***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.003)
+</td>
+<td style="text-align:center;">
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Left (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.125
+</td>
+<td style="text-align:center;">
+0.122
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.097)
+</td>
+<td style="text-align:center;">
+(0.097)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+High income (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.148
+</td>
+<td style="text-align:center;">
+-0.148
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.092)
+</td>
+<td style="text-align:center;">
+(0.092)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+High education (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.179*
+</td>
+<td style="text-align:center;">
+-0.180*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.093)
+</td>
+<td style="text-align:center;">
+(0.093)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.166*
+</td>
+<td style="text-align:center;">
+0.169**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.085)
+</td>
+<td style="text-align:center;">
+(0.085)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+6.944***
+</td>
+<td style="text-align:center;">
+7.379***
+</td>
+<td style="text-align:center;">
+7.304***
+</td>
+<td style="text-align:center;">
+8.001***
+</td>
+<td style="text-align:center;">
+8.021***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.074)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.091)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.120)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.176)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.142)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.276
+</td>
+<td style="text-align:center;">
+0.287
+</td>
+<td style="text-align:center;">
+0.288
+</td>
+<td style="text-align:center;">
+0.294
+</td>
+<td style="text-align:center;">
+0.294
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol>
+</div>
+<div id="are-there-treatment-effects-on-attitudes" class="section level1">
+<h1>Are there treatment effects on attitudes?</h1>
+<p>The survey came after the experiment. Are there any treatment effect on the survey outcomes?</p>
+<p>The simplest is to repeat the main regression table with dummies for treatment. We test for joint significance of the treatment dummies.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>surv_joint_tests <span class="ot">&lt;-</span> <span class="fu">c</span>(car<span class="sc">::</span><span class="fu">linearHypothesis</span>(survey_regressions_list<span class="sc">$</span>with_treatment[[<span class="dv">1</span>]], </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chisq)</span><span class="st">`</span>[<span class="dv">2</span>],</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                      car<span class="sc">::</span><span class="fu">linearHypothesis</span>(survey_regressions_list<span class="sc">$</span>with_treatment[[<span class="dv">2</span>]], </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chisq)</span><span class="st">`</span>[<span class="dv">2</span>],</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                      car<span class="sc">::</span><span class="fu">linearHypothesis</span>(survey_regressions_list<span class="sc">$</span>with_treatment[[<span class="dv">3</span>]], </span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chisq)</span><span class="st">`</span>[<span class="dv">2</span>],</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>                      car<span class="sc">::</span><span class="fu">linearHypothesis</span>(survey_regressions_list<span class="sc">$</span>with_treatment[[<span class="dv">4</span>]], </span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chisq)</span><span class="st">`</span>[<span class="dv">2</span>],</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>                      car<span class="sc">::</span><span class="fu">linearHypothesis</span>(survey_regressions_list<span class="sc">$</span>with_treatment[[<span class="dv">5</span>]], </span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>                              <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;Chisq)</span><span class="st">`</span>[<span class="dv">2</span>])</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>surv_joint_tests_wrow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>v, <span class="sc">~</span>p1, <span class="sc">~</span>p2, <span class="sc">~</span>p3, <span class="sc">~</span>p4, <span class="sc">~</span>p5,</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Joint p-value on treatment dummies:&quot;</span>,</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, surv_joint_tests[<span class="dv">1</span>]),</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, surv_joint_tests[<span class="dv">2</span>]),</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, surv_joint_tests[<span class="dv">3</span>]),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, surv_joint_tests[<span class="dv">4</span>]),</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, surv_joint_tests[<span class="dv">5</span>]))</span></code></pre></div>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+<ol style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="2" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="3" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="4" style="list-style-type: decimal">
+<li></th>
+<th style="text-align:center;">
+<ol start="5" style="list-style-type: decimal">
+<li></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Talent (d)
+</td>
+<td style="text-align:center;">
+-3.728***
+</td>
+<td style="text-align:center;">
+-3.379***
+</td>
+<td style="text-align:center;">
+-3.389***
+</td>
+<td style="text-align:center;">
+-3.500***
+</td>
+<td style="text-align:center;">
+-3.397***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.105)
+</td>
+<td style="text-align:center;">
+(0.112)
+</td>
+<td style="text-align:center;">
+(0.222)
+</td>
+<td style="text-align:center;">
+(0.224)
+</td>
+<td style="text-align:center;">
+(0.113)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Effort (d)
+</td>
+<td style="text-align:center;">
+-4.074***
+</td>
+<td style="text-align:center;">
+-3.587***
+</td>
+<td style="text-align:center;">
+-3.273***
+</td>
+<td style="text-align:center;">
+-3.464***
+</td>
+<td style="text-align:center;">
+-3.613***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.105)
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+<td style="text-align:center;">
+(0.238)
+</td>
+<td style="text-align:center;">
+(0.243)
+</td>
+<td style="text-align:center;">
+(0.121)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Belief about control (0-10)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.124***
+</td>
+<td style="text-align:center;">
+-0.104***
+</td>
+<td style="text-align:center;">
+-0.115***
+</td>
+<td style="text-align:center;">
+-0.118***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.015)
+</td>
+<td style="text-align:center;">
+(0.027)
+</td>
+<td style="text-align:center;">
+(0.028)
+</td>
+<td style="text-align:center;">
+(0.016)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Talent x Belief about control
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.007
+</td>
+<td style="text-align:center;">
+0.015
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.039)
+</td>
+<td style="text-align:center;">
+(0.039)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Effort x Belief about control
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.053
+</td>
+<td style="text-align:center;">
+-0.021
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.037)
+</td>
+<td style="text-align:center;">
+(0.038)
+</td>
+<td style="text-align:center;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Age (years)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.014***
+</td>
+<td style="text-align:center;">
+-0.014***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.003)
+</td>
+<td style="text-align:center;">
+(0.003)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Left (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.121
+</td>
+<td style="text-align:center;">
+0.119
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.097)
+</td>
+<td style="text-align:center;">
+(0.097)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+High income (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.151*
+</td>
+<td style="text-align:center;">
+-0.151
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.092)
+</td>
+<td style="text-align:center;">
+(0.092)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+High education (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+-0.162*
+</td>
+<td style="text-align:center;">
+-0.164*
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.093)
+</td>
+<td style="text-align:center;">
+(0.093)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male (d)
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+0.170**
+</td>
+<td style="text-align:center;">
+0.173**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+</td>
+<td style="text-align:center;">
+(0.085)
+</td>
+<td style="text-align:center;">
+(0.085)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Treatment: Ex Ante Personal (d)
+</td>
+<td style="text-align:center;">
+-0.140
+</td>
+<td style="text-align:center;">
+-0.125
+</td>
+<td style="text-align:center;">
+-0.128
+</td>
+<td style="text-align:center;">
+-0.148
+</td>
+<td style="text-align:center;">
+-0.145
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+<td style="text-align:center;">
+(0.119)
+</td>
+<td style="text-align:center;">
+(0.119)
+</td>
+<td style="text-align:center;">
+(0.118)
+</td>
+<td style="text-align:center;">
+(0.118)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Treatment: Ex Post Impersonal (d)
+</td>
+<td style="text-align:center;">
+-0.066
+</td>
+<td style="text-align:center;">
+-0.064
+</td>
+<td style="text-align:center;">
+-0.064
+</td>
+<td style="text-align:center;">
+-0.051
+</td>
+<td style="text-align:center;">
+-0.050
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.119)
+</td>
+<td style="text-align:center;">
+(0.117)
+</td>
+<td style="text-align:center;">
+(0.117)
+</td>
+<td style="text-align:center;">
+(0.117)
+</td>
+<td style="text-align:center;">
+(0.117)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Treatment: Ex Post Personal (d)
+</td>
+<td style="text-align:center;">
+0.278**
+</td>
+<td style="text-align:center;">
+0.266**
+</td>
+<td style="text-align:center;">
+0.265**
+</td>
+<td style="text-align:center;">
+0.267**
+</td>
+<td style="text-align:center;">
+0.267**
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.121)
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+<td style="text-align:center;">
+(0.120)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+6.923***
+</td>
+<td style="text-align:center;">
+7.353***
+</td>
+<td style="text-align:center;">
+7.283***
+</td>
+<td style="text-align:center;">
+7.990***
+</td>
+<td style="text-align:center;">
+8.003***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.103)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.115)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.140)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.189)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.157)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+<td style="text-align:center;">
+6003
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.278
+</td>
+<td style="text-align:center;">
+0.289
+</td>
+<td style="text-align:center;">
+0.290
+</td>
+<td style="text-align:center;">
+0.296
+</td>
+<td style="text-align:center;">
+0.296
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joint p-value on treatment dummies:
+</td>
+<td style="text-align:center;">
+0.004
+</td>
+<td style="text-align:center;">
+0.008
+</td>
+<td style="text-align:center;">
+0.007
+</td>
+<td style="text-align:center;">
+0.005
+</td>
+<td style="text-align:center;">
+0.006
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol></li>
+</ol>
+<p>We test for joint significance of the treatment effects for each of the 6 outcomes.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>A1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(luck_fair <span class="sc">~</span> treatment, <span class="at">data =</span> mmtalent)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>A1w <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">linearHypothesis</span>(A1, <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>A2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(talent_fair <span class="sc">~</span> treatment, <span class="at">data =</span> mmtalent)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>A2w <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">linearHypothesis</span>(A2, <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>A3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(effort_fair <span class="sc">~</span> treatment, <span class="at">data =</span> mmtalent)</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>A3w <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">linearHypothesis</span>(A3, <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>B1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(luck_control <span class="sc">~</span> treatment, <span class="at">data =</span> mmtalent)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>B1w <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">linearHypothesis</span>(B1, <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>B2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(talent_control <span class="sc">~</span> treatment, <span class="at">data =</span> mmtalent)</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>B2w <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">linearHypothesis</span>(B2, <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>B3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(effort_control <span class="sc">~</span> treatment, <span class="at">data =</span> mmtalent)</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>B3w <span class="ot">&lt;-</span> car<span class="sc">::</span><span class="fu">linearHypothesis</span>(B3, <span class="fu">c</span>(<span class="st">&quot;treatmentExAntePersonal = 0&quot;</span>,</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostPersonal = 0&quot;</span>,</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;treatmentExPostImpersonal = 0&quot;</span>))</span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>wrow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tribble</span>(<span class="sc">~</span>v, <span class="sc">~</span>p1, <span class="sc">~</span>p2, <span class="sc">~</span>p3, <span class="sc">~</span>p4, <span class="sc">~</span>p5, <span class="sc">~</span>p6,</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>                        <span class="st">&quot;Joint p-value on treatment dummies:&quot;</span>, </span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, A1w<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">2</span>]),</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, A2w<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">2</span>]),</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, A3w<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">2</span>]),</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, B1w<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">2</span>]),</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, B2w<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">2</span>]),</span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a>          <span class="fu">sprintf</span>(<span class="st">&quot;%4.3f&quot;</span>, B3w<span class="sc">$</span><span class="st">`</span><span class="at">Pr(&gt;F)</span><span class="st">`</span>[<span class="dv">2</span>]))</span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a>modelsummary<span class="sc">::</span><span class="fu">modelsummary</span>(<span class="fu">list</span>(<span class="st">&quot;A.luck&quot;</span><span class="ot">=</span>A1, <span class="st">&quot;A.talent&quot;</span><span class="ot">=</span>A2, <span class="st">&quot;A.effort&quot;</span><span class="ot">=</span>A3, <span class="st">&quot;B.luck&quot;</span><span class="ot">=</span>B1, <span class="st">&quot;B.talent&quot;</span><span class="ot">=</span>B2, <span class="st">&quot;B.effort&quot;</span><span class="ot">=</span>B3),</span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a>                           <span class="at">stars =</span> <span class="fu">c</span>(<span class="st">&#39;*&#39;</span><span class="ot">=</span><span class="fl">0.1</span>, <span class="st">&#39;**&#39;</span><span class="ot">=</span><span class="fl">0.05</span>, <span class="st">&#39;***&#39;</span><span class="ot">=</span><span class="fl">0.01</span>),</span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>                           <span class="at">gof_omit =</span> <span class="st">&quot;R2 Adj.|AIC|BIC|Log.Lik.|F&quot;</span>,</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>                           <span class="at">add_rows =</span> wrow) <span class="sc">%&gt;%</span> kableExtra<span class="sc">::</span><span class="fu">add_header_above</span>(<span class="fu">c</span>(<span class="st">&quot; &quot;</span><span class="ot">=</span><span class="dv">1</span>, <span class="st">&quot;Unfair inequality&quot;</span><span class="ot">=</span><span class="dv">3</span>, <span class="st">&quot;Belief about individual control&quot;</span><span class="ot">=</span><span class="dv">3</span>))</span></code></pre></div>
+<table style="NAborder-bottom: 0; width: auto !important; margin-left: auto; margin-right: auto;" class="table">
+<thead>
+<tr>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Unfair inequality
+</div>
+</th>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="3">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+Belief about individual control
+</div>
+</th>
+</tr>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:center;">
+A.luck
+</th>
+<th style="text-align:center;">
+A.talent
+</th>
+<th style="text-align:center;">
+A.effort
+</th>
+<th style="text-align:center;">
+B.luck
+</th>
+<th style="text-align:center;">
+B.talent
+</th>
+<th style="text-align:center;">
+B.effort
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:center;">
+6.710***
+</td>
+<td style="text-align:center;">
+3.219***
+</td>
+<td style="text-align:center;">
+2.905***
+</td>
+<td style="text-align:center;">
+3.423***
+</td>
+<td style="text-align:center;">
+6.095***
+</td>
+<td style="text-align:center;">
+7.304***
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.137)
+</td>
+<td style="text-align:center;">
+(0.136)
+</td>
+<td style="text-align:center;">
+(0.134)
+</td>
+<td style="text-align:center;">
+(0.135)
+</td>
+<td style="text-align:center;">
+(0.133)
+</td>
+<td style="text-align:center;">
+(0.138)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatmentExAntePersonal
+</td>
+<td style="text-align:center;">
+0.132
+</td>
+<td style="text-align:center;">
+-0.076
+</td>
+<td style="text-align:center;">
+-0.121
+</td>
+<td style="text-align:center;">
+0.120
+</td>
+<td style="text-align:center;">
+0.259
+</td>
+<td style="text-align:center;">
+-0.110
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.193)
+</td>
+<td style="text-align:center;">
+(0.192)
+</td>
+<td style="text-align:center;">
+(0.189)
+</td>
+<td style="text-align:center;">
+(0.190)
+</td>
+<td style="text-align:center;">
+(0.188)
+</td>
+<td style="text-align:center;">
+(0.195)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatmentExPostImpersonal
+</td>
+<td style="text-align:center;">
+0.127
+</td>
+<td style="text-align:center;">
+-0.107
+</td>
+<td style="text-align:center;">
+-0.177
+</td>
+<td style="text-align:center;">
+-0.141
+</td>
+<td style="text-align:center;">
+0.175
+</td>
+<td style="text-align:center;">
+0.020
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:center;">
+(0.193)
+</td>
+<td style="text-align:center;">
+(0.192)
+</td>
+<td style="text-align:center;">
+(0.189)
+</td>
+<td style="text-align:center;">
+(0.190)
+</td>
+<td style="text-align:center;">
+(0.188)
+</td>
+<td style="text-align:center;">
+(0.195)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+treatmentExPostPersonal
+</td>
+<td style="text-align:center;">
+0.193
+</td>
+<td style="text-align:center;">
+0.291
+</td>
+<td style="text-align:center;">
+0.203
+</td>
+<td style="text-align:center;">
+0.077
+</td>
+<td style="text-align:center;">
+-0.083
+</td>
+<td style="text-align:center;">
+-0.106
+</td>
+</tr>
+<tr>
+<td style="text-align:left;box-shadow: 0px 1px">
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.193)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.192)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.188)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.189)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.187)
+</td>
+<td style="text-align:center;box-shadow: 0px 1px">
+(0.194)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Num.Obs.
+</td>
+<td style="text-align:center;">
+2001
+</td>
+<td style="text-align:center;">
+2001
+</td>
+<td style="text-align:center;">
+2001
+</td>
+<td style="text-align:center;">
+2001
+</td>
+<td style="text-align:center;">
+2001
+</td>
+<td style="text-align:center;">
+2001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+R2
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.003
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+0.001
+</td>
+<td style="text-align:center;">
+0.002
+</td>
+<td style="text-align:center;">
+0.000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Joint p-value on treatment dummies:
+</td>
+<td style="text-align:center;">
+0.787
+</td>
+<td style="text-align:center;">
+0.145
+</td>
+<td style="text-align:center;">
+0.187
+</td>
+<td style="text-align:center;">
+0.534
+</td>
+<td style="text-align:center;">
+0.242
+</td>
+<td style="text-align:center;">
+0.861
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup> * p &lt; 0.1, ** p &lt; 0.05, *** p &lt; 0.01
+</td>
+</tr>
+</tfoot>
+</table>
+<p>We see that 3 out of 18 treatment effects are significant at the 10% level, which is not surprising even under the null of no true effect.</p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
