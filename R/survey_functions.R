@@ -22,7 +22,7 @@ long_attitudes <- function(mmtalent) {
 }
 
 survey_bars <- function(mmtalent_long, gtitle = NULL, numobs = TRUE, ylimits = c(0,10)) {
-  mmtalent_long %>%
+  g <- mmtalent_long %>%
   group_by(outcometype, fo, outcome) %>%
     summarize(m = weighted.mean(value, wgt),
               se = weighted.se(value, wgt)) %>%
@@ -31,11 +31,14 @@ survey_bars <- function(mmtalent_long, gtitle = NULL, numobs = TRUE, ylimits = c
     geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) +
     labs(x = element_blank(),
          y = "Mean outcome \u00B1 s.e.m.",
-         title = gtitle,
-         caption = ifelse(numobs, sprintf("n=%4g", nrow(mmtalent_long)/6), element_blank())) +
+         title = gtitle) +
     theme_minimal() +
     coord_cartesian(ylim = ylimits) +
     theme(plot.title.position = "plot")
+  if (numobs) {
+    g <- g + labs(caption = sprintf("n=%d", nrow(mmtalent_long)/6))
+  }
+  g
 }
 
 survey_bars_by_subgroup <- function(mmtalent_long) {
