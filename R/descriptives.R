@@ -3,16 +3,15 @@
 # Will determine later if I can make standard errors for these
 
 
-descriptive_table_rows <- function(df) {
+descriptive_table_rows <- function(df, fname_inc, fname_edu) {
   gender_rows <- summarize_gender(df)
   age_rows <- summarize_age(df)
   region_rows <- summarize_region(df)
-  education_rows <- summarize_education(df)
-  income_rows <- summarize_income(df)
+  education_rows <- summarize_education(df, fname_edu)
+  income_rows <- summarize_income(df, fname_inc)
   political_rows <- summarize_political(df)
   all_rows <- bind_rows(gender_rows, age_rows, region_rows,
                         education_rows, income_rows, political_rows)
-  all_rows
 }
 
 summarize_age <- function(df) {
@@ -38,7 +37,7 @@ summarize_region <- function(df) {
   header %>% bind_rows(Northeast, Midwest, South, West)
 }
 
-summarize_education <- function(df) {
+summarize_education <- function(df, fname) {
   header <- tibble(name_col = "Education category:", mean_raw=NA, SD_raw=NA, mean_w=NA, SD_w=NA)
   dft <- df %>% mutate(
     no_high_school = edu_category=="No High School",
@@ -57,7 +56,9 @@ summarize_education <- function(df) {
     mutate(name_col = "Bachelor (4 years)")
   gd <- dft %>% summarize(mean_raw = mean(graduate), mean_w = weighted.mean(graduate, wgt)) %>%
     mutate(name_col = "Graduate degree")
-  header %>% bind_rows(no_hs, hs, sc, b4, gd)
+  expdata <- header %>% bind_rows(no_hs, hs, sc, b4, gd)
+  censusdata <- read_educationdistribution2017(fname)
+  expdata %>% left_join(censusdata)
 
 }
 
@@ -74,13 +75,13 @@ summarize_gender <- function(df) {
     dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
 }
 
-summarize_income <- function(df) {
+summarize_income <- function(df, fname) {
   dft <- df %>% mutate( below_30 = income_category == "Less than 29 999",
                  between_30_60 = income_category =="30k- 59 999",
                  between_60_100 = income_category=="60k - 99 999",
                  between_100_150 = income_category=="100k - 149 999",
                  above_150 = income_category=="150k +")
-  with(dft, tibble(name_col = c("Income (Y) category:",
+  expdata <- with(dft, tibble(name_col = c("Income (Y) category:",
                       "Y<30", "30 leq Y < 60", "60 leq Y 100", "100 leq Y < 150", "Y geq 150"),
          mean_raw = c(NA,
            mean(below_30), mean(between_30_60), mean(between_60_100), mean(between_100_150), mean(above_150)),
@@ -90,6 +91,9 @@ summarize_income <- function(df) {
                     weighted.mean(between_60_100, wgt),
                     weighted.mean(between_100_150, wgt),
                     weighted.mean(above_150, wgt))))
+  censusdata <- read_incomedistribution2017(fname)
+  expdata %>% left_join(censusdata)
+
 }
 
 summarize_political <- function(df) {
@@ -252,4 +256,34 @@ format_survey_balance_table_timing <- function(rows) {
     fmt_number(columns = c("ExAnte", "ExPost"),
                n_sigfig = 3) %>%
     fmt_number(columns = c("P-value (F)"), decimals = 3)
+}
+
+read_incomedistribution2017 <- function(fname) {
+  original <- readxl::read_excel(fname)
+  r_df <- original[10:53,1:2]
+  colnames(r_df) <- c("incgroup","nmb")
+  r_df$nmb <- as.integer(r_df$nmb)
+  r_df$name_col <- c(rep("Y<30",12), rep("30 leq Y < 60", 12), rep("60 leq Y 100", 16), rep("100 leq Y < 150",1), rep("Y geq 150",3))
+  r_df %>% group_by(name_col) %>%
+    summarize( n = sum(nmb)) %>%
+    mutate( means_census = n/sum(n)) %>%
+    dplyr::select(name_col, means_census)
+}
+
+read_educationdistribution2017 <- function(fname) {
+  original <- readxl::read_excel(fname)
+  e_df <- original[c(5,7),3:17]
+  colnames(e_df) <- e_df[1,]
+  e_df[2,] %>% pivot_longer(cols = everything(), names_to = "edugroup", values_to = "nmb" ) %>%
+    mutate(nmb = as.integer(nmb)) %>%
+    mutate(name_col = case_when(
+    edugroup %in% c("None","1st - 4th grade","5th - 6th grade","7th - 8th grade","9th grade","10th grade","11th grade2") ~ "No high school",
+    edugroup == "High school graduate" ~ "High School/GED",
+    edugroup %in% c("Some college, no degree", "Associate's degree, occupational", "Associate's degree, academic") ~ "Some college / ass. degree.",
+    edugroup == "Bachelor's degree" ~ "Bachelor (4 years)",
+    edugroup %in% c("Master's degree","Professional degree","Doctoral degree") ~ "Graduate degree")) %>%
+    group_by(name_col) %>%
+    summarize(n = sum(nmb)) %>%
+    mutate(means_census = n/sum(n)) %>%
+    dplyr::select(name_col, means_census)
 }

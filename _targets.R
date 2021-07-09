@@ -18,6 +18,16 @@ list(
     format = "file"
   ),
   tar_target(
+    educational_attainment_file_name,
+    here::here("raw-data","table-1-1.xlsx"),
+    format = "file"
+  ),
+  tar_target(
+    income_distribution_file_name,
+    here::here("raw-data","finc07.xls"),
+    format = "file"
+  ),
+  tar_target(
     popweights_df,
     readRDS(popweights_file_name)
   ),
@@ -35,7 +45,7 @@ list(
   ),
   tar_target(
     descriptive_rows_df,
-    descriptive_table_rows(mmtalent)
+    descriptive_table_rows(mmtalent, income_distribution_file_name, educational_attainment_file_name)
   ),
   tar_target(
     background_balance_rows_df,
