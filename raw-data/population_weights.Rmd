@@ -1,7 +1,7 @@
 ---
 title: "Population weights"
-author: "Erik"
-date: "November 28, 2017"
+author: "Erik Ø. Sørensen"
+date: "July 9, 2021"
 output: html_document
 ---
 
@@ -12,35 +12,35 @@ require('readr')
 ```
 
 The point of this file is to create population weights that can be used to 
-reweight the "Research Now" data to nationally representative for the
+reweigh the "Research Now" data to nationally representative for the
 US with respect to some basic demographics. I Have downloaded
 raw data from the 
-[Census bureau](https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/) on November 28, 2017 at which time the data file
-was time-stamped "22-Jun-2017 09:07".
+[Census bureau](https://www2.census.gov/programs-surveys/popest/datasets/2010-2017/state/asrh/) 
+on July 9, 2021 at which time the data file was time-stamped "21-Jun-2018 10:04".
 
 Reading in the raw data
 ```{r}
-census_df <- read_csv("sc-est2016-alldata6.csv", quote="") %>%
+census_df <- read_csv("sc-est2017-alldata6.csv", quote="") %>%
   filter(SEX %in% c(1,2)) %>% 
   filter(ORIGIN==0) %>%
   filter(AGE>=18) %>%
   mutate(age_category = cut(AGE, breaks=c(18, 35, 45, 55, 65, 120), right=FALSE)) %>%
   group_by(REGION, age_category, SEX) %>%
-  summarize(n2016 = sum(POPESTIMATE2016)) %>%
+  summarize(n2017 = sum(POPESTIMATE2017)) %>%
   mutate(gender = factor(SEX, labels=c("male", "female"))) %>%
-  select(REGION, gender, age_category, n2016)  %>% ungroup()
+  select(REGION, gender, age_category, n2017)  %>% ungroup()
 census_df$region = factor(census_df$REGION, labels=c("Northeast", "Midwest", "South", "West"))
-census_df <- census_df %>% select(region, gender, age_category, n2016)
+census_df <- census_df %>% select(region, gender, age_category, n2017)
 ```
 
-This dataframe now has the data needed to reweigth the "Research Now" data. I save it to 
+This dataframe now has the data needed to reweight the "Research Now" data. I save it to 
 a file.
 ```{r}
-populationweights2016 <- census_df %>% mutate(region = as.character(region),
+populationweights2017 <- census_df %>% mutate(region = as.character(region),
                                               gender = as.character(gender),
                                               age_category = as.character(age_category))
-saveRDS(populationweights2016, file=here::here("data", "populationweights2016.rds"))
-head(populationweights2016)
+saveRDS(populationweights2017, file=here::here("data", "populationweights2017.rds"))
+head(populationweights2017)
 ```
 
 

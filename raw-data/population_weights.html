@@ -9,9 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Erik" />
+<meta name="author" content="Erik Ø. Sørensen" />
 
-<meta name="date" content="2017-11-28" />
+<meta name="date" content="2021-07-09" />
 
 <title>Population weights</title>
 
@@ -166,30 +166,30 @@ pre code {
 
 
 <h1 class="title toc-ignore">Population weights</h1>
-<h4 class="author">Erik</h4>
-<h4 class="date">November 28, 2017</h4>
+<h4 class="author">Erik Ø. Sørensen</h4>
+<h4 class="date">July 9, 2021</h4>
 
 </div>
 
 
-<p>The point of this file is to create population weights that can be used to reweight the “Research Now” data to nationally representative for the US with respect to some basic demographics. I Have downloaded raw data from the <a href="https://www2.census.gov/programs-surveys/popest/datasets/2010-2016/state/asrh/">Census bureau</a> on November 28, 2017 at which time the data file was time-stamped “22-Jun-2017 09:07”.</p>
+<p>The point of this file is to create population weights that can be used to reweigh the “Research Now” data to nationally representative for the US with respect to some basic demographics. I Have downloaded raw data from the <a href="https://www2.census.gov/programs-surveys/popest/datasets/2010-2017/state/asrh/">Census bureau</a> on July 9, 2021 at which time the data file was time-stamped “21-Jun-2018 10:04”.</p>
 <p>Reading in the raw data</p>
-<pre class="r"><code>census_df &lt;- read_csv(&quot;sc-est2016-alldata6.csv&quot;, quote=&quot;&quot;) %&gt;%
+<pre class="r"><code>census_df &lt;- read_csv(&quot;sc-est2017-alldata6.csv&quot;, quote=&quot;&quot;) %&gt;%
   filter(SEX %in% c(1,2)) %&gt;% 
   filter(ORIGIN==0) %&gt;%
   filter(AGE&gt;=18) %&gt;%
   mutate(age_category = cut(AGE, breaks=c(18, 35, 45, 55, 65, 120), right=FALSE)) %&gt;%
   group_by(REGION, age_category, SEX) %&gt;%
-  summarize(n2016 = sum(POPESTIMATE2016)) %&gt;%
+  summarize(n2017 = sum(POPESTIMATE2017)) %&gt;%
   mutate(gender = factor(SEX, labels=c(&quot;male&quot;, &quot;female&quot;))) %&gt;%
-  select(REGION, gender, age_category, n2016)  %&gt;% ungroup()</code></pre>
+  select(REGION, gender, age_category, n2017)  %&gt;% ungroup()</code></pre>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
 ## cols(
-##   SUMLEV = col_character(),
+##   SUMLEV = col_double(),
 ##   REGION = col_double(),
 ##   DIVISION = col_double(),
-##   STATE = col_character(),
+##   STATE = col_double(),
 ##   NAME = col_character(),
 ##   SEX = col_double(),
 ##   ORIGIN = col_double(),
@@ -203,26 +203,27 @@ pre code {
 ##   POPESTIMATE2013 = col_double(),
 ##   POPESTIMATE2014 = col_double(),
 ##   POPESTIMATE2015 = col_double(),
-##   POPESTIMATE2016 = col_double()
+##   POPESTIMATE2016 = col_double(),
+##   POPESTIMATE2017 = col_double()
 ## )</code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;REGION&#39;, &#39;age_category&#39;. You can override using the `.groups` argument.</code></pre>
 <pre class="r"><code>census_df$region = factor(census_df$REGION, labels=c(&quot;Northeast&quot;, &quot;Midwest&quot;, &quot;South&quot;, &quot;West&quot;))
-census_df &lt;- census_df %&gt;% select(region, gender, age_category, n2016)</code></pre>
-<p>This dataframe now has the data needed to reweigth the “Research Now” data. I save it to a file.</p>
-<pre class="r"><code>populationweights2016 &lt;- census_df %&gt;% mutate(region = as.character(region),
+census_df &lt;- census_df %&gt;% select(region, gender, age_category, n2017)</code></pre>
+<p>This dataframe now has the data needed to reweight the “Research Now” data. I save it to a file.</p>
+<pre class="r"><code>populationweights2017 &lt;- census_df %&gt;% mutate(region = as.character(region),
                                               gender = as.character(gender),
                                               age_category = as.character(age_category))
-saveRDS(populationweights2016, file=here::here(&quot;data&quot;, &quot;populationweights2016.rds&quot;))
-head(populationweights2016)</code></pre>
+saveRDS(populationweights2017, file=here::here(&quot;data&quot;, &quot;populationweights2017.rds&quot;))
+head(populationweights2017)</code></pre>
 <pre><code>## # A tibble: 6 x 4
-##   region    gender age_category   n2016
+##   region    gender age_category   n2017
 ##   &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;          &lt;dbl&gt;
-## 1 Northeast male   [18,35)      6567496
-## 2 Northeast female [18,35)      6446401
-## 3 Northeast male   [35,45)      3371597
-## 4 Northeast female [35,45)      3461744
-## 5 Northeast male   [45,55)      3829349
-## 6 Northeast female [45,55)      4018247</code></pre>
+## 1 Northeast male   [18,35)      6593709
+## 2 Northeast female [18,35)      6466990
+## 3 Northeast male   [35,45)      3386488
+## 4 Northeast female [35,45)      3468225
+## 5 Northeast male   [45,55)      3757897
+## 6 Northeast female [45,55)      3944282</code></pre>
 
 
 

@@ -31,13 +31,13 @@ prepare_data <- function(df, wgts) {
 #' @examples
 find_population_weights <- function(df_experiment, df_popweights) {
   total_n_exp <- nrow(df_experiment)
-  ncensus <- sum(df_popweights$n2016)
+  ncensus <- sum(df_popweights$n2017)
   weights <- df_experiment %>%
     group_by(age_category, region, gender) %>%
     summarize(n_exp = n()) %>%
     left_join(df_popweights, by=c("age_category", "region", "gender")) %>%
     mutate(share_in_sample = n_exp / total_n_exp,
-           share_in_pop = n2016 / ncensus,
+           share_in_pop = n2017 / ncensus,
            wgt = share_in_pop / share_in_sample) %>%
     dplyr::select(age_category, region, gender, wgt)
   weights

@@ -9,7 +9,7 @@ tar_option_set(packages = c("tidyverse", "multcomp","gt"))
 list(
   tar_target(
     popweights_file_name,
-    here::here("data","populationweights2016.rds"),
+    here::here("data","populationweights2017.rds"),
     format = "file"
   ),
   tar_target(
