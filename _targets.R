@@ -6,7 +6,13 @@ source(here::here("R","descriptives.R"))
 options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse", "multcomp","gt"))
 
+
 list(
+  tar_target(
+    census_description_file_2017,
+    here::here("raw-data","sc-est2017-alldata6.csv"),
+    format = "file"
+  ),
   tar_target(
     popweights_file_name,
     here::here("data","populationweights2017.rds"),
@@ -45,7 +51,8 @@ list(
   ),
   tar_target(
     descriptive_rows_df,
-    descriptive_table_rows(mmtalent, income_distribution_file_name, educational_attainment_file_name)
+    descriptive_table_rows(mmtalent, income_distribution_file_name, educational_attainment_file_name,
+                           popweights_df, census_description_file_2017)
   ),
   tar_target(
     background_balance_rows_df,

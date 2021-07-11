@@ -3,10 +3,10 @@
 # Will determine later if I can make standard errors for these
 
 
-descriptive_table_rows <- function(df, fname_inc, fname_edu) {
-  gender_rows <- summarize_gender(df)
-  age_rows <- summarize_age(df)
-  region_rows <- summarize_region(df)
+descriptive_table_rows <- function(df, fname_inc, fname_edu, weights, fname_censusfile) {
+  gender_rows <- summarize_gender(df, weights)
+  age_rows <- summarize_age(df, fname_censusfile)
+  region_rows <- summarize_region(df, weights)
   education_rows <- summarize_education(df, fname_edu)
   income_rows <- summarize_income(df, fname_inc)
   political_rows <- summarize_political(df)
@@ -14,17 +14,20 @@ descriptive_table_rows <- function(df, fname_inc, fname_edu) {
                         education_rows, income_rows, political_rows)
 }
 
-summarize_age <- function(df) {
-  df %>%
+summarize_age <- function(df, fname) {
+  summaries <- df %>%
     summarize(mean_raw = mean(age, na.rm=TRUE),
               SD_raw = sd(age, na.rm=TRUE),
               mean_w = weighted.mean(age, w=wgt, na.rm=TRUE),
               SD_w = weighted.sd(age, w=wgt, na.rm=TRUE)) %>%
     mutate(name_col = "Age (years)") %>%
     dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
-  }
 
-summarize_region <- function(df) {
+  avgs <- read_mean_age2017(fname)
+  summaries %>% left_join(avgs)
+}
+
+summarize_region <- function(df, weights) {
   Northeast <- df %>% summarize(mean_raw = mean(region=="Northeast"), mean_w = weighted.mean(region=="Northeast", wgt)) %>%
     mutate(name_col = "Northeast")
   Midwest <- df %>% summarize(mean_raw = mean(region=="Midwest"), mean_w = weighted.mean(region=="Midwest", wgt)) %>%
@@ -34,7 +37,14 @@ summarize_region <- function(df) {
   West <- df %>% summarize(mean_raw = mean(region=="West"), mean_w = weighted.mean(region=="West", wgt)) %>%
     mutate(name_col = "West")
   header <- tibble(name_col = "Census region:", mean_raw=NA, SD_raw=NA, mean_w=NA, SD_w=NA)
-  header %>% bind_rows(Northeast, Midwest, South, West)
+  summaries <- header %>% bind_rows(Northeast, Midwest, South, West)
+
+  ravg <- weights %>% group_by(region) %>%
+    summarize( nmb = sum(n2017)) %>%
+    mutate(means_census = nmb/sum(nmb)) %>%
+    dplyr::select(region, means_census)
+
+  summaries %>% left_join(ravg, by=c("name_col"="region"))
 }
 
 summarize_education <- function(df, fname) {
@@ -64,8 +74,8 @@ summarize_education <- function(df, fname) {
 
 
 
-summarize_gender <- function(df) {
-  df %>%
+summarize_gender <- function(df, weights) {
+  summaries <- df %>%
     mutate( female = as.numeric(gender=="female")) %>%
     summarize(mean_raw = mean(female, na.rm=TRUE),
               SD_raw = NA,
@@ -73,6 +83,15 @@ summarize_gender <- function(df) {
               SD_w = NA) %>%
     mutate(name_col = "Female (d)") %>%
     dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
+
+  ravg <- weights %>% group_by(gender) %>%
+    summarize( nmb = sum(n2017)) %>%
+    mutate( means_census = nmb/sum(nmb)) %>%
+    filter(gender=="female") %>%
+    mutate(name_col = "Female (d)") %>%
+    dplyr::select(name_col, means_census)
+
+  summaries %>% left_join(ravg, by="name_col")
 }
 
 summarize_income <- function(df, fname) {
@@ -110,7 +129,7 @@ summarize_political <- function(df) {
 
 format_descriptive_table <- function(rows) {
   rows %>% gt() %>%
-    fmt_number(columns = c("mean_raw", "SD_raw","mean_w", "SD_w"), n_sigfig=3) %>%
+    fmt_number(columns = c("mean_raw", "SD_raw","mean_w", "SD_w", "means_census"), n_sigfig=3) %>%
     fmt_missing(columns = c("mean_raw", "SD_raw","mean_w", "SD_w"), rows = everything(), missing_text = "") %>%
     tab_spanner(
       label = "Raw (quota sampled)",
@@ -120,11 +139,15 @@ format_descriptive_table <- function(rows) {
       label = "Weighted",
       columns = c("mean_w", "SD_w")
     ) %>%
+    tab_spanner(
+      label = "Census",
+      columns = c("means_census")
+    ) %>%
     cols_label( mean_raw = "Mean",
                 SD_raw = "SD",
                 mean_w = "Mean",
                 SD_w = "SD",
-                name_col = "Outcome")
+                means_census = "Mean")
 
 
 
@@ -285,5 +308,18 @@ read_educationdistribution2017 <- function(fname) {
     group_by(name_col) %>%
     summarize(n = sum(nmb)) %>%
     mutate(means_census = n/sum(n)) %>%
+    dplyr::select(name_col, means_census)
+}
+
+read_mean_age2017 <- function(fname) {
+  original <- read_csv(fname,quote="")
+  original %>%
+  filter(SEX %in% c(1,2)) %>%
+  filter(ORIGIN==0) %>%
+  filter(AGE>=18) %>%
+    group_by(AGE) %>%
+    summarize(n=sum(POPESTIMATE2017)) %>%
+    summarize(means_census = weighted.mean(AGE, n)) %>%
+    mutate(name_col = "Age (years)") %>%
     dplyr::select(name_col, means_census)
 }
