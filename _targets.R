@@ -95,6 +95,10 @@ list(
   tar_target(
     average_distributions_graph,
     average_distributions(mmtalent)
+  ),
+  tar_target(
+    extreme_shares_graph,
+    extreme_shares(mmtalent)
   )
 )
 

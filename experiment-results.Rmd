@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(targets)
 require(tidyverse)
 require(gt)
+require(patchwork)
 ```
 
 
@@ -65,3 +66,12 @@ modelsummary::modelsummary(tar_read(implemented_inequality_list),
     kableExtra::add_header_above(c(" "=1, "Gini"=2, "Nothing to worst of"=2)) %>%
   cat(file=here::here("tables","inequality_treatment_regression.tex"))
 ```
+
+# Graph of shares at extreme distributions
+
+```{r}
+tar_load(extreme_shares_graph)
+extreme_shares_graph$a + extreme_shares_graph$b + plot_annotation(tag_levels = 'a')
+ggsave(here::here("graphs", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
+```
+

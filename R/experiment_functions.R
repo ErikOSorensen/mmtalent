@@ -32,3 +32,31 @@ average_distributions <- function(dt) {
        x=element_blank()) +
   theme_minimal()
 }
+
+extreme_shares <- function(dt) {
+  shares <- dt %>% mutate(no_redistribution = redistribute==0,
+                          full_redistribution = redistribute==3) %>%
+    group_by(treatment) %>%
+    summarize( no_redistribution_mean = weighted.mean(no_redistribution, wgt),
+               no_redistribution_se = weighted.se(no_redistribution, wgt),
+               full_redistribution_mean = weighted.mean(full_redistribution, wgt),
+               full_redistribution_se = weighted.se(full_redistribution, wgt))
+
+  a <- shares %>% ggplot(aes(x=treatment, y=no_redistribution_mean,
+                             ymin = no_redistribution_mean - no_redistribution_se,
+                             ymax = no_redistribution_mean + no_redistribution_se)) +
+    geom_point() +
+    geom_errorbar(width=0.2) +
+    theme_minimal() +
+    scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+    labs(x = element_blank(), y = "Share \u00B1 s.e.", title="No redistribution")
+  b <- shares %>% ggplot(aes(x=treatment, y=full_redistribution_mean,
+                             ymin = full_redistribution_mean - full_redistribution_se,
+                             ymax = full_redistribution_mean + full_redistribution_se)) +
+    geom_point() +
+    geom_errorbar(width=0.2) +
+    theme_minimal() +
+    scale_x_discrete(guide = guide_axis(n.dodge=2)) +
+    labs(x = element_blank(), y = "Share \u00B1 s.e.", title="Full redistribution")
+  list('a'=a,'b'=b)
+}
