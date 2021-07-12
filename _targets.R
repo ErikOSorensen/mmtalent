@@ -3,6 +3,8 @@ source(here::here("R","data.R"))
 source(here::here("R","data_transforms.R"))
 source(here::here("R","utility.R"))
 source(here::here("R","descriptives.R"))
+source(here::here("R","survey_functions.R"))
+source(here::here("R","experiment_functions.R"))
 options(tidyverse.quiet = TRUE)
 tar_option_set(packages = c("tidyverse", "multcomp","gt"))
 
@@ -81,6 +83,18 @@ list(
   tar_target(
     survey_balance_formatted_timing,
     format_survey_balance_table_timing(survey_balance_rows_timing_df)
+  ),
+  tar_target(
+    implemented_inequality_list,
+    implemented_inequality(mmtalent)
+  ),
+  tar_target(
+    histogram_distribution_graph,
+    histogram_distributions(mmtalent)
+  ),
+  tar_target(
+    average_distributions_graph,
+    average_distributions(mmtalent)
   )
 )
 

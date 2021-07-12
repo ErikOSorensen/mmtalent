@@ -1,0 +1,67 @@
+---
+title: "Experiment outcomes"
+author: "Erik Ø. Sørensen"
+date: "2021-07-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(targets)
+require(tidyverse)
+require(gt)
+```
+
+
+# Histogram of distributions
+```{r echo=FALSE}
+tar_load(histogram_distribution_graph)
+histogram_distribution_graph
+ggsave(here::here("graphs","histogram_transfers.pdf"))
+```
+
+
+# Graph with average outcomes
+```{r echo=FALSE}
+tar_load(average_distributions_graph)
+average_distributions_graph
+ggsave(here::here("graphs","average_ginis.pdf"))
+```
+
+# Regressions
+
+We look at two different outcomes. The first is the gini coefficient, which (as before) is between 0 and 0.6 (there is a
+base income of (2,2) that cannot be lowered, so max inequality is (8,2) or (2,8)). 
+The second outcome is a dummy indicator for maximum inequality (or giving nothing to the 
+worst off, "nothingtw" in the table below). 
+
+
+```{r}
+outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
+                   'treatmentExPostImpersonal' = 'Ex Post Impersonal (d)',
+                   'treatmentExPostPersonal' = 'Ex Post Personal (d)',
+                  'age' = 'Age (years)',
+                  'leftTRUE' = 'Left (d)',
+                  'high_incomeTRUE' = 'High income (d)',
+                  'high_eduTRUE' = 'High education (d)',
+                  'as.factor(gender)male' = 'Male (d)',
+                  '(Intercept)'='(Intercept)')
+```
+
+
+
+Table:
+```{r echo=FALSE}
+modelsummary::modelsummary(tar_read(implemented_inequality_list),
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names,
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") %>%
+  kableExtra::add_header_above(c(" "=1, "Gini"=2, "Nothing to worst of"=2))
+modelsummary::modelsummary(tar_read(implemented_inequality_list),
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names,
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F",
+                           output = 'latex') %>%
+    kableExtra::add_header_above(c(" "=1, "Gini"=2, "Nothing to worst of"=2)) %>%
+  cat(file=here::here("tables","inequality_treatment_regression.tex"))
+```

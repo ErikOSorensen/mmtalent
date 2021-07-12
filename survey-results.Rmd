@@ -132,7 +132,7 @@ modelsummary::modelsummary(survey_regressions_list$without_treatment,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            gof_omit = "R2 Adj.|se_type",
                            coef_map = survey_names,
-                           output=here::here("tables","attitudes_controlbelief_regression_withT.tex"))
+                           output=here::here("tables","attitudes_controlbelief_regression.tex"))
 ```
 
 

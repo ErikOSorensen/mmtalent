@@ -159,7 +159,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;  R package version 5.2.2. https://CRAN.R-project.org/package=stargazer</span></span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multiwayvcov)</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(here)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; here() starts at /home/sameos/Documents/gits/mmtalent</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; here() starts at /g4pool/eos/Documents/gits/mmtalent</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: mvtnorm</span></span>
 <span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Loading required package: survival</span></span>
@@ -292,9 +292,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # A tibble: 3 x 16</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;      id fo     treatment gender   age left  high_income income_category high_edu</span></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   &lt;int&gt; &lt;fct&gt;  &lt;fct&gt;     &lt;chr&gt;  &lt;dbl&gt; &lt;lgl&gt; &lt;lgl&gt;       &lt;chr&gt;           &lt;lgl&gt;   </span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   846 Talent ExPostIm… female    25 FALSE FALSE       30k- 59 999     FALSE   </span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2  1255 Talent ExPostIm… female    38 FALSE FALSE       30k- 59 999     TRUE    </span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   114 Luck   ExAntePe… female    46 FALSE TRUE        150k +          TRUE    </span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1   584 Effort ExAnteIm… female    63 FALSE TRUE        60k - 99 999    TRUE    </span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2   167 Luck   ExAnteIm… male      27 TRUE  FALSE       30k- 59 999     FALSE   </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 3   100 Talent ExAnteIm… female    25 TRUE  FALSE       Less than 29 9… FALSE   </span></span>
 <span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; # … with 7 more variables: edu_category &lt;chr&gt;, wgt &lt;dbl&gt;,</span></span>
 <span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   Unfair inequality &lt;dbl&gt;, Belief about individual control &lt;dbl&gt;, Luck &lt;dbl&gt;,</span></span>
 <span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; #   Effort &lt;dbl&gt;, Talent &lt;dbl&gt;</span></span></code></pre></div>
@@ -362,19 +362,19 @@ Talent (d)
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.106)
+(0.107)
 </td>
 <td style="text-align:center;">
-(0.113)
+(0.109)
 </td>
 <td style="text-align:center;">
-(0.223)
+(0.206)
 </td>
 <td style="text-align:center;">
-(0.225)
+(0.208)
 </td>
 <td style="text-align:center;">
-(0.113)
+(0.109)
 </td>
 </tr>
 <tr>
@@ -401,19 +401,19 @@ Effort (d)
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.105)
-</td>
-<td style="text-align:center;">
-(0.120)
-</td>
-<td style="text-align:center;">
-(0.238)
-</td>
-<td style="text-align:center;">
-(0.243)
+(0.111)
 </td>
 <td style="text-align:center;">
 (0.121)
+</td>
+<td style="text-align:center;">
+(0.225)
+</td>
+<td style="text-align:center;">
+(0.232)
+</td>
+<td style="text-align:center;">
+(0.122)
 </td>
 </tr>
 <tr>
@@ -441,7 +441,7 @@ Belief about control (0-10)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.015)
+(0.019)
 </td>
 <td style="text-align:center;">
 (0.027)
@@ -450,7 +450,7 @@ Belief about control (0-10)
 (0.028)
 </td>
 <td style="text-align:center;">
-(0.016)
+(0.019)
 </td>
 </tr>
 <tr>
@@ -478,10 +478,10 @@ Talent x Belief about control
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.039)
+(0.035)
 </td>
 <td style="text-align:center;">
-(0.040)
+(0.035)
 </td>
 <td style="text-align:center;">
 </td>
@@ -511,10 +511,10 @@ Effort x Belief about control
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.037)
+(0.033)
 </td>
 <td style="text-align:center;">
-(0.039)
+(0.035)
 </td>
 <td style="text-align:center;">
 </td>
@@ -579,10 +579,10 @@ Left (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.097)
+(0.115)
 </td>
 <td style="text-align:center;">
-(0.097)
+(0.115)
 </td>
 </tr>
 <tr>
@@ -612,10 +612,10 @@ High income (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.092)
+(0.109)
 </td>
 <td style="text-align:center;">
-(0.092)
+(0.109)
 </td>
 </tr>
 <tr>
@@ -632,7 +632,7 @@ High education (d)
 -0.182*
 </td>
 <td style="text-align:center;">
--0.183**
+-0.183*
 </td>
 </tr>
 <tr>
@@ -645,10 +645,10 @@ High education (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.093)
+(0.110)
 </td>
 <td style="text-align:center;">
-(0.093)
+(0.110)
 </td>
 </tr>
 <tr>
@@ -662,10 +662,10 @@ Male (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-0.166*
+0.166
 </td>
 <td style="text-align:center;">
-0.169**
+0.169*
 </td>
 </tr>
 <tr>
@@ -678,10 +678,10 @@ Male (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.085)
+(0.101)
 </td>
 <td style="text-align:center;">
-(0.085)
+(0.100)
 </td>
 </tr>
 <tr>
@@ -711,16 +711,16 @@ Male (d)
 (0.075)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.092)
+(0.102)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
 (0.121)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.176)
+(0.192)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.142)
+(0.164)
 </td>
 </tr>
 <tr>
@@ -856,19 +856,19 @@ Talent (d)
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.106)
+(0.107)
 </td>
 <td style="text-align:center;">
-(0.113)
+(0.109)
 </td>
 <td style="text-align:center;">
-(0.223)
+(0.207)
 </td>
 <td style="text-align:center;">
-(0.225)
+(0.209)
 </td>
 <td style="text-align:center;">
-(0.113)
+(0.109)
 </td>
 </tr>
 <tr>
@@ -895,19 +895,19 @@ Effort (d)
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.105)
-</td>
-<td style="text-align:center;">
-(0.120)
-</td>
-<td style="text-align:center;">
-(0.238)
-</td>
-<td style="text-align:center;">
-(0.243)
+(0.111)
 </td>
 <td style="text-align:center;">
 (0.121)
+</td>
+<td style="text-align:center;">
+(0.226)
+</td>
+<td style="text-align:center;">
+(0.233)
+</td>
+<td style="text-align:center;">
+(0.122)
 </td>
 </tr>
 <tr>
@@ -935,7 +935,7 @@ Belief about control (0-10)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.015)
+(0.019)
 </td>
 <td style="text-align:center;">
 (0.027)
@@ -944,7 +944,7 @@ Belief about control (0-10)
 (0.028)
 </td>
 <td style="text-align:center;">
-(0.016)
+(0.019)
 </td>
 </tr>
 <tr>
@@ -972,10 +972,10 @@ Talent x Belief about control
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.039)
+(0.035)
 </td>
 <td style="text-align:center;">
-(0.039)
+(0.036)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1005,10 +1005,10 @@ Effort x Belief about control
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.037)
+(0.033)
 </td>
 <td style="text-align:center;">
-(0.039)
+(0.035)
 </td>
 <td style="text-align:center;">
 </td>
@@ -1073,10 +1073,10 @@ Left (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.097)
+(0.115)
 </td>
 <td style="text-align:center;">
-(0.097)
+(0.115)
 </td>
 </tr>
 <tr>
@@ -1106,10 +1106,10 @@ High income (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.092)
+(0.108)
 </td>
 <td style="text-align:center;">
-(0.092)
+(0.108)
 </td>
 </tr>
 <tr>
@@ -1123,10 +1123,10 @@ High education (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
--0.164*
+-0.164
 </td>
 <td style="text-align:center;">
--0.166*
+-0.166
 </td>
 </tr>
 <tr>
@@ -1139,10 +1139,10 @@ High education (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.093)
+(0.109)
 </td>
 <td style="text-align:center;">
-(0.093)
+(0.109)
 </td>
 </tr>
 <tr>
@@ -1156,10 +1156,10 @@ Male (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-0.170**
+0.170*
 </td>
 <td style="text-align:center;">
-0.173**
+0.173*
 </td>
 </tr>
 <tr>
@@ -1172,10 +1172,10 @@ Male (d)
 <td style="text-align:center;">
 </td>
 <td style="text-align:center;">
-(0.085)
+(0.100)
 </td>
 <td style="text-align:center;">
-(0.085)
+(0.100)
 </td>
 </tr>
 <tr>
@@ -1202,19 +1202,19 @@ Treatment: Ex Ante Personal (d)
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.120)
+(0.139)
 </td>
 <td style="text-align:center;">
-(0.119)
+(0.142)
 </td>
 <td style="text-align:center;">
-(0.119)
+(0.141)
 </td>
 <td style="text-align:center;">
-(0.119)
+(0.139)
 </td>
 <td style="text-align:center;">
-(0.118)
+(0.139)
 </td>
 </tr>
 <tr>
@@ -1241,19 +1241,19 @@ Treatment: Ex Post Impersonal (d)
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.119)
+(0.137)
 </td>
 <td style="text-align:center;">
-(0.117)
+(0.139)
 </td>
 <td style="text-align:center;">
-(0.117)
+(0.139)
 </td>
 <td style="text-align:center;">
-(0.117)
+(0.139)
 </td>
 <td style="text-align:center;">
-(0.117)
+(0.139)
 </td>
 </tr>
 <tr>
@@ -1261,38 +1261,38 @@ Treatment: Ex Post Impersonal (d)
 Treatment: Ex Post Personal (d)
 </td>
 <td style="text-align:center;">
-0.277**
+0.277*
 </td>
 <td style="text-align:center;">
-0.266**
+0.266*
 </td>
 <td style="text-align:center;">
-0.265**
+0.265*
 </td>
 <td style="text-align:center;">
-0.267**
+0.267*
 </td>
 <td style="text-align:center;">
-0.267**
+0.267*
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
 </td>
 <td style="text-align:center;">
-(0.121)
+(0.141)
 </td>
 <td style="text-align:center;">
-(0.120)
+(0.144)
 </td>
 <td style="text-align:center;">
-(0.120)
+(0.144)
 </td>
 <td style="text-align:center;">
-(0.120)
+(0.144)
 </td>
 <td style="text-align:center;">
-(0.120)
+(0.144)
 </td>
 </tr>
 <tr>
@@ -1319,19 +1319,19 @@ Treatment: Ex Post Personal (d)
 <td style="text-align:left;box-shadow: 0px 1px">
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.103)
+(0.112)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.116)
+(0.133)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.140)
+(0.149)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.189)
+(0.211)
 </td>
 <td style="text-align:center;box-shadow: 0px 1px">
-(0.158)
+(0.186)
 </td>
 </tr>
 <tr>
@@ -1379,19 +1379,19 @@ R2
 Joint p-value on treatment dummies:
 </td>
 <td style="text-align:center;">
-0.004
+0.020
 </td>
 <td style="text-align:center;">
-0.007
+0.039
 </td>
 <td style="text-align:center;">
-0.007
+0.037
 </td>
 <td style="text-align:center;">
-0.005
+0.027
 </td>
 <td style="text-align:center;">
-0.005
+0.028
 </td>
 </tr>
 </tbody>
