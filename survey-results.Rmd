@@ -1,20 +1,9 @@
 ---
 title: "survey-results"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{survey-results}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+author: "Erik Ø. Sørensen"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
 ---
-
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  fig.width = 7,
-  fig.height = 4.5,
-  collapse = TRUE,
-  comment = "#>"
-)
-```
 
 ```{r setup}
 library(tidyverse)

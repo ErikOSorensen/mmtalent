@@ -1,7 +1,7 @@
 ---
 title: "Experiment outcomes"
 author: "Erik Ø. Sørensen"
-date: "2021-07-12"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
@@ -18,7 +18,7 @@ require(patchwork)
 ```{r echo=FALSE}
 tar_load(histogram_distribution_graph)
 histogram_distribution_graph
-ggsave(here::here("graphs","histogram_transfers.pdf"))
+ggsave(here::here("graphs","histogram_transfers.pdf"), width = 16, height = 10, units = "cm")
 ```
 
 
@@ -26,7 +26,7 @@ ggsave(here::here("graphs","histogram_transfers.pdf"))
 ```{r echo=FALSE}
 tar_load(average_distributions_graph)
 average_distributions_graph
-ggsave(here::here("graphs","average_ginis.pdf"))
+ggsave(here::here("graphs","average_ginis.pdf"), width = 16, height = 10, units = "cm")
 ```
 
 # Regressions
