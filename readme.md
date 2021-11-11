@@ -1,6 +1,6 @@
 # The talent paradox: Why is it fair to reward talent but not luck?
 
-This repo provides the data and code to replicate the analysis of the paper.
+This repository provides data and code to replicate the analysis of the paper.
 
 ## Authors
 
