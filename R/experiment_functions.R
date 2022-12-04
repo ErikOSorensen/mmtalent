@@ -11,7 +11,7 @@ implemented_inequality <- function(dt) {
 
 
 histogram_distributions <- function(dt) {
-  dt %>% ggplot(aes(x=payment_low_worker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) +
+  dt |> ggplot(aes(x=payment_low_worker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) +
     geom_bar() +
     theme_minimal() +
     facet_wrap(. ~ treatment) +
@@ -23,8 +23,8 @@ histogram_distributions <- function(dt) {
 
 
 average_distributions <- function(dt) {
-  dt %>% group_by(treatment) %>% summarize(se_gini = weighted.se(gini, wgt),
-                                           mean_gini = weighted.mean(gini, wgt)) %>%
+  dt |> group_by(treatment) |> summarize(se_gini = weighted.se(gini, wgt),
+                                           mean_gini = weighted.mean(gini, wgt)) |>
   ggplot(aes(x=treatment, y=mean_gini)) +
   geom_point() +
   geom_errorbar(aes(ymin=mean_gini - se_gini, ymax=mean_gini + se_gini), width=0.2) +
@@ -34,15 +34,15 @@ average_distributions <- function(dt) {
 }
 
 extreme_shares <- function(dt) {
-  shares <- dt %>% mutate(no_redistribution = redistribute==0,
-                          full_redistribution = redistribute==3) %>%
-    group_by(treatment) %>%
+  shares <- dt |> mutate(no_redistribution = redistribute==0,
+                          full_redistribution = redistribute==3) |>
+    group_by(treatment) |>
     summarize( no_redistribution_mean = weighted.mean(no_redistribution, wgt),
                no_redistribution_se = weighted.se(no_redistribution, wgt),
                full_redistribution_mean = weighted.mean(full_redistribution, wgt),
                full_redistribution_se = weighted.se(full_redistribution, wgt))
 
-  a <- shares %>% ggplot(aes(x=treatment, y=no_redistribution_mean,
+  a <- shares |> ggplot(aes(x=treatment, y=no_redistribution_mean,
                              ymin = no_redistribution_mean - no_redistribution_se,
                              ymax = no_redistribution_mean + no_redistribution_se)) +
     geom_point() +
@@ -50,7 +50,7 @@ extreme_shares <- function(dt) {
     theme_minimal() +
     scale_x_discrete(guide = guide_axis(n.dodge=2)) +
     labs(x = element_blank(), y = "Share \u00B1 s.e.", title="No redistribution")
-  b <- shares %>% ggplot(aes(x=treatment, y=full_redistribution_mean,
+  b <- shares |> ggplot(aes(x=treatment, y=full_redistribution_mean,
                              ymin = full_redistribution_mean - full_redistribution_se,
                              ymax = full_redistribution_mean + full_redistribution_se)) +
     geom_point() +

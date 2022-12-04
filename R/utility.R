@@ -61,21 +61,21 @@ weighted.se <- function(x, w, na.rm=FALSE)
 
 weighted.bars <- function(y, weight, values=NULL, name=NULL, na.rm=FALSE) {
   df <- dplyr::tibble(x=y, w=weight)
-  df <- df %>% fastDummies::dummy_columns(select_columns="x", ignore_na=TRUE,
+  df <- df |> fastDummies::dummy_columns(select_columns="x", ignore_na=TRUE,
                                           remove_selected_columns = TRUE)
-  means <- df %>% summarize_at(vars(starts_with("x_")),
+  means <- df |> summarize_at(vars(starts_with("x_")),
                                ~weighted.mean(., w, na.rm=TRUE))
-  out <- means %>% pivot_longer(starts_with("x_"), values_to ="proportion", names_to = "v",
-                                names_prefix="x_") %>%
+  out <- means |> pivot_longer(starts_with("x_"), values_to ="proportion", names_to = "v",
+                                names_prefix="x_") |>
     mutate(v=as.numeric(v))
   if (!is.null(values)) {
     dfv <- tibble(v=values, proportion=0)
-    out <- out %>% bind_rows(dfv)
-    out <- out %>% group_by(v) %>%
+    out <- out |> bind_rows(dfv)
+    out <- out |> group_by(v) |>
       summarize(proportion=sum(proportion))
   }
   if (!is.null(name)) {
-    out <- out %>% rename(v=name)
+    out <- out |> rename(v=name)
   }
   out
 }

@@ -24,9 +24,9 @@ format_descriptive_table <- function(rows) {
       label = "Allocated to treatment",
       columns = c("mean_attrition","mean_sample","mean_weighted")
     ) |>
-    tab_header("Descriptive statistics (averages) compared to census reference") %>%
+    tab_header("Descriptive statistics (averages) compared to census reference") |>
     tab_row_group(label="Panel B: Not used in quota sampling or weight construction",
-                  rows = 7:16) %>%
+                  rows = 7:16) |>
     tab_row_group(label="Panel A: Variables used in quota sampling and for weights",
                   rows = 1:6)
 }
@@ -206,12 +206,12 @@ summarize_income <- function(df, fname) {
 }
 
 summarize_political <- function(df) {
-  df %>%
+  df |>
     summarize(mean_raw = mean(polpref, na.rm=TRUE),
               SD_raw = sd(polpref, na.rm=TRUE),
               mean_w = weighted.mean(polpref, w = wgt, na.rm=TRUE),
-              SD_w = weighted.sd(polpref, w=wgt, na.rm=TRUE)) %>%
-    mutate(name_col = "Conservative (1-5)") %>%
+              SD_w = weighted.sd(polpref, w=wgt, na.rm=TRUE)) |>
+    mutate(name_col = "Conservative (1-5)") |>
     dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
 }
 
@@ -219,7 +219,7 @@ summarize_political <- function(df) {
 
 
 background_balance_rows <- function(df) {
-  bt <- df %>% group_by(treatment) %>%
+  bt <- df |> group_by(treatment) |>
     summarize(Age = weighted.mean(age, wgt, na.rm=TRUE),
            Female = weighted.mean(gender=="female", wgt, na.rm=TRUE),
            Left = weighted.mean(left, wgt, na.rm=TRUE),
@@ -229,23 +229,23 @@ background_balance_rows <- function(df) {
   bt.T <- as.data.frame(as.matrix(t(bt[,-1])))
   colnames(bt.T) <- as.character(bt$treatment)
   rwn <- rownames(bt.T)
-  bt.T <- bt.T %>% mutate(Outcome = rwn) %>%
+  bt.T <- bt.T |> mutate(Outcome = rwn) |>
     dplyr::select(Outcome, ExAnteImpersonal, ExAntePersonal, ExPostImpersonal, ExPostPersonal)
   bt.T
 }
 
 format_background_balance_table <- function(rows) {
-  rows %>% gt() %>%
+  rows |> gt() |>
     fmt_number(columns = c("ExAnteImpersonal", "ExAntePersonal",
                            "ExPostImpersonal", "ExPostPersonal"),
-               n_sigfig=3) %>%
+               n_sigfig=3) |>
     tab_spanner(
       label = "ExAnte",
-      columns = c("ExAnteImpersonal", "ExAntePersonal")) %>%
+      columns = c("ExAnteImpersonal", "ExAntePersonal")) |>
     tab_spanner(
       label = "ExPost",
       columns = c("ExPostImpersonal", "ExPostPersonal")
-    ) %>%
+    ) |>
     cols_label( "ExAnteImpersonal" = "Impersonal",
                 "ExAntePersonal" = "Personal",
                 "ExPostImpersonal" = "Impersonal",
@@ -254,7 +254,7 @@ format_background_balance_table <- function(rows) {
 
 
 survey_balance_rows <- function(df) {
-  at <- df %>% group_by(treatment) %>%
+  at <- df |> group_by(treatment) |>
     summarize( "Luck (unfair)" = weighted.mean(luck_fair, wgt, na.rm=TRUE),
                "Talent (unfair)" = weighted.mean(talent_fair, wgt, na.rm=TRUE),
                "Effort (unfair)" = weighted.mean(effort_fair, wgt, na.rm=TRUE),
@@ -265,7 +265,7 @@ survey_balance_rows <- function(df) {
   at.T <- as.data.frame(as.matrix(t(at[,-1])))
   colnames(at.T) <- as.character(at$treatment)
   rwn <- rownames(at.T)
-  at.T <- at.T %>% mutate(Outcome = rwn) %>%
+  at.T <- at.T |> mutate(Outcome = rwn) |>
     dplyr::select(Outcome, ExAnteImpersonal, ExAntePersonal, ExPostImpersonal, ExPostPersonal)
 
   pvals <- tibble(Outcome = c("Luck (unfair)",
@@ -283,11 +283,11 @@ survey_balance_rows <- function(df) {
                                      summary(aov(df$effort_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
                                      summary(aov(df$redist_pref~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1])
                                      )
-  at.T %>% left_join(pvals, by="Outcome")
+  at.T |> left_join(pvals, by="Outcome")
 }
 
 survey_balance_rows_timing <- function(df) {
-  at <- df %>% group_by(timing) %>%
+  at <- df |> group_by(timing) |>
     summarize( "Luck (unfair)" = weighted.mean(luck_fair, wgt, na.rm=TRUE),
                "Talent (unfair)" = weighted.mean(talent_fair, wgt, na.rm=TRUE),
                "Effort (unfair)" = weighted.mean(effort_fair, wgt, na.rm=TRUE),
@@ -298,7 +298,7 @@ survey_balance_rows_timing <- function(df) {
   at.T <- as.data.frame(as.matrix(t(at[,-1])))
   colnames(at.T) <- as.character(at$timing)
   rwn <- rownames(at.T)
-  at.T <- at.T %>% mutate(Outcome = rwn) %>%
+  at.T <- at.T |> mutate(Outcome = rwn) |>
     dplyr::select(Outcome, ExAnte, ExPost)
 
   pvals <- tibble(Outcome = c("Luck (unfair)",
@@ -316,22 +316,22 @@ survey_balance_rows_timing <- function(df) {
                                                summary(aov(df$effort_control~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
                                     summary(aov(df$redist_pref~df$timing, weights=df$wgt))[[1]][["Pr(>F)"]][1])
   )
-  at.T %>% left_join(pvals, by="Outcome")
+  at.T |> left_join(pvals, by="Outcome")
 }
 
 format_survey_balance_table <- function(rows) {
-  rows %>% gt() %>%
+  rows |> gt() |>
     fmt_number(columns = c("ExAnteImpersonal", "ExAntePersonal",
                            "ExPostImpersonal", "ExPostPersonal"),
-               n_sigfig = 3) %>%
-    fmt_number(columns = c("P-value (F)"), decimals = 3) %>%
+               n_sigfig = 3) |>
+    fmt_number(columns = c("P-value (F)"), decimals = 3) |>
     tab_spanner(
       label = "ExAnte",
-      columns = c("ExAnteImpersonal", "ExAntePersonal")) %>%
+      columns = c("ExAnteImpersonal", "ExAntePersonal")) |>
     tab_spanner(
       label = "ExPost",
       columns = c("ExPostImpersonal", "ExPostPersonal")
-    ) %>%
+    ) |>
     cols_label( "ExAnteImpersonal" = "Impersonal",
                 "ExAntePersonal" = "Personal",
                 "ExPostImpersonal" = "Impersonal",
@@ -339,9 +339,9 @@ format_survey_balance_table <- function(rows) {
 }
 
 format_survey_balance_table_timing <- function(rows) {
-  rows %>% gt() %>%
+  rows |> gt() |>
     fmt_number(columns = c("ExAnte", "ExPost"),
-               n_sigfig = 3) %>%
+               n_sigfig = 3) |>
     fmt_number(columns = c("P-value (F)"), decimals = 3)
 }
 
@@ -351,9 +351,9 @@ read_incomedistribution2017 <- function(fname) {
   colnames(r_df) <- c("incgroup","nmb")
   r_df$nmb <- as.integer(r_df$nmb)
   r_df$name_col <- c(rep("Y<30",12), rep("30 leq Y < 60", 12), rep("60 leq Y 100", 16), rep("100 leq Y < 150",1), rep("Y geq 150",3))
-  r_df %>% group_by(name_col) %>%
-    summarize( n = sum(nmb)) %>%
-    mutate( means_census = n/sum(n)) %>%
+  r_df |> group_by(name_col) |>
+    summarize( n = sum(nmb)) |>
+    mutate( means_census = n/sum(n)) |>
     dplyr::select(name_col, means_census)
 }
 
@@ -361,30 +361,30 @@ read_educationdistribution2017 <- function(fname) {
   original <- readxl::read_excel(fname)
   e_df <- original[c(5,7),3:17]
   colnames(e_df) <- e_df[1,]
-  e_df[2,] %>% pivot_longer(cols = everything(), names_to = "edugroup", values_to = "nmb" ) %>%
-    mutate(nmb = as.integer(nmb)) %>%
+  e_df[2,] |> pivot_longer(cols = everything(), names_to = "edugroup", values_to = "nmb" ) |>
+    mutate(nmb = as.integer(nmb)) |>
     mutate(name_col = case_when(
     edugroup %in% c("None","1st - 4th grade","5th - 6th grade","7th - 8th grade","9th grade","10th grade","11th grade2") ~ "No high school",
     edugroup == "High school graduate" ~ "High School/GED",
     edugroup %in% c("Some college, no degree", "Associate's degree, occupational", "Associate's degree, academic") ~ "Some college/ass. degree",
     edugroup == "Bachelor's degree" ~ "Bachelor (4 years)",
-    edugroup %in% c("Master's degree","Professional degree","Doctoral degree") ~ "Graduate degree")) %>%
-    group_by(name_col) %>%
-    summarize(n = sum(nmb)) %>%
-    mutate(means_census = n/sum(n)) %>%
+    edugroup %in% c("Master's degree","Professional degree","Doctoral degree") ~ "Graduate degree")) |>
+    group_by(name_col) |>
+    summarize(n = sum(nmb)) |>
+    mutate(means_census = n/sum(n)) |>
     dplyr::select(name_col, means_census)
 }
 
 read_mean_age2017 <- function(fname) {
   original <- read_csv(fname,quote="")
-  original %>%
-  filter(SEX %in% c(1,2)) %>%
-  filter(ORIGIN==0) %>%
-  filter(AGE>=18) %>%
-    group_by(AGE) %>%
-    summarize(n=sum(POPESTIMATE2017)) %>%
-    summarize(means_census = weighted.mean(AGE, n)) %>%
-    mutate(name_col = "Age (years)") %>%
+  original |>
+  filter(SEX %in% c(1,2)) |>
+  filter(ORIGIN==0) |>
+  filter(AGE>=18) |>
+    group_by(AGE) |>
+    summarize(n=sum(POPESTIMATE2017)) |>
+    summarize(means_census = weighted.mean(AGE, n)) |>
+    mutate(name_col = "Age (years)") |>
     dplyr::select(name_col, means_census)
 }
 
