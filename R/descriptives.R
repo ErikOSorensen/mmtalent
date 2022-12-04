@@ -3,116 +3,206 @@
 # Will determine later if I can make standard errors for these
 
 
-descriptive_table_rows <- function(df, fname_inc, fname_edu, weights, fname_censusfile) {
-  gender_rows <- summarize_gender(df, weights)
+descriptive_table <- function(df, fname_inc, fname_edu, fname_censusfile) {
+  rows <- descriptive_table_rows(df, fname_inc, fname_edu, fname_censusfile)
+  format_descriptive_table(rows)
+}
+
+format_descriptive_table <- function(rows) {
+  rows |> gt() |>
+    sub_missing(columns = c("means_census"), rows = everything(), missing_text = "") |>
+    fmt_number(columns = c(2:6), rows=c(1,3:16), decimals=3) |>
+    fmt_number(columns = c(2:6), rows=2, decimals=1) |>
+    fmt_number(columns = c(2:6), rows=17, decimals=0) |>
+    cols_label ( name_col = "",
+                 mean_available = "Available",
+                 mean_attrition = "Attrition",
+                 mean_sample = "Sample (unweighted)",
+                 mean_weighted = "Sample (weighted)",
+                 means_census = "Census") |>
+    tab_spanner (
+      label = "Allocated to treatment",
+      columns = c("mean_attrition","mean_sample","mean_weighted")
+    ) |>
+    tab_header("Descriptive statistics (averages) compared to census reference") %>%
+    tab_row_group(label="Panel B: Not used in quota sampling or weight construction",
+                  rows = 7:16) %>%
+    tab_row_group(label="Panel A: Variables used in quota sampling and for weights",
+                  rows = 1:6)
+}
+
+descriptive_table_rows <- function(df, fname_inc, fname_edu, fname_censusfile) {
+  gender_rows <- summarize_gender(df, fname_censusfile)
   age_rows <- summarize_age(df, fname_censusfile)
-  region_rows <- summarize_region(df, weights)
+  region_rows <- summarize_region(df, fname_censusfile)
   education_rows <- summarize_education(df, fname_edu)
   income_rows <- summarize_income(df, fname_inc)
-  political_rows <- summarize_political(df)
-  all_rows <- bind_rows(gender_rows, age_rows, region_rows,
-                        education_rows, income_rows, political_rows)
+  observation_rows <- summarize_observations(df)
+  bind_rows(gender_rows, age_rows, region_rows,
+            education_rows, income_rows, observation_rows) |>
+    dplyr::select(c(name_col, mean_available, mean_attrition, mean_sample, mean_weighted,means_census))
+}
+
+summarize_observations <- function(df) {
+  o1 <- df |> filter(completion_state>2) |> nrow()
+  o2 <- df |> filter(completion_state==4) |> nrow()
+  o3 <- df |> filter(completion_state==5) |> nrow()
+  o4 <- df |> filter(completion_state==5) |> nrow()
+  tribble(~name_col, ~mean_available,~mean_attrition, ~mean_sample,~mean_weighted,
+          "Number of observations", o1, o2, o3, o4)
 }
 
 summarize_age <- function(df, fname) {
-  summaries <- df %>%
-    summarize(mean_raw = mean(age, na.rm=TRUE),
-              SD_raw = sd(age, na.rm=TRUE),
-              mean_w = weighted.mean(age, w=wgt, na.rm=TRUE),
-              SD_w = weighted.sd(age, w=wgt, na.rm=TRUE)) %>%
-    mutate(name_col = "Age (years)") %>%
-    dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
-
-  avgs <- read_mean_age2017(fname)
-  summaries %>% left_join(avgs)
+  a1 <- df |>
+    filter(completion_state>2) |>
+    summarize(mean_available = mean(age)) |>
+    mutate(name_col = "Age (years)")
+  a2 <- df |>
+    filter(completion_state==4) |>
+    summarize(mean_attrition = mean(age)) |>
+    mutate(name_col = "Age (years)")
+  a3 <- gdf |> filter(completion_state==5) |>
+    summarize(mean_sample = mean(age))  |>
+    mutate(name_col = "Age (years)")
+  a4 <- gdf |> filter(completion_state==5) |>
+    summarize(mean_weighted = weighted.mean(age, wgt)) |>
+    mutate(name_col = "Age (years)")
+  a5 <- read_mean_age2017(censusfile)
+  a1 |> inner_join(a2) |> inner_join(a3) |> inner_join(a4) |> inner_join(a5)
 }
 
-summarize_region <- function(df, weights) {
-  Northeast <- df %>% summarize(mean_raw = mean(region=="Northeast"), mean_w = weighted.mean(region=="Northeast", wgt)) %>%
-    mutate(name_col = "Northeast")
-  Midwest <- df %>% summarize(mean_raw = mean(region=="Midwest"), mean_w = weighted.mean(region=="Midwest", wgt)) %>%
-    mutate(name_col = "Midwest")
-  South <- df %>% summarize(mean_raw = mean(region=="South"), mean_w = weighted.mean(region=="South", wgt)) %>%
-    mutate(name_col = "South")
-  West <- df %>% summarize(mean_raw = mean(region=="West"), mean_w = weighted.mean(region=="West", wgt)) %>%
-    mutate(name_col = "West")
-  header <- tibble(name_col = "Census region:", mean_raw=NA, SD_raw=NA, mean_w=NA, SD_w=NA)
-  summaries <- header %>% bind_rows(Northeast, Midwest, South, West)
-
-  ravg <- weights %>% group_by(region) %>%
-    summarize( nmb = sum(n2017)) %>%
-    mutate(means_census = nmb/sum(nmb)) %>%
-    dplyr::select(region, means_census)
-
-  summaries %>% left_join(ravg, by=c("name_col"="region"))
+summarize_region <- function(df, fname) {
+  regions_df <- tribble(~region, ~sortorder,
+                        "Northeast",1,
+                        "Midwest",2,
+                        "South",3,
+                        "West",4)
+  regionresults <- list()
+  for (r in regions_df$region) {
+    r1 <- df |> filter(completion_state>2) |>
+      summarize(mean_available = mean( region==r)) |>
+      mutate(name_col = r)
+    r2 <- df |> filter(completion_state==4) |>
+      summarize(mean_attrition = mean( region==r)) |>
+      mutate(name_col = r)
+    r3 <- df |> filter(completion_state==5) |>
+      summarize(mean_sample = mean( region==r )) |>
+      mutate(name_col= r)
+    r4 <- df |> filter(completion_state==5) |>
+      summarize(mean_weighted = weighted.mean(region==r, wgt)) |>
+      mutate(name_col= r)
+    regionresults[[r]] <- r1 |> inner_join(r2) |> inner_join(r3) |> inner_join(r4)
+  }
+  rdf <- Reduce(bind_rows,regionresults)
+  cdf <- read_mean_region2017(fname)
+  rdf |> inner_join(cdf) |>
+    left_join(regions_df, by=c("name_col"="region")) |>
+    arrange(sortorder) |>
+    dplyr::select(-sortorder)
 }
 
 summarize_education <- function(df, fname) {
-  header <- tibble(name_col = "Education category:", mean_raw=NA, SD_raw=NA, mean_w=NA, SD_w=NA)
-  dft <- df %>% mutate(
-    no_high_school = edu_category=="No High School",
-    high_school = edu_category=="High School/GED",
-    some_college = edu_category %in% c("Associate's Degree", "Some college"),
-    bachelor4 = edu_category =="Bachelor",
-    graduate = edu_category %in% c("Professional (JD/MD)", "PhD", "Masters")
-  )
-  no_hs <- dft %>% summarize(mean_raw = mean(no_high_school), mean_w = weighted.mean(no_high_school, wgt)) %>%
-    mutate(name_col = "No high school")
-  hs <- dft %>% summarize(mean_raw = mean(high_school), mean_w = weighted.mean(high_school, wgt)) %>%
-    mutate(name_col = "High School/GED")
-  sc <- dft %>% summarize(mean_raw = mean(some_college), mean_w = weighted.mean(some_college, wgt)) %>%
-    mutate(name_col = "Some college / ass. degree.")
-  b4 <- dft %>% summarize(mean_raw = mean(bachelor4), mean_w = weighted.mean(bachelor4, wgt)) %>%
-    mutate(name_col = "Bachelor (4 years)")
-  gd <- dft %>% summarize(mean_raw = mean(graduate), mean_w = weighted.mean(graduate, wgt)) %>%
-    mutate(name_col = "Graduate degree")
-  expdata <- header %>% bind_rows(no_hs, hs, sc, b4, gd)
-  censusdata <- read_educationdistribution2017(fname)
-  expdata %>% left_join(censusdata)
-
+  outcomes <- tribble(~s_edu_category, ~sortorder,
+                      "No high school", 1,
+                      "High School/GED",2,
+                      "Some college/ass. degree",3,
+                      "Bachelor (4 years)",4,
+                      "Graduate degree",5)
+  dft <- df |>  mutate(edu_category = sjlabelled::as_label(education),
+                       s_edu_category = case_when(
+                          edu_category == "No High School" ~ "No high school",
+                          edu_category == "High School/GED" ~ "High School/GED",
+                          edu_category == "Associate's Degree" ~ "Some college/ass. degree",
+                          edu_category == "Some college" ~ "Some college/ass. degree",
+                          edu_category == "Bachelor" ~ "Bachelor (4 years)",
+                          edu_category == "Professional (JD/MD)" ~ "Graduate degree",
+                          edu_category == "PhD" ~ "Graduate degree",
+                          edu_category == "Masters" ~ "Graduate degree"))
+  eduresults <- list()
+  for (r in outcomes$s_edu_category) {
+    e1 <- dft |> filter(completion_state>2) |>
+      summarize(mean_available = mean( s_edu_category==r)) |>
+      mutate(name_col = r)
+    e2 <- dft |> filter(completion_state==4) |>
+      summarize(mean_attrition = mean( s_edu_category==r)) |>
+      mutate(name_col = r)
+    e3 <- dft |> filter(completion_state==5) |>
+      summarize(mean_sample = mean( s_edu_category==r )) |>
+      mutate(name_col= r)
+    e4 <- dft |> filter(completion_state==5) |>
+      summarize(mean_weighted = weighted.mean(s_edu_category==r, wgt)) |>
+      mutate(name_col= r)
+    eduresults[[r]] <- e1 |> inner_join(e2) |> inner_join(e3) |> inner_join(e4)
+  }
+  rdf <- Reduce(bind_rows,eduresults)
+  edf <- read_educationdistribution2017(fname)
+  rdf |> inner_join(edf) |>
+    left_join(outcomes, by=c("name_col"="s_edu_category")) |>
+    arrange(sortorder) |>
+    dplyr::select(-sortorder)
 }
 
 
 
-summarize_gender <- function(df, weights) {
-  summaries <- df %>%
-    mutate( female = as.numeric(gender=="female")) %>%
-    summarize(mean_raw = mean(female, na.rm=TRUE),
-              SD_raw = NA,
-              mean_w = weighted.mean(female, w=wgt, na.rm=TRUE),
-              SD_w = NA) %>%
-    mutate(name_col = "Female (d)") %>%
-    dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
-
-  ravg <- weights %>% group_by(gender) %>%
-    summarize( nmb = sum(n2017)) %>%
-    mutate( means_census = nmb/sum(nmb)) %>%
-    filter(gender=="female") %>%
-    mutate(name_col = "Female (d)") %>%
-    dplyr::select(name_col, means_census)
-
-  summaries %>% left_join(ravg, by="name_col")
+summarize_gender <- function(df, censusfile) {
+  gdf <- df |>
+    mutate( gender = sjlabelled::as_label(gender),
+            female = as.numeric(gender=="female"))
+  g1 <- gdf |>
+    filter(completion_state>2) |>
+    summarize(mean_available = mean(female)) |>
+    mutate(name_col = "Female (d)")
+  g2 <- gdf |>
+    filter(completion_state==4) |>
+    summarize(mean_attrition = mean(female)) |>
+    mutate(name_col = "Female (d)")
+  g3 <- gdf |> filter(completion_state==5) |>
+    summarize(mean_sample = mean(female))  |>
+    mutate(name_col = "Female (d)")
+  g4 <- gdf |> filter(completion_state==5) |>
+    summarize(mean_weighted = weighted.mean(female, wgt)) |>
+    mutate(name_col = "Female (d)")
+  g5 <- read_mean_female2017(censusfile)
+  g1 |> inner_join(g2) |> inner_join(g3) |> inner_join(g4) |> inner_join(g5)
 }
 
 summarize_income <- function(df, fname) {
-  dft <- df %>% mutate( below_30 = income_category == "Less than 29 999",
-                 between_30_60 = income_category =="30k- 59 999",
-                 between_60_100 = income_category=="60k - 99 999",
-                 between_100_150 = income_category=="100k - 149 999",
-                 above_150 = income_category=="150k +")
-  expdata <- with(dft, tibble(name_col = c("Income (Y) category:",
-                      "Y<30", "30 leq Y < 60", "60 leq Y 100", "100 leq Y < 150", "Y geq 150"),
-         mean_raw = c(NA,
-           mean(below_30), mean(between_30_60), mean(between_60_100), mean(between_100_150), mean(above_150)),
-         mean_w = c(NA,
-                    weighted.mean(below_30, wgt, wgt),
-                    weighted.mean(between_30_60, wgt),
-                    weighted.mean(between_60_100, wgt),
-                    weighted.mean(between_100_150, wgt),
-                    weighted.mean(above_150, wgt))))
+  outcomes <- tribble(~income_category, ~sortorder,
+                      "Y<30", 1,
+                      "30 leq Y < 60",2,
+                      "60 leq Y 100",3,
+                      "100 leq Y < 150",4,
+                      "Y geq 150",5)
+  dft <- df |>  mutate(income_category = sjlabelled::as_label(income)) |>
+    mutate(income_category = case_when(
+      income_category=="Less than 29 999" ~ "Y<30",
+      income_category=="30k- 59 999" ~ "30 leq Y < 60",
+      income_category=="60k - 99 999" ~ "60 leq Y 100",
+      income_category=="100k - 149 999" ~ "100 leq Y < 150",
+      income_category=="150k +" ~ "Y geq 150"
+    ))
+  incomeresults = list()
+  for (r in outcomes$income_category) {
+    i1 <- dft |> filter(completion_state>2) |>
+      summarize(mean_available = mean( income_category==r)) |>
+      mutate(name_col = r)
+    i2 <- dft |> filter(completion_state==4) |>
+      summarize(mean_attrition = mean( income_category==r)) |>
+      mutate(name_col = r)
+    i3 <- dft |> filter(completion_state==5) |>
+      summarize(mean_sample = mean( income_category==r )) |>
+      mutate(name_col= r)
+    i4 <- dft |> filter(completion_state==5) |>
+      summarize(mean_weighted = weighted.mean(income_category==r, wgt)) |>
+      mutate(name_col= r)
+    incomeresults[[r]] <- i1 |> inner_join(i2) |> inner_join(i3) |> inner_join(i4)
+  }
+  idf <- Reduce(bind_rows, incomeresults)
   censusdata <- read_incomedistribution2017(fname)
-  expdata %>% left_join(censusdata)
-
+  idf |> left_join(censusdata) |>
+    left_join(outcomes,by=c("name_col"="income_category") ) |>
+    arrange(sortorder) |>
+    dplyr::select(-sortorder)
 }
 
 summarize_political <- function(df) {
@@ -121,37 +211,11 @@ summarize_political <- function(df) {
               SD_raw = sd(polpref, na.rm=TRUE),
               mean_w = weighted.mean(polpref, w = wgt, na.rm=TRUE),
               SD_w = weighted.sd(polpref, w=wgt, na.rm=TRUE)) %>%
-
     mutate(name_col = "Conservative (1-5)") %>%
     dplyr::select(name_col, mean_raw, SD_raw, mean_w, SD_w)
 }
 
 
-format_descriptive_table <- function(rows) {
-  rows %>% gt() %>%
-    fmt_number(columns = c("mean_raw", "SD_raw","mean_w", "SD_w", "means_census"), n_sigfig=3) %>%
-    fmt_missing(columns = c("mean_raw", "SD_raw","mean_w", "SD_w"), rows = everything(), missing_text = "") %>%
-    tab_spanner(
-      label = "Raw (quota sampled)",
-      columns = c("mean_raw","SD_raw")
-    ) %>%
-    tab_spanner(
-      label = "Weighted",
-      columns = c("mean_w", "SD_w")
-    ) %>%
-    tab_spanner(
-      label = "Census",
-      columns = c("means_census")
-    ) %>%
-    cols_label( mean_raw = "Mean",
-                SD_raw = "SD",
-                mean_w = "Mean",
-                SD_w = "SD",
-                means_census = "Mean")
-
-
-
-}
 
 
 background_balance_rows <- function(df) {
@@ -302,7 +366,7 @@ read_educationdistribution2017 <- function(fname) {
     mutate(name_col = case_when(
     edugroup %in% c("None","1st - 4th grade","5th - 6th grade","7th - 8th grade","9th grade","10th grade","11th grade2") ~ "No high school",
     edugroup == "High school graduate" ~ "High School/GED",
-    edugroup %in% c("Some college, no degree", "Associate's degree, occupational", "Associate's degree, academic") ~ "Some college / ass. degree.",
+    edugroup %in% c("Some college, no degree", "Associate's degree, occupational", "Associate's degree, academic") ~ "Some college/ass. degree",
     edugroup == "Bachelor's degree" ~ "Bachelor (4 years)",
     edugroup %in% c("Master's degree","Professional degree","Doctoral degree") ~ "Graduate degree")) %>%
     group_by(name_col) %>%
@@ -322,4 +386,36 @@ read_mean_age2017 <- function(fname) {
     summarize(means_census = weighted.mean(AGE, n)) %>%
     mutate(name_col = "Age (years)") %>%
     dplyr::select(name_col, means_census)
+}
+
+read_mean_female2017 <- function(fname) {
+  original <- read_csv(fname,quote="")
+  original |>
+    filter(SEX %in% c(1,2)) |>
+    filter(ORIGIN==0) |>
+    filter(AGE>=18) |>
+    group_by(SEX) |>
+    summarize(n=sum(POPESTIMATE2017)) |>
+    pivot_wider(values_from="n", names_from="SEX", names_prefix = "n") |>
+    mutate( means_census = n2/(n1+n2),
+            name_col = "Female (d)") |>
+    select(c(name_col, means_census))
+}
+
+read_mean_region2017 <- function(fname) {
+  regions <- tribble(~REGION, ~region,
+                     1,"Northeast",
+                     2,"Midwest",
+                     3,"South",
+                     4,"West")
+  original <- read_csv(fname,quote="", show_col_types = FALSE) |> left_join(regions, by="REGION")
+  original |>
+    filter(SEX %in% c(1,2)) |>
+    filter(ORIGIN==0) |>
+    filter(AGE>=18) |>
+    group_by(region) |>
+    summarize(n = sum(POPESTIMATE2017)) |>
+    mutate(means_census = n/sum(n)) |>
+    rename(name_col = region) |>
+    select(-n)
 }

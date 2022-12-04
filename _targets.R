@@ -5,8 +5,10 @@ source(here::here("R","utility.R"))
 source(here::here("R","descriptives.R"))
 source(here::here("R","survey_functions.R"))
 source(here::here("R","experiment_functions.R"))
+source(here::here("R","consort_graphs.R"))
 options(tidyverse.quiet = TRUE)
-tar_option_set(packages = c("tidyverse", "multcomp","gt"))
+tar_option_set(packages = c("tidyverse", "multcomp","gt","consort","sjlabelled"),
+               error = "null")
 
 
 list(
@@ -16,13 +18,8 @@ list(
     format = "file"
   ),
   tar_target(
-    popweights_file_name,
-    here::here("data","populationweights2017.rds"),
-    format = "file"
-  ),
-  tar_target(
     survey_file_name,
-    here::here("data","mmtalent_df.rds"),
+    here::here("data","mmtalent_df.dta"),
     format = "file"
   ),
   tar_target(
@@ -36,25 +33,16 @@ list(
     format = "file"
   ),
   tar_target(
-    popweights_df,
-    readRDS(popweights_file_name)
-  ),
-  tar_target(
     survey_df,
-    readRDS(survey_file_name)
-  ),
-  tar_target(
-    weights,
-    find_population_weights(survey_df, popweights_df)
+    read_dta(survey_file_name)
   ),
   tar_target(
     mmtalent,
-    prepare_data(survey_df, weights)
+    prepare_data(survey_df)
   ),
   tar_target(
-    descriptive_rows_df,
-    descriptive_table_rows(mmtalent, income_distribution_file_name, educational_attainment_file_name,
-                           popweights_df, census_description_file_2017)
+    descriptive_table_gt,
+    descriptive_table(survey_df, income_distribution_file_name, educational_attainment_file_name, census_description_file_2017)
   ),
   tar_target(
     background_balance_rows_df,
@@ -67,10 +55,6 @@ list(
   tar_target(
     survey_balance_rows_timing_df,
     survey_balance_rows_timing(mmtalent)
-  ),
-  tar_target(
-    descriptive_table_formatted,
-    format_descriptive_table(descriptive_rows_df)
   ),
   tar_target(
     background_balance_formatted,
@@ -99,7 +83,10 @@ list(
   tar_target(
     extreme_shares_graph,
     extreme_shares(mmtalent)
-  )
+  ),
+  tar_target(
+    consort_diagram,
+    mmtalent_consort(survey_df))
 )
 
 
