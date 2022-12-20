@@ -5,3 +5,7 @@
 inst/doc
 subjectives.dta
 _targets
+.bash_history
+.cache
+.config
+.local
