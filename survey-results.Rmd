@@ -19,12 +19,12 @@ source(here::here("R","survey_functions.R"))
 tar_load(mmtalent)
 ```
 
-# Graphs on attitudes and belief
+# Figures on attitudes and belief
 To have the main result on attitudes and belief, we would like to have aggregate patterns 
 before going into the individual level data.
 ```{r}
 long_attitudes(mmtalent) %>% survey_bars(numobs = FALSE, ylimits = c(0,8))
-ggsave(here::here("graphs","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
+ggsave(here::here("figures","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
 ```
 
 And the corresponding histograms:
@@ -38,7 +38,7 @@ long_attitudes(mmtalent) %>%
   labs(x = "Response (on 0-10 scale)") +
   scale_x_continuous(breaks=c(0,1,2,3,4,5,6,7,8,9,10)) +
   facet_grid(outcometype ~ fo)
-ggsave(here::here("graphs","attitude_histograms.pdf"), width = 16, height = 10, units = "cm")
+ggsave(here::here("figures","attitude_histograms.pdf"), width = 16, height = 10, units = "cm")
 ```
 
 # Subgroups
@@ -48,7 +48,7 @@ First for the division of all data into binary groups:
 long_attitudes(mmtalent) %>% 
   survey_bars_by_subgroup() %>% 
   patchwork::wrap_plots() + plot_layout(ncol=2) + plot_annotation(tag_levels = "a")
-ggsave(here::here("graphs","attitudes_beliefs_by_subgroups.pdf"), width = 30, height = 50, units="cm")
+ggsave(here::here("figures","attitudes_beliefs_by_subgroups.pdf"), width = 30, height = 50, units="cm")
 ```
 
 Now with all the $2^5$ combinations:
@@ -57,7 +57,7 @@ Now with all the $2^5$ combinations:
 long_attitudes(mmtalent) %>% 
   survey_bars_by_subgroup_cross() %>% 
   patchwork::wrap_plots() + plot_layout(ncol=4) + plot_annotation(tag_levels = "1")
-ggsave(here::here("graphs","attitudes_beliefs_by_subgroups_cross.pdf"), width = 30, height = 50, units="cm")
+ggsave(here::here("figures","attitudes_beliefs_by_subgroups_cross.pdf"), width = 30, height = 50, units="cm")
 ```
 
 
@@ -71,7 +71,7 @@ long_attitudes(mmtalent) %>%
   geom_errorbar(aes(ymin=m-se, ymax=m+se), width=0.2) + 
   labs(x=element_blank(), y="Mean outcome \u00B1 s.e.m.") +
   theme_minimal()
-ggsave(here::here("graphs","attitudes_beliefs_pol.pdf"))
+ggsave(here::here("figures","attitudes_beliefs_pol.pdf"))
 ```
 
 # Regression table

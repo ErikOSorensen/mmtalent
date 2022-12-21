@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  mmtalent:
+    build: .
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - ./code:/home/rstudio/code
+      - ./raw_data:/home/rstudio/raw_data
+      - ./data:/home/rstudio/data
+      - ./tables:/home/rstudio/tables
+      - ./figures:/home/rstudio/figures
+    environment:
+      - "DISABLE_AUTH=true"

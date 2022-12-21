@@ -18,7 +18,7 @@ require(patchwork)
 ```{r echo=FALSE}
 tar_load(histogram_distribution_graph)
 histogram_distribution_graph
-ggsave(here::here("graphs","histogram_transfers.pdf"), width = 16, height = 10, units = "cm")
+ggsave(here::here("figures","histogram_transfers.pdf"), width = 16, height = 10, units = "cm")
 ```
 
 
@@ -26,7 +26,7 @@ ggsave(here::here("graphs","histogram_transfers.pdf"), width = 16, height = 10, 
 ```{r echo=FALSE}
 tar_load(average_distributions_graph)
 average_distributions_graph
-ggsave(here::here("graphs","average_ginis.pdf"), width = 16, height = 10, units = "cm")
+ggsave(here::here("figures","average_ginis.pdf"), width = 16, height = 10, units = "cm")
 ```
 
 # Regressions
@@ -72,6 +72,6 @@ modelsummary::modelsummary(tar_read(implemented_inequality_list),
 ```{r}
 tar_load(extreme_shares_graph)
 extreme_shares_graph$a + extreme_shares_graph$b + plot_annotation(tag_levels = 'a')
-ggsave(here::here("graphs", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
+ggsave(here::here("figures", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
 ```
 
