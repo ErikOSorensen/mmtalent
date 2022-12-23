@@ -12,6 +12,7 @@ services:
       - ./figures:/home/rstudio/figures
       - ./renv.lock:/home/rstudio/renv.lock
       - ./_targets.R:/home/rstudio/_targets.R
+      - ./mmtalent.proj:/mmtalent.proj
       - ./reports:/home/rstudio/reports
     environment:
       - "DISABLE_AUTH=true"
