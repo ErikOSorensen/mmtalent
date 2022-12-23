@@ -5,10 +5,13 @@ services:
     ports:
       - "127.0.0.1:8787:8787"
     volumes:
-      - ./code:/home/rstudio/code
-      - ./raw_data:/home/rstudio/raw_data
+      - ./R:/home/rstudio/R
+      - ./raw-data:/home/rstudio/raw-data
       - ./data:/home/rstudio/data
       - ./tables:/home/rstudio/tables
       - ./figures:/home/rstudio/figures
+      - ./renv.lock:/home/rstudio/renv.lock
+      - ./_targets.R:/home/rstudio/_targets.R
+      - ./reports:/home/rstudio/reports
     environment:
       - "DISABLE_AUTH=true"
