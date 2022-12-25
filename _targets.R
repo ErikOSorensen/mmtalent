@@ -1,57 +1,57 @@
 library("targets")
-source(here::here("R","data.R"))
-source(here::here("R","data_transforms.R"))
-source(here::here("R","utility.R"))
-source(here::here("R","descriptives.R"))
-source(here::here("R","survey_functions.R"))
-source(here::here("R","experiment_functions.R"))
-source(here::here("R","consort_graphs.R"))
+source(here::here("R", "data_transforms.R"))
+source(here::here("R", "utility.R"))
+source(here::here("R", "descriptives.R"))
+source(here::here("R", "survey_functions.R"))
+source(here::here("R", "experiment_functions.R"))
+source(here::here("R", "consort_graphs.R"))
 options(tidyverse.quiet = TRUE)
-tar_option_set(packages = c("tidyverse", "multcomp","gt","consort","sjlabelled"),
-               error = "null")
+tar_option_set(
+  packages = c("tidyverse", "multcomp", "gt", "consort", "sjlabelled"),
+  error = "null"
+)
 
 
 list(
   tar_target(
     census_description_file_2017,
-    here::here("raw-data","sc-est2017-alldata6.csv"),
+    here::here("raw-data", "sc-est2017-alldata6.csv"),
     format = "file"
   ),
   tar_target(
     survey_file_name,
-    here::here("data","mmtalent_df.dta"),
+    here::here("data", "mmtalent_df.dta"),
     format = "file"
   ),
   tar_target(
     educational_attainment_file_name,
-    here::here("raw-data","table-1-1.xlsx"),
+    here::here("raw-data", "table-1-1.xlsx"),
     format = "file"
   ),
   tar_target(
     income_distribution_file_name,
-    here::here("raw-data","finc07.xls"),
+    here::here("raw-data", "finc07.xls"),
     format = "file"
   ),
-  tar_target(
-    survey_df,
-    read_dta(survey_file_name)
-  ),
-  tar_target(
-    mmtalent,
-    prepare_data(survey_df)
-  ),
+  tar_target(survey_df,
+             read_dta(survey_file_name)),
+  tar_target(mmtalent,
+             prepare_data(survey_df)),
   tar_target(
     descriptive_table_gt,
-    descriptive_table(survey_df, income_distribution_file_name, educational_attainment_file_name, census_description_file_2017)
+    descriptive_table(
+      survey_df,
+      income_distribution_file_name,
+      educational_attainment_file_name,
+      census_description_file_2017
+    )
   ),
   tar_target(
     background_balance_rows_df,
     background_balance_rows(mmtalent)
   ),
-  tar_target(
-    survey_balance_rows_df,
-    survey_balance_rows(mmtalent)
-  ),
+  tar_target(survey_balance_rows_df,
+             survey_balance_rows(mmtalent)),
   tar_target(
     survey_balance_rows_timing_df,
     survey_balance_rows_timing(mmtalent)
@@ -80,13 +80,8 @@ list(
     average_distributions_graph,
     average_distributions(mmtalent)
   ),
-  tar_target(
-    extreme_shares_graph,
-    extreme_shares(mmtalent)
-  ),
-  tar_target(
-    consort_diagram,
-    mmtalent_consort(survey_df))
+  tar_target(extreme_shares_graph,
+             extreme_shares(mmtalent)),
+  tar_target(consort_diagram,
+             mmtalent_consort(survey_df))
 )
-
-
