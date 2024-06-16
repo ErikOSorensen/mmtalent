@@ -51,7 +51,7 @@ outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
 
 
 
-Table:
+Table must fix to use GT instead of Kable...:
 ```{r echo=FALSE}
 modelsummary::modelsummary(tar_read(implemented_inequality_list),
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),

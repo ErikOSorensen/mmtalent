@@ -219,7 +219,10 @@ wrow <- tibble::tribble(~v, ~p1, ~p2, ~p3, ~p4, ~p5, ~p6,
 modelsummary::modelsummary(list("A.luck"=A1, "A.talent"=A2, "A.effort"=A3, "B.luck"=B1, "B.talent"=B2, "B.effort"=B3),
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            gof_omit = "R2 Adj.|AIC|BIC|Log.Lik.|F",
-                           add_rows = wrow) %>% kableExtra::add_header_above(c(" "=1, "Unfair inequality"=3, "Belief about individual control"=3))
+                           output="gt",
+                           add_rows = wrow) |> 
+  gt::tab_spanner(label="Unfair inequality", columns=2:4) |>
+  gt::tab_spanner(label="Belief about individual control", columns = 5:7)
 ```
 
 We see that 3 out of 18 treatment effects are significant at the 10% level, which is not surprising

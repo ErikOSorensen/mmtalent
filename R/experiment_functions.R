@@ -10,6 +10,27 @@ implemented_inequality <- function(dt) {
 }
 
 
+implemented_inequality_heterogeneity <- function(dt) {
+  dt <- dt |> mutate(male = gender=="male")
+  A1 <- lm(gini ~ timing + timing*age + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  A2 <- lm(gini ~ timing + timing*left + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  A3 <- lm(gini ~ timing + timing*high_edu + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  A4 <- lm(gini ~ timing + timing*high_income + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  A5 <- lm(gini ~ timing + timing*male + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  list(A1,A2,A3,A4,A5)
+
+}
+
+
+
+
+
+
 histogram_distributions <- function(dt) {
   dt |> ggplot(aes(x=payment_low_worker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) +
     geom_bar() +

@@ -73,6 +73,10 @@ list(
     implemented_inequality(mmtalent)
   ),
   tar_target(
+    implemented_inequality_heterogeneity_list,
+    implemented_inequality_heterogeneity(mmtalent)
+  ),
+  tar_target(
     histogram_distribution_graph,
     histogram_distributions(mmtalent)
   ),
@@ -84,7 +88,7 @@ list(
              extreme_shares(mmtalent)),
   tar_target(consort_diagram,
              mmtalent_consort(survey_df)),
-  tar_render(experiment_results, here::here("reports","experiment-results.Rmd")),
-  tar_render(survey_results, here::here("reports","survey-results.Rmd")),
-  tar_render(descriptive_balance_tables, here::here("reports","descriptive_balance_tables.Rmd"))
+  tar_render(experiment_results, here::here("experiment-results.Rmd")),
+  tar_render(survey_results, here::here("survey-results.Rmd")),
+  tar_render(descriptive_balance_tables, here::here("descriptive_balance_tables.Rmd"))
 )
