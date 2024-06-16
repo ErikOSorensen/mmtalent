@@ -23,6 +23,7 @@ disposition_data <- function(data) {
         completion_state == 4 & is.na(payment_low_worker) ~ "no decision"),
       demographics = ifelse(completion_state>2, observationid, NA),
       allocated = ifelse(completion_state>3, observationid, NA),
+      treatment = as.character(sjlabelled::as_label(treatment)),
       treatment = case_when(
         treatment == "ExAnteImpersonal" ~ "Trt. EAI",
         treatment == "ExAntePersonal" ~ "Trt. EAP",
