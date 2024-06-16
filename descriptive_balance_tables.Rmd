@@ -17,9 +17,9 @@ require(gt)
 # Descriptive table
 
 ```{r}
-tar_load(descriptive_table_formatted)
-descriptive_table_formatted
-descriptive_table_formatted %>% as_latex() %>%
+tar_load(descriptive_table_gt)
+descriptive_table_gt
+descriptive_table_gt %>% as_latex() %>%
   as.character() %>%
   cat(file=here::here("tables","descriptive_table.tex"))
 ```
@@ -57,6 +57,14 @@ survey_balance_formatted_timing %>%
   as.character() %>%
   cat(file=here::here("tables","survey_balance_table_timing.tex"))
 ```
+
+## Consort diagram
+```{r}
+tar_load(consort_diagram)
+consort_diagram
+ggsave(here::here("figures","consort.pdf"), plot = consort::build_grid(consort_diagram), width=16, height = 8, units="in")
+```
+
 
 
 

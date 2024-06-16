@@ -276,13 +276,16 @@ survey_balance_rows <- function(df) {
                                "Effort (control)",
                                "Should society aim to equalize incomes"),
                    "P-value (F)" = c(p.adjust(c(summary(aov(df$luck_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$talent_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$effort_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
+                                                summary(aov(df$talent_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                                summary(aov(df$effort_fair~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]),
+                                              method="holm"),
                                      p.adjust(c(summary(aov(df$luck_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$talent_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
-                                     summary(aov(df$effort_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]), method="holm"),
+                                                summary(aov(df$talent_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1],
+                                                summary(aov(df$effort_control~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1]),
+                                              method="holm"),
                                      summary(aov(df$redist_pref~df$treatment, weights=df$wgt))[[1]][["Pr(>F)"]][1])
                                      )
+
   at.T |> left_join(pvals, by="Outcome")
 }
 
