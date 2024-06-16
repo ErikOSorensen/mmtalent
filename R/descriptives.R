@@ -24,10 +24,10 @@ format_descriptive_table <- function(rows) {
       label = "Allocated to treatment",
       columns = c("mean_attrition","mean_sample","mean_weighted")
     ) |>
-    tab_header("Descriptive statistics (averages) compared to census reference") |>
-    tab_row_group(label="Panel B: Not used in quota sampling or weight construction",
+    gt::tab_header("Descriptive statistics (averages) compared to census reference") |>
+    gt::tab_row_group(label="Panel B: Not used in quota sampling or weight construction",
                   rows = 7:16) |>
-    tab_row_group(label="Panel A: Variables used in quota sampling and for weights",
+    gt::tab_row_group(label="Panel A: Variables used in quota sampling and for weights",
                   rows = 1:6)
 }
 
@@ -61,13 +61,13 @@ summarize_age <- function(df, fname) {
     filter(completion_state==4) |>
     summarize(mean_attrition = mean(age)) |>
     mutate(name_col = "Age (years)")
-  a3 <- gdf |> filter(completion_state==5) |>
+  a3 <- df |> filter(completion_state==5) |>
     summarize(mean_sample = mean(age))  |>
     mutate(name_col = "Age (years)")
-  a4 <- gdf |> filter(completion_state==5) |>
+  a4 <- df |> filter(completion_state==5) |>
     summarize(mean_weighted = weighted.mean(age, wgt)) |>
     mutate(name_col = "Age (years)")
-  a5 <- read_mean_age2017(censusfile)
+  a5 <- read_mean_age2017(fname)
   a1 |> inner_join(a2) |> inner_join(a3) |> inner_join(a4) |> inner_join(a5)
 }
 
@@ -399,7 +399,7 @@ read_mean_female2017 <- function(fname) {
     pivot_wider(values_from="n", names_from="SEX", names_prefix = "n") |>
     mutate( means_census = n2/(n1+n2),
             name_col = "Female (d)") |>
-    select(c(name_col, means_census))
+    dplyr::select(c(name_col, means_census))
 }
 
 read_mean_region2017 <- function(fname) {
@@ -417,5 +417,5 @@ read_mean_region2017 <- function(fname) {
     summarize(n = sum(POPESTIMATE2017)) |>
     mutate(means_census = n/sum(n)) |>
     rename(name_col = region) |>
-    select(-n)
+    dplyr::select(-n)
 }

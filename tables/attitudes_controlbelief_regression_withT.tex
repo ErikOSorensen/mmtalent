@@ -1,42 +1,48 @@
 \begin{table}
 \centering
-\begin{tabular}[t]{lccccc}
+\begin{talltblr}[         %% tabularray outer open
+entry=none,label=none,
+note{}={* p < 0.1, ** p < 0.05, *** p < 0.01},
+]                     %% tabularray outer close
+{                     %% tabularray inner open
+colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
+column{1}={halign=l,},
+column{2}={halign=c,},
+column{3}={halign=c,},
+column{4}={halign=c,},
+column{5}={halign=c,},
+column{6}={halign=c,},
+hline{22}={1,2,3,4,5,6}{solid, 0.05em, black},
+}                     %% tabularray inner close
 \toprule
-  & (1) & (2) & (3) & (4) & (5)\\
-\midrule
-Talent (d) & -3.731*** & -3.380*** & -3.392*** & -3.503*** & -3.399***\\
- & (0.107) & (0.109) & (0.207) & (0.209) & (0.109)\\
-Effort (d) & -4.076*** & -3.587*** & -3.269*** & -3.461*** & -3.614***\\
- & (0.111) & (0.121) & (0.226) & (0.233) & (0.122)\\
-Belief about control (0-10) &  & -0.125*** & -0.104*** & -0.116*** & -0.118***\\
- &  & (0.019) & (0.027) & (0.028) & (0.019)\\
-Talent x Belief about control &  &  & -0.007 & 0.015 & \\
- &  &  & (0.035) & (0.036) & \\
-Effort x Belief about control &  &  & -0.054 & -0.022 & \\
- &  &  & (0.033) & (0.035) & \\
-Age (years) &  &  &  & -0.014*** & -0.014***\\
- &  &  &  & (0.003) & (0.003)\\
-Left (d) &  &  &  & 0.121 & 0.118\\
- &  &  &  & (0.115) & (0.115)\\
-High income (d) &  &  &  & -0.148 & -0.148\\
- &  &  &  & (0.108) & (0.108)\\
-High education (d) &  &  &  & -0.164 & -0.166\\
- &  &  &  & (0.109) & (0.109)\\
-Male (d) &  &  &  & 0.170* & 0.173*\\
- &  &  &  & (0.100) & (0.100)\\
-Treatment: Ex Ante Personal (d) & -0.144 & -0.129 & -0.133 & -0.152 & -0.149\\
- & (0.139) & (0.142) & (0.141) & (0.139) & (0.139)\\
-Treatment: Ex Post Impersonal (d) & -0.067 & -0.065 & -0.065 & -0.052 & -0.051\\
- & (0.137) & (0.139) & (0.139) & (0.139) & (0.139)\\
-Treatment: Ex Post Personal (d) & 0.277* & 0.266* & 0.265* & 0.267* & 0.267*\\
- & (0.141) & (0.144) & (0.144) & (0.144) & (0.144)\\
-(Intercept) & 6.925*** & 7.356*** & 7.286*** & 7.993*** & 8.006***\\
- & (0.112) & (0.133) & (0.149) & (0.211) & (0.186)\\
-\midrule
-Num.Obs. & 6003 & 6003 & 6003 & 6003 & 6003\\
-R2 & 0.279 & 0.290 & 0.290 & 0.297 & 0.296\\
-Joint p-value on treatment dummies: & 0.020 & 0.039 & 0.037 & 0.027 & 0.028\\
+& (1) & (2) & (3) & (4) & (5) \\ \midrule %% TinyTableHeader
+Talent (d)                          & \num{-3.731}*** & \num{-3.380}*** & \num{-3.393}*** & \num{-3.505}*** & \num{-3.399}*** \\
+& (\num{0.107})   & (\num{0.109})   & (\num{0.207})   & (\num{0.209})   & (\num{0.109})   \\
+Effort (d)                          & \num{-4.076}*** & \num{-3.587}*** & \num{-3.269}*** & \num{-3.462}*** & \num{-3.613}*** \\
+& (\num{0.111})   & (\num{0.121})   & (\num{0.226})   & (\num{0.233})   & (\num{0.122})   \\
+Age (years)                         &                  &                  &                  & \num{-0.014}*** & \num{-0.014}*** \\
+&                  &                  &                  & (\num{0.003})   & (\num{0.003})   \\
+Left (d)                            &                  &                  &                  & \num{0.121}     & \num{0.119}     \\
+&                  &                  &                  & (\num{0.115})   & (\num{0.115})   \\
+High income (d)                     &                  &                  &                  & \num{-0.149}    & \num{-0.149}    \\
+&                  &                  &                  & (\num{0.108})   & (\num{0.108})   \\
+High education (d)                  &                  &                  &                  & \num{-0.165}    & \num{-0.167}    \\
+&                  &                  &                  & (\num{0.109})   & (\num{0.109})   \\
+Treatment: Ex Ante Personal (d)     & \num{-0.145}    & \num{-0.129}    & \num{-0.133}    & \num{-0.152}    & \num{-0.150}    \\
+& (\num{0.139})   & (\num{0.142})   & (\num{0.141})   & (\num{0.139})   & (\num{0.139})   \\
+Treatment: Ex Post Impersonal (d)   & \num{-0.068}    & \num{-0.066}    & \num{-0.066}    & \num{-0.054}    & \num{-0.052}    \\
+& (\num{0.137})   & (\num{0.139})   & (\num{0.139})   & (\num{0.139})   & (\num{0.139})   \\
+Treatment: Ex Post Personal (d)     & \num{0.277}**   & \num{0.266}*    & \num{0.265}*    & \num{0.267}*    & \num{0.267}*    \\
+& (\num{0.141})   & (\num{0.145})   & (\num{0.144})   & (\num{0.144})   & (\num{0.144})   \\
+(Intercept)                         & \num{6.925}***  & \num{7.356}***  & \num{7.286}***  & \num{8.166}***  & \num{8.181}***  \\
+& (\num{0.112})   & (\num{0.133})   & (\num{0.149})   & (\num{0.236})   & (\num{0.206})   \\
+Num.Obs.                            & \num{6003}      & \num{6003}      & \num{6003}      & \num{6003}      & \num{6003}      \\
+R2                                  & \num{0.279}     & \num{0.290}     & \num{0.290}     & \num{0.297}     & \num{0.296}     \\
+AIC                                 & \num{30936.3}   & \num{30846.0}   & \num{30846.5}   & \num{30803.4}   & \num{30800.8}   \\
+BIC                                 & \num{30983.2}   & \num{30899.6}   & \num{30913.5}   & \num{30903.9}   & \num{30887.9}   \\
+RMSE                                & \num{3.02}      & \num{3.01}      & \num{3.01}      & \num{2.99}      & \num{2.99}      \\
+Std.Errors                          & by: id           & by: id           & by: id           & by: id           & by: id           \\
+Joint p-value on treatment dummies: & 0.020            & 0.038            & 0.036            & 0.027            & 0.028            \\
 \bottomrule
-\multicolumn{6}{l}{\rule{0pt}{1em}* p $<$ 0.1, ** p $<$ 0.05, *** p $<$ 0.01}\\
-\end{tabular}
+\end{talltblr}
 \end{table}

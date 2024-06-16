@@ -2,12 +2,13 @@
 title: "survey-results"
 author: "Erik Ø. Sørensen"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output: 
+  html_document: 
+    toc: true
 ---
 
 ```{r setup}
 library(tidyverse)
-library(stargazer)
 library(multiwayvcov)
 library(here)
 library(multcomp)
