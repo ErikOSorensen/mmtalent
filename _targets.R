@@ -1,4 +1,5 @@
 library("targets")
+library("tarchetypes")
 source(here::here("R", "data_transforms.R"))
 source(here::here("R", "utility.R"))
 source(here::here("R", "descriptives.R"))
@@ -7,8 +8,7 @@ source(here::here("R", "experiment_functions.R"))
 source(here::here("R", "consort_graphs.R"))
 options(tidyverse.quiet = TRUE)
 tar_option_set(
-  packages = c("tidyverse", "multcomp", "gt", "consort", "sjlabelled"),
-  error = "null"
+  packages = c("tidyverse", "multcomp", "gt", "consort", "sjlabelled")
 )
 
 
@@ -83,5 +83,8 @@ list(
   tar_target(extreme_shares_graph,
              extreme_shares(mmtalent)),
   tar_target(consort_diagram,
-             mmtalent_consort(survey_df))
+             mmtalent_consort(survey_df)),
+  tar_render(experiment_results, here::here("reports","experiment-results.Rmd")),
+  tar_render(survey_results, here::here("reports","survey-results.Rmd")),
+  tar_render(descriptive_balance_tables, here::here("reports","descriptive_balance_tables.Rmd"))
 )

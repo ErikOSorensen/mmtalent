@@ -8,7 +8,7 @@ mmtalent_consort <- function(data) {
 }
 
 disposition_data <- function(data) {
-  data |>
+  ndata <- data |>
     mutate(
       exclusion1 = case_when(
         completion_state == 1 ~ "Did not consent to terms",
@@ -31,11 +31,13 @@ disposition_data <- function(data) {
         treatment == "ExPostPersonal" ~ "trt. EPP"
       ),
       final = ifelse(completion_state==5, observationid, NA)) |>
-    select(c(observationid, demographics, allocated, treatment, final, exclusion1, exclusion2, exclusion3))
+    dplyr::select(c("observationid", "demographics", "allocated", "treatment", "final", "exclusion1", "exclusion2", "exclusion3"))
+
+  ndata
 }
 
-apply_dispositions <- function(data) {
-  data |> consort_plot(
+apply_dispositions <- function(mdata) {
+  mdata |> consort_plot(
     orders  = c(observationid = "Responded to invitation",
                 exclusion1 = "Excluded from participation",
                 demographics = "Available for allocation",
