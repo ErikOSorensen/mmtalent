@@ -82,8 +82,7 @@ in the situation.
 
 Now, we need to turn the data around a bit first:
 ```{r}
-subjectives_dt <- long_attitudes(mmtalent) %>%
-  subjectives()
+tar_load(subjectives_dt)
 subjectives_dt %>% sample_n(3) 
 ```
 
@@ -94,14 +93,13 @@ $A_{i,t}\in[0,10]$ is the fairness attitude, $B_{i,t}\in[0,10]$ is the control b
 $X_i$ is a set of individual controls, and $\phi_t$ is a set of fixed effect for each factor.
 
 ```{r}
-survey_regressions_list <- survey_regressions(subjectives_dt)
-subjectives_dt %>% janitor::clean_names() %>% haven::write_dta("subjectives.dta")
+tar_load(survey_regressions_list)
 survey_names <- c('Talent'='Talent (d)',
                   'Effort'='Effort (d)',
                    '`Belief about individual control`'='Belief about control (0-10)',
                   'Talent:`Belief about individual control`' = 'Talent x Belief about control',
                   'Effort:`Belief about individual control`' = 'Effort x Belief about control',
-                  'age' = 'Age (years)',
+                  'age_high' = 'High age (d)',
                   'leftTRUE' = 'Left (d)',
                   'high_incomeTRUE' = 'High income (d)',
                   'high_eduTRUE' = 'High education (d)',
@@ -110,19 +108,18 @@ survey_names <- c('Talent'='Talent (d)',
                   'treatmentExPostImpersonal'	= "Treatment: Ex Post Impersonal (d)",
                   'treatmentExPostPersonal' = "Treatment: Ex Post Personal (d)",
                   '(Intercept)'='(Intercept)')
-
 ```
 
 ```{r echo=FALSE}
-modelsummary::modelsummary(survey_regressions_list$without_treatment,
-                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
-                           gof_omit = "R2 Adj.|se_type",
-                           coef_map = survey_names)
-modelsummary::modelsummary(survey_regressions_list$without_treatment,
+t1 <- modelsummary::modelsummary(survey_regressions_list$without_treatment,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            gof_omit = "R2 Adj.|se_type",
                            coef_map = survey_names,
-                           output=here::here("tables","attitudes_controlbelief_regression.tex"))
+                           output = "gt") |>
+  tab_spanner(label = "Fairness of Talent,Effort,Luck determining income", columns = 2:6)
+t1
+t1 |> as_latex() |>
+    cat(file=here::here("tables","attitudes_controlbelief_regression.tex"))
 ```
 
 
@@ -165,17 +162,16 @@ surv_joint_tests_wrow <- tibble::tribble(~v, ~p1, ~p2, ~p3, ~p4, ~p5,
 
 
 ```{r echo=FALSE}
-modelsummary::modelsummary(survey_regressions_list$with_treatment,
-                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
-                           gof_omit = "R2 Adj.|se_type",
-                           coef_map = survey_names,
-                           add_rows = surv_joint_tests_wrow)
-modelsummary::modelsummary(survey_regressions_list$with_treatment,
+t2 <- modelsummary::modelsummary(survey_regressions_list$with_treatment,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            gof_omit = "R2 Adj.|se_type",
                            coef_map = survey_names,
                            add_rows = surv_joint_tests_wrow,
-                           output=here::here("tables","attitudes_controlbelief_regression_withT.tex"))
+                           output = "gt") |>
+  tab_spanner(label = "Fairness of Talent,Effort,Luck determining income", columns = 2:6)
+t2
+t2 |> as_latex() |>
+    cat(file=here::here("tables","attitudes_controlbelief_regression_withT.tex"))
 ```
 
 

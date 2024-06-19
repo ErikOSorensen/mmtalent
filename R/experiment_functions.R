@@ -1,34 +1,46 @@
 implemented_inequality <- function(dt) {
+  dt <- dt |> mutate(male = gender=="male")
   R1 <- lm(gini ~ treatment, data = dt, weights=wgt)
-  R2 <- lm(gini ~ treatment + age + left + high_edu + high_income + as.factor(gender),
+  R2 <- lm(gini ~ treatment + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
   R3 <- lm(nothingtw ~ treatment, data = dt, weights=wgt)
-  R4 <- lm(nothingtw ~ treatment + age + left + high_edu + high_income + as.factor(gender),
+  R4 <- lm(nothingtw ~ treatment + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
 
-  list("(1)"=R1,"(2)"=R2,"(3)"=R3,"(4)"=R4)
+  list(R1,R2,R3,R4)
 }
 
 
 implemented_inequality_heterogeneity <- function(dt) {
   dt <- dt |> mutate(male = gender=="male")
-  A1 <- lm(gini ~ timing + timing*age + left + high_edu + high_income + male,
+  A1 <- lm(gini ~ timing + timing*age_high + age_high + left + high_edu + high_income + male ,
            data = dt, weights=wgt)
-  A2 <- lm(gini ~ timing + timing*left + left + high_edu + high_income + male,
+  A2 <- lm(gini ~ timing + timing*left + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
-  A3 <- lm(gini ~ timing + timing*high_edu + left + high_edu + high_income + male,
+  A3 <- lm(gini ~ timing + timing*high_edu + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
-  A4 <- lm(gini ~ timing + timing*high_income + left + high_edu + high_income + male,
+  A4 <- lm(gini ~ timing + timing*high_income + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
-  A5 <- lm(gini ~ timing + timing*male + left + high_edu + high_income + male,
+  A5 <- lm(gini ~ timing + timing*male + left + age_high + high_edu + high_income + male,
            data = dt, weights=wgt)
-  list(A1,A2,A3,A4,A5)
+  Alist <- list(A1,A2,A3,A4,A5)
 
+  B1 <- lm(nothingtw ~ timing + timing*age_high + age_high + left + high_edu + high_income + male ,
+           data = dt, weights=wgt)
+  B2 <- lm(nothingtw ~ timing + timing*left + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  B3 <- lm(nothingtw ~ timing + timing*high_edu + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  B4 <- lm(nothingtw ~ timing + timing*high_income + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  B5 <- lm(nothingtw ~ timing + timing*male + left + age_high + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  Blist <- list(B1,B2,B3,B4,B5)
+
+  All <- c(Alist,Blist)
+
+  list("A"=Alist, "B"=Blist, "All"=All)
 }
-
-
-
-
 
 
 histogram_distributions <- function(dt) {

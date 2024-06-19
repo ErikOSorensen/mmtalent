@@ -1,41 +1,32 @@
-\begin{table}
-\centering
-\begin{talltblr}[         %% tabularray outer open
-entry=none,label=none,
-note{}={* p < 0.1, ** p < 0.05, *** p < 0.01},
-]                     %% tabularray outer close
-{                     %% tabularray inner open
-colspec={Q[]Q[]Q[]Q[]Q[]Q[]},
-column{1}={halign=l,},
-column{2}={halign=c,},
-column{3}={halign=c,},
-column{4}={halign=c,},
-column{5}={halign=c,},
-column{6}={halign=c,},
-hline{16}={1,2,3,4,5,6}{solid, 0.05em, black},
-}                     %% tabularray inner close
+\setlength{\LTpost}{0mm}
+\begin{longtable}{lccccc}
 \toprule
-& (1) & (2) & (3) & (4) & (5) \\ \midrule %% TinyTableHeader
-Talent (d)         & \num{-3.731}*** & \num{-3.376}*** & \num{-3.373}*** & \num{-3.482}*** & \num{-3.395}*** \\
-& (\num{0.107})   & (\num{0.109})   & (\num{0.206})   & (\num{0.208})   & (\num{0.109})   \\
-Effort (d)         & \num{-4.076}*** & \num{-3.582}*** & \num{-3.267}*** & \num{-3.457}*** & \num{-3.608}*** \\
-& (\num{0.111})   & (\num{0.121})   & (\num{0.225})   & (\num{0.232})   & (\num{0.122})   \\
-Age (years)        &                  &                  &                  & \num{-0.014}*** & \num{-0.014}*** \\
-&                  &                  &                  & (\num{0.003})   & (\num{0.003})   \\
-Left (d)           &                  &                  &                  & \num{0.125}     & \num{0.123}     \\
-&                  &                  &                  & (\num{0.115})   & (\num{0.115})   \\
-High income (d)    &                  &                  &                  & \num{-0.145}    & \num{-0.145}    \\
-&                  &                  &                  & (\num{0.109})   & (\num{0.109})   \\
-High education (d) &                  &                  &                  & \num{-0.182}*   & \num{-0.184}*   \\
-&                  &                  &                  & (\num{0.110})   & (\num{0.110})   \\
-(Intercept)        & \num{6.944}***  & \num{7.381}***  & \num{7.306}***  & \num{8.171}***  & \num{8.194}***  \\
-& (\num{0.075})   & (\num{0.102})   & (\num{0.121})   & (\num{0.219})   & (\num{0.188})   \\
-Num.Obs.           & \num{6003}      & \num{6003}      & \num{6003}      & \num{6003}      & \num{6003}      \\
-R2                 & \num{0.277}     & \num{0.288}     & \num{0.288}     & \num{0.295}     & \num{0.294}     \\
-AIC                & \num{30947.7}   & \num{30855.8}   & \num{30856.4}   & \num{30814.2}   & \num{30811.5}   \\
-BIC                & \num{30974.5}   & \num{30889.3}   & \num{30903.3}   & \num{30894.6}   & \num{30878.5}   \\
-RMSE               & \num{3.02}      & \num{3.01}      & \num{3.01}      & \num{2.99}      & \num{2.99}      \\
-Std.Errors         & by: id           & by: id           & by: id           & by: id           & by: id           \\
+ & \multicolumn{5}{c}{Fairness of Talent,Effort,Luck determining income} \\ 
+\cmidrule(lr){2-6}
+  & (1) & (2) & (3) & (4) & (5) \\ 
+\midrule\addlinespace[2.5pt]
+Talent (d) & -3.731*** & -3.376*** & -3.373*** & -3.467*** & -3.391*** \\ 
+ & (0.107) & (0.109) & (0.206) & (0.210) & (0.109) \\ 
+Effort (d) & -4.076*** & -3.582*** & -3.267*** & -3.430*** & -3.602*** \\ 
+ & (0.111) & (0.121) & (0.225) & (0.231) & (0.122) \\ 
+High age (d) &  &  &  & -0.432*** & -0.438*** \\ 
+ &  &  &  & (0.105) & (0.102) \\ 
+Left (d) &  &  &  & 0.119 & 0.116 \\ 
+ &  &  &  & (0.114) & (0.115) \\ 
+High income (d) &  &  &  & -0.147 & -0.148 \\ 
+ &  &  &  & (0.108) & (0.108) \\ 
+High education (d) &  &  &  & -0.195* & -0.197* \\ 
+ &  &  &  & (0.110) & (0.110) \\ 
+(Intercept) & 6.944*** & 7.381*** & 7.306*** & 7.793*** & 7.820*** \\ 
+ & (0.075) & (0.102) & (0.121) & (0.168) & (0.141) \\ 
+Num.Obs. & 6003 & 6003 & 6003 & 6003 & 6003 \\ 
+R2 & 0.277 & 0.288 & 0.288 & 0.294 & 0.294 \\ 
+AIC & 30947.7 & 30855.8 & 30856.4 & 30819.2 & 30816.5 \\ 
+BIC & 30974.5 & 30889.3 & 30903.3 & 30899.6 & 30883.5 \\ 
+RMSE & 3.02 & 3.01 & 3.01 & 3.00 & 3.00 \\ 
+Std.Errors & by: id & by: id & by: id & by: id & by: id \\ 
 \bottomrule
-\end{talltblr}
-\end{table}
+\end{longtable}
+\begin{minipage}{\linewidth}
+* p < 0.1, ** p < 0.05, *** p < 0.01\\
+\end{minipage}

@@ -69,6 +69,14 @@ list(
     format_survey_balance_table_timing(survey_balance_rows_timing_df)
   ),
   tar_target(
+    survey_regressions_list,
+    survey_regressions(subjectives_dt)
+  ),
+  tar_target(
+    subjectives_dt,
+    long_attitudes(mmtalent) |> subjectives()
+  ),
+  tar_target(
     implemented_inequality_list,
     implemented_inequality(mmtalent)
   ),

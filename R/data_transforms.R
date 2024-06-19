@@ -10,6 +10,7 @@ prepare_data <- function(df) {
         )
       ),
       gender = sjlabelled::as_label(gender),
+      age_high = as.numeric( age> median(age) ),
       left = (polpref < 3),
       nothingtw = 1*(payment_low_worker %in% c(2, 8)),
       gini = abs(payment_low_worker - payment_high_worker)/10,

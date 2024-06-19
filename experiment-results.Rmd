@@ -42,28 +42,27 @@ outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
                    'treatmentExPostImpersonal' = 'Ex Post Impersonal (d)',
                    'treatmentExPostPersonal' = 'Ex Post Personal (d)',
                   'age' = 'Age (years)',
+                  'age_high' = 'High age (d)',
                   'leftTRUE' = 'Left (d)',
                   'high_incomeTRUE' = 'High income (d)',
                   'high_eduTRUE' = 'High education (d)',
-                  'as.factor(gender)male' = 'Male (d)',
+                  'maleTRUE' = 'Male (d)',
                   '(Intercept)'='(Intercept)')
 ```
 
 
 
-Table must fix to use GT instead of Kable...:
 ```{r echo=FALSE}
-modelsummary::modelsummary(tar_read(implemented_inequality_list),
+tar_load(implemented_inequality_list)
+reg1 <- modelsummary::modelsummary(implemented_inequality_list,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            coef_map = outcome_names,
-                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") %>%
-  kableExtra::add_header_above(c(" "=1, "Gini"=2, "Nothing to worst of"=2))
-modelsummary::modelsummary(tar_read(implemented_inequality_list),
-                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
-                           coef_map = outcome_names,
-                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F",
-                           output = 'latex') %>%
-    kableExtra::add_header_above(c(" "=1, "Gini"=2, "Nothing to worst of"=2)) %>%
+                           output = "gt",
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") |>
+  tab_spanner(label="Gini", columns=2:3) |> 
+  tab_spanner(label="Nothing to worst of", columns = 4:5)
+reg1
+reg1 |> as_latex() |>
   cat(file=here::here("tables","inequality_treatment_regression.tex"))
 ```
 
@@ -73,5 +72,70 @@ modelsummary::modelsummary(tar_read(implemented_inequality_list),
 tar_load(extreme_shares_graph)
 extreme_shares_graph$a + extreme_shares_graph$b + plot_annotation(tag_levels = 'a')
 ggsave(here::here("figures", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
+```
+
+
+## Heterogeneity in treatment outcomefs
+
+Needs a new list of labels
+
+```{r}
+outcome_names_het1 <- c('timingExPost' = 'Ex Post (d)',
+                   'timingExPost:age_high' = "Ex Post X High age",
+                   'timingExPost:leftTRUE' = "Ex Post X Left",
+                   'timingExPost:high_eduTRUE' = "Ex Post X High education",
+                   'timingExPost:high_incomeTRUE' = "Ex Post X High income",
+                   'timingExPost:maleTRUE' = "Ex Post X male",
+                  'age_high' = 'High age (d)',
+                  'leftTRUE' = 'Left (d)',
+                  'high_incomeTRUE' = 'High income (d)',
+                  'high_eduTRUE' = 'High education (d)',
+                  'maleTRUE' = 'Male (d)',
+                  '(Intercept)'='(Intercept)')
+```
+
+
+
+```{r}
+tar_load(implemented_inequality_heterogeneity_list)
+lst1 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$A,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names_het1,
+                           output = "gt",
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
+  tab_spanner(label="Gini", columns=2:6) 
+lst1
+lst1 |> as_latex() |>
+  cat(file=here::here("tables","inequality_treatment_regression_het1.tex"))
+```
+
+I try the same for nothing to least off and a joint table.
+
+
+```{r}
+tar_load(implemented_inequality_heterogeneity_list)
+lst2 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$B,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names_het1,
+                           output = "gt",
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
+  tab_spanner(label="Nothing to worst off", columns=2:6) 
+lst2
+lst2 |> as_latex() |>
+  cat(file=here::here("tables","inequality_treatment_regression_het2.tex"))
+```
+
+```{r}
+tar_load(implemented_inequality_heterogeneity_list)
+lst3 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$All,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names_het1,
+                           output = "gt",
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
+  tab_spanner(label="Gini", columns=2:6) |>
+  tab_spanner(label="Nothing to worst off", columns=7:11)
+lst3
+lst3 |> as_latex() |>
+  cat(file=here::here("tables","inequality_treatment_regression_het3.tex"))
 ```
 
