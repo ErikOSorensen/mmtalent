@@ -96,9 +96,9 @@ $X_i$ is a set of individual controls, and $\phi_t$ is a set of fixed effect for
 tar_load(survey_regressions_list)
 survey_names <- c('Talent'='Talent (d)',
                   'Effort'='Effort (d)',
-                   '`Belief about individual control`'='Belief about control (0-10)',
-                  'Talent:`Belief about individual control`' = 'Talent x Belief about control',
-                  'Effort:`Belief about individual control`' = 'Effort x Belief about control',
+                   'Belief about individual control'='Belief about control (0-10)',
+                  'Talent:Belief about individual control' = 'Talent x Belief about control',
+                  'Effort:Belief about individual control' = 'Effort x Belief about control',
                   'age_high' = 'High age (d)',
                   'leftTRUE' = 'Left (d)',
                   'high_incomeTRUE' = 'High income (d)',
@@ -116,7 +116,7 @@ t1 <- modelsummary::modelsummary(survey_regressions_list$without_treatment,
                            gof_omit = "R2 Adj.|se_type",
                            coef_map = survey_names,
                            output = "gt") |>
-  tab_spanner(label = "Fairness of Talent,Effort,Luck determining income", columns = 2:6)
+  tab_spanner(label = "Unfairness of Talent,Effort,Luck determining income", columns = 2:6)
 t1
 t1 |> as_latex() |>
     cat(file=here::here("tables","attitudes_controlbelief_regression.tex"))
