@@ -11,11 +11,12 @@ library(targets)
 require(tidyverse)
 require(gt)
 require(patchwork)
+tar_load(mmtalent)
 ```
 
 
 # Histogram of distributions
-```{r echo=FALSE}
+```{r Dollars redistributed, echo=FALSE}
 tar_load(histogram_distribution_graph)
 histogram_distribution_graph
 ggsave(here::here("figures","histogram_transfers.pdf"), width = 16, height = 10, units = "cm")
@@ -23,11 +24,42 @@ ggsave(here::here("figures","histogram_transfers.pdf"), width = 16, height = 10,
 
 
 # Graph with average outcomes
-```{r echo=FALSE}
+```{r Mean Gini implemented by treatments, echo=FALSE}
 tar_load(average_distributions_graph)
-average_distributions_graph
+average_distributions_graph$graph
 ggsave(here::here("figures","average_ginis.pdf"), width = 16, height = 10, units = "cm")
 ```
+Means broken down by timing:
+
+```{r means broken down by timing, echo=FALSE}
+mmtalent |> group_by(timing) |> summarize(meanGINI = weighted.mean(gini, weights=wgt),
+                                          share_nothingtw = weighted.mean( nothingtw, weights=wgt)) 
+
+mmtalent |> lm(gini ~ timing, data=_, weights=wgt) |> summary() 
+mmtalent |> lm(nothingtw ~ timing, data=_, weights=wgt) |> summary()
+```
+
+
+
+
+Means broken down by personal.
+```{r means broken down by personal, echo=FALSE}
+mmtalent |> group_by(personal) |> summarize(meanGINI = weighted.mean(gini, weights=wgt),
+                                          share_nothingtw = weighted.mean( nothingtw, weights=wgt))
+mmtalent |> lm(gini ~ personal, data=_, weights=wgt) |> summary() 
+mmtalent |> lm(nothingtw ~ personal, data=_, weights=wgt) |> summary()
+```
+
+```{r}
+mmtalent |> lm(gini ~ timing*personal, weights=wgt, data=_) |>summary()
+mmtalent |> lm(nothingtw ~ timing*personal, weights=wgt, data=_) |>summary()
+
+
+```
+
+
+Testing 
+
 
 # Regressions
 
@@ -37,7 +69,7 @@ The second outcome is a dummy indicator for maximum inequality (or giving nothin
 worst off, "nothingtw" in the table below). 
 
 
-```{r}
+```{r Label mappings (main), include=FALSE}
 outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
                    'treatmentExPostImpersonal' = 'Ex Post Impersonal (d)',
                    'treatmentExPostPersonal' = 'Ex Post Personal (d)',
@@ -52,7 +84,7 @@ outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
 
 
 
-```{r echo=FALSE}
+```{r Implemented Inequality regressed on treatments, echo=FALSE}
 tar_load(implemented_inequality_list)
 reg1 <- modelsummary::modelsummary(implemented_inequality_list,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
@@ -66,20 +98,13 @@ reg1 |> as_latex() |>
   cat(file=here::here("tables","inequality_treatment_regression.tex"))
 ```
 
-# Graph of shares at extreme distributions
-
-```{r}
-tar_load(extreme_shares_graph)
-extreme_shares_graph$a + extreme_shares_graph$b + plot_annotation(tag_levels = 'a')
-ggsave(here::here("figures", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
-```
 
 
 ## Heterogeneity in treatment outcomefs
 
 Needs a new list of labels
 
-```{r}
+```{r Label mappings (heterogeneity table), include=FALSE}
 outcome_names_het1 <- c('timingExPost' = 'Ex Post (d)',
                    'timingExPost:age_high' = "Ex Post X High age",
                    'timingExPost:leftTRUE' = "Ex Post X Left",
@@ -95,37 +120,7 @@ outcome_names_het1 <- c('timingExPost' = 'Ex Post (d)',
 ```
 
 
-
-```{r}
-tar_load(implemented_inequality_heterogeneity_list)
-lst1 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$A,
-                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
-                           coef_map = outcome_names_het1,
-                           output = "gt",
-                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
-  tab_spanner(label="Gini", columns=2:6) 
-lst1
-lst1 |> as_latex() |>
-  cat(file=here::here("tables","inequality_treatment_regression_het1.tex"))
-```
-
-I try the same for nothing to least off and a joint table.
-
-
-```{r}
-tar_load(implemented_inequality_heterogeneity_list)
-lst2 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$B,
-                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
-                           coef_map = outcome_names_het1,
-                           output = "gt",
-                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
-  tab_spanner(label="Nothing to worst off", columns=2:6) 
-lst2
-lst2 |> as_latex() |>
-  cat(file=here::here("tables","inequality_treatment_regression_het2.tex"))
-```
-
-```{r}
+```{r Heterogeneity in treatment effects on implemented inequality, echo=FALSE}
 tar_load(implemented_inequality_heterogeneity_list)
 lst3 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$All,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
@@ -139,3 +134,10 @@ lst3 |> as_latex() |>
   cat(file=here::here("tables","inequality_treatment_regression_het3.tex"))
 ```
 
+# Graph of shares at extreme distributions (appendix)
+
+```{r Fraction of spectators choosing no and full redistribution (Appendix), echo=FALSE}
+tar_load(extreme_shares_graph)
+extreme_shares_graph$a + extreme_shares_graph$b + plot_annotation(tag_levels = 'a')
+ggsave(here::here("figures", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
+```

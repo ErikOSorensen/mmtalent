@@ -56,14 +56,16 @@ histogram_distributions <- function(dt) {
 
 
 average_distributions <- function(dt) {
-  dt |> group_by(treatment) |> summarize(se_gini = weighted.se(gini, wgt),
-                                           mean_gini = weighted.mean(gini, wgt)) |>
+  df <-  dt |> group_by(treatment) |> summarize(se_gini = weighted.se(gini, wgt),
+                                           mean_gini = weighted.mean(gini, wgt))
+  gr <- df |>
   ggplot(aes(x=treatment, y=mean_gini)) +
   geom_point() +
   geom_errorbar(aes(ymin=mean_gini - se_gini, ymax=mean_gini + se_gini), width=0.2) +
   labs(y="Mean inequality (Gini) \u00B1 s.e.m.",
        x=element_blank()) +
   theme_minimal()
+  list("numbers"=df, "graph"=gr)
 }
 
 extreme_shares <- function(dt) {

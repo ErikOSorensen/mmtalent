@@ -12,6 +12,7 @@ library(tidyverse)
 library(multiwayvcov)
 library(here)
 library(multcomp)
+library(gt)
 require(targets)
 require(patchwork)
 source(here::here("R","utility.R"))
@@ -27,6 +28,14 @@ before going into the individual level data.
 long_attitudes(mmtalent) %>% survey_bars(numobs = FALSE, ylimits = c(0,8))
 ggsave(here::here("figures","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
 ```
+
+```{r}
+long_attitudes(mmtalent) |>
+  group_by(outcometype, fo, outcome) |>
+    summarize(m = weighted.mean(value, wgt),
+              se = weighted.se(value, wgt))
+```
+
 
 And the corresponding histograms:
 ```{r}
@@ -103,7 +112,7 @@ survey_names <- c('Talent'='Talent (d)',
                   'leftTRUE' = 'Left (d)',
                   'high_incomeTRUE' = 'High income (d)',
                   'high_eduTRUE' = 'High education (d)',
-                  'as.factor(gender)male' = 'Male (d)',
+                  'maleTRUE' = 'Male (d)',
                   'treatmentExAntePersonal' = "Treatment: Ex Ante Personal (d)",
                   'treatmentExPostImpersonal'	= "Treatment: Ex Post Impersonal (d)",
                   'treatmentExPostPersonal' = "Treatment: Ex Post Personal (d)",

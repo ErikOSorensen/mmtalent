@@ -9,6 +9,12 @@ prepare_data <- function(df) {
           treatment %in% c("ExPostImpersonal", "ExPostPersonal") ~ "ExPost"
         )
       ),
+      personal = factor(
+        case_when(
+          treatment %in% c("ExAntePersonal","ExPostPersonal") ~ "Personal",
+          treatment %in% c("ExAnteImpersonal","ExPostImpersonal") ~ "Impersonal",
+        )
+      ),
       gender = sjlabelled::as_label(gender),
       age_high = as.numeric( age> median(age) ),
       left = (polpref < 3),

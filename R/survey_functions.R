@@ -188,6 +188,8 @@ subjectives <- function(mmtalent_long) {
 
 
 survey_regressions <- function(subjective_data) {
+  subjective_data <- subjective_data |> mutate(male = gender=="male")
+
   AB1 <- estimatr::lm_robust(`Unfair inequality` ~ Talent + Effort, data=subjective_data, weights=wgt, clusters=id)
   AB2 <- estimatr::lm_robust(`Unfair inequality` ~ Talent + Effort + `Belief about individual control`,
                              data=subjective_data, weights=wgt, clusters=id)
@@ -196,9 +198,9 @@ survey_regressions <- function(subjective_data) {
                               data=subjective_data, weights=wgt, clusters=id)
   AB4 <- estimatr::lm_robust( `Unfair inequality`  ~ Talent + Effort + Talent*`Belief about individual control` +
                                 Effort*`Belief about individual control` + `Belief about individual control` +
-                                age_high + left + high_income + high_edu + as.factor(gender), data=subjective_data, weights=wgt, clusters=id)
+                                age_high + left + high_income + high_edu + male, data=subjective_data, weights=wgt, clusters=id)
   AB5 <- estimatr::lm_robust( `Unfair inequality`  ~ Talent + Effort + `Belief about individual control` +
-                                age_high + left + high_income + high_edu + as.factor(gender), data=subjective_data, weights=wgt, clusters=id)
+                                age_high + left + high_income + high_edu + male, data=subjective_data, weights=wgt, clusters=id)
 
   AB1t <- estimatr::lm_robust(`Unfair inequality` ~ Talent + Effort + treatment, data=subjective_data, weights=wgt, clusters=id)
   AB2t <- estimatr::lm_robust(`Unfair inequality` ~ Talent + Effort + `Belief about individual control` + treatment,
@@ -208,9 +210,9 @@ survey_regressions <- function(subjective_data) {
                               data=subjective_data, weights=wgt, clusters=id)
   AB4t <- estimatr::lm_robust( `Unfair inequality`  ~ Talent + Effort + Talent*`Belief about individual control` +
                                 Effort*`Belief about individual control` + `Belief about individual control` +
-                                age_high + left + high_income + high_edu + as.factor(gender) + treatment, data=subjective_data, weights=wgt, clusters=id)
+                                age_high + left + high_income + high_edu + male + treatment, data=subjective_data, weights=wgt, clusters=id)
   AB5t <- estimatr::lm_robust( `Unfair inequality`  ~ Talent + Effort + `Belief about individual control` +
-                                age_high + left + high_income + high_edu + as.factor(gender) + treatment, data=subjective_data, weights=wgt, clusters=id)
+                                age_high + left + high_income + high_edu + male + treatment, data=subjective_data, weights=wgt, clusters=id)
 
   list(without_treatment = list(AB1,AB2,AB3,AB4,AB5),
        with_treatment = list(AB1t,AB2t,AB3t,AB4t,AB5t))
