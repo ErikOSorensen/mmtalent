@@ -8,7 +8,7 @@ source(here::here("R", "experiment_functions.R"))
 source(here::here("R", "consort_graphs.R"))
 options(tidyverse.quiet = TRUE)
 tar_option_set(
-  packages = c("tidyverse", "multcomp", "gt", "consort", "sjlabelled")
+  packages = c("tidyverse", "multcomp", "gt", "consort", "sjlabelled","broom","estimatr")
 )
 
 
@@ -91,6 +91,14 @@ list(
   tar_target(
     average_distributions_graph,
     average_distributions(mmtalent)
+  ),
+  tar_target(
+    survey_heterogeneity,
+    survey_heterogeneity_figure(subjectives_dt)
+  ),
+  tar_target(
+    inequality_heterogeneity,
+    inequality_heterogeneity_graph(mmtalent)
   ),
   tar_target(extreme_shares_graph,
              extreme_shares(mmtalent)),

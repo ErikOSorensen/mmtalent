@@ -71,7 +71,7 @@ worst off, "nothingtw" in the table below).
 
 ```{r Label mappings (main), include=FALSE}
 outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
-                   'treatmentExPostImpersonal' = 'Ex Post Impersonal (d)',
+                   'treatmentExAnteImpersonal' = 'Ex Ante Impersonal (d)',
                    'treatmentExPostPersonal' = 'Ex Post Personal (d)',
                   'age' = 'Age (years)',
                   'age_high' = 'High age (d)',
@@ -105,12 +105,12 @@ reg1 |> as_latex() |>
 Needs a new list of labels
 
 ```{r Label mappings (heterogeneity table), include=FALSE}
-outcome_names_het1 <- c('timingExPost' = 'Ex Post (d)',
-                   'timingExPost:age_high' = "Ex Post X High age",
-                   'timingExPost:leftTRUE' = "Ex Post X Left",
-                   'timingExPost:high_eduTRUE' = "Ex Post X High education",
-                   'timingExPost:high_incomeTRUE' = "Ex Post X High income",
-                   'timingExPost:maleTRUE' = "Ex Post X male",
+outcome_names_het1 <- c('timingExAnte' = 'Ex Ante (d)',
+                   'timingExAnte:age_high' = "Ex Ante X High age",
+                   'timingExAnte:leftTRUE' = "Ex Ante X Left",
+                   'timingExAnte:high_eduTRUE' = "Ex Ante X High education",
+                   'timingExAnte:high_incomeTRUE' = "Ex Ante X High income",
+                   'timingExAnte:maleTRUE' = "Ex Ante X male",
                   'age_high' = 'High age (d)',
                   'leftTRUE' = 'Left (d)',
                   'high_incomeTRUE' = 'High income (d)',
@@ -128,11 +128,23 @@ lst3 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$All
                            output = "gt",
                            gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
   tab_spanner(label="Gini", columns=2:6) |>
-  tab_spanner(label="Nothing to worst off", columns=7:11)
+  tab_spanner(label="Maximum Inequality", columns=7:11)
 lst3
 lst3 |> as_latex() |>
   cat(file=here::here("tables","inequality_treatment_regression_het3.tex"))
 ```
+
+Presenting heterogeneity in a figure instead:
+
+```{r}
+tar_load(inequality_heterogeneity)
+L <- inequality_heterogeneity
+
+L$graph1 / L$graph2 + plot_annotation(tag_levels = "a") + plot_layout(nrow=2)
+ggsave(here::here("figures","experiment_heterogeneity.pdf"), width = 16, height=14, units="cm")
+```
+
+
 
 # Graph of shares at extreme distributions (appendix)
 

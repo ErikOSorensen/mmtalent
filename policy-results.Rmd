@@ -1,0 +1,56 @@
+---
+title: "Policy Attitudes"
+author: "Erik Ø. Sørensen"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(gt)
+library(targets)
+library(sjlabelled)
+library(modelsummary)
+```
+
+
+```{r}
+tar_load(mmtalent)
+df <- mmtalent |>  sjlabelled::remove_all_labels()
+
+l1 <- df |> lm(6-redist_pref ~ luck_fair, data=_, weights=wgt)
+l2 <- df |> lm(6-redist_pref ~ talent_fair, data=_, weights=wgt)
+l3 <- df |> lm(6-redist_pref ~ effort_fair, data=_, weights=wgt)
+l4 <- df |> lm(6-redist_pref ~ luck_control, data=_, weights=wgt)
+l5 <- df |> lm(6-redist_pref ~ talent_control, data=_, weights=wgt)
+l6 <- df |> lm(6-redist_pref ~ effort_control, data=_, weights=wgt)
+l7 <- df |> lm(6-redist_pref ~ gini, data=_, weights=wgt)
+l8 <- df |> lm(6-redist_pref ~ luck_fair + talent_fair + effort_fair + 
+                 luck_control + talent_control + effort_control + gini, 
+               data=_, weights=wgt)
+
+
+
+outcome_names <- c("luck_fair"="Luck is unfair cause (0--10)",
+                   "talent_fair"="Talent is unfair cause (0--10)",
+                   "effort_fair"="Effort is unfair cause (0--10)",
+                   "luck_control"="Luck is under control (0--10)",
+                   "talent_control"="Talent is under control (0--10)",
+                   "effort_control"="Effort is under control (0--10)",
+                   "gini"="Implemented inequality (Gini: 0--0.6)")
+
+
+table2 <- list(l1,l2,l3,l4,l5,l6,l7,l8) |> modelsummary(output = "gt", 
+                               stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names,
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |> 
+  fmt_number(decimals=3) |>
+  tab_spanner(label="'Society should aim to equalise incomes' (agreement, 1--5)",
+              columns=2:8)
+table2 
+table2 |> gtsave(here::here("tables","policy_attitudes.tex"))
+
+```
+
+
+

@@ -11,6 +11,94 @@ implemented_inequality <- function(dt) {
 }
 
 
+inequality_heterogeneity_graph <- function(mmtalent) {
+  dt <- mmtalent |> mutate(exante = as.numeric(timing =="ExAnte"))
+  subsets <- tibble(
+    group = c("Age", "Age", "Politics", "Politics", "Income", "Income", "Education", "Education", "Gender", "Gender"),
+    subset_name = c("Young", "Old", "Left", "Right", "Low income", "High income", "Low education", "High education", "Male", "Female"),
+    filter_condition = list(
+      dt |> filter(age_high==0),
+      dt |> filter(age_high==1),
+      dt |> filter(left==TRUE),
+      dt |> filter(left==FALSE),
+      dt |> filter(high_income==FALSE),
+      dt |> filter(high_income==TRUE),
+      dt |> filter(high_edu==FALSE),
+      dt |> filter(high_edu==TRUE),
+      dt |> filter(gender=="male"),
+      dt |> filter(gender=="female")
+    )
+  )
+  results1 <- subsets |>
+    mutate(
+      model_results = map(filter_condition, ~ {
+        lm(gini ~ exante, data=.x, weights=wgt) |>
+          tidy() |>
+          filter(term == "exante")
+      })
+    ) |>
+    unnest(model_results) |>
+    dplyr::select(group, subset_name, estimate, std.error)
+  results1 <- results1 |>
+    mutate(subset_name = factor(subset_name, levels = unique(subset_name)))
+  results2 <- subsets |>
+    mutate(
+      model_results = map(filter_condition, ~ {
+        lm(nothingtw ~ exante, data=.x, weights=wgt) |>
+          tidy() |>
+          filter(term == "exante")
+    })
+    ) |>
+    unnest(model_results) |>
+    dplyr::select(group, subset_name, estimate, std.error)
+  results2 <- results2 |>
+    mutate(subset_name = factor(subset_name, levels = unique(subset_name)))
+
+  graph1 <- results1 |> ggplot(aes(x = estimate, y = subset_name)) +
+    geom_vline(xintercept = 0, color = "black", size = 0.5, linetype = "solid") +
+    geom_point() +
+    geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
+    facet_wrap(~ group, scales = "free_y", ncol = 1, switch = "y") +
+    scale_x_continuous(limits = c(-0.03, 0.25), expand = expansion(mult = c(0.1, 0.1)),
+                       breaks = c(0,0.05,0.10,0.15,0.20)) +
+    labs(
+      x = "Estimated effect of Ex Ante timing \u00B1 95% CI",
+      y = element_blank(),
+      title = "Effects on Gini"
+    ) +
+    theme_minimal() +
+    theme(
+      panel.spacing = unit(0, "lines"),
+      strip.text = element_text(size = 12),
+      strip.placement = "outside",
+      strip.text.y.left = element_text(angle = 0),
+      plot.title.position = "plot"
+    )
+
+  graph2 <- results2 |> ggplot(aes(x = estimate, y = subset_name)) +
+    geom_vline(xintercept = 0, color = "black", size = 0.5, linetype = "solid") +
+    geom_point() +
+    geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
+    facet_wrap(~ group, scales = "free_y", ncol = 1, switch = "y") +
+    scale_x_continuous(limits = c(-0.03, 0.25), expand = expansion(mult = c(0.1, 0.1)),
+                       breaks = c(0,0.05,0.10,0.15,0.20)) +
+    labs(
+      x = "Estimated effect of Ex Ante timing \u00B1 95% CI",
+      y = element_blank(),
+      title = "Effects on share that implements maximum inequality"
+    ) +
+    theme_minimal() +
+    theme(
+      panel.spacing = unit(0, "lines"),
+      strip.text = element_text(size = 12),
+      strip.placement = "outside",
+      strip.text.y.left = element_text(angle = 0),
+      plot.title.position = "plot")
+
+  list("results1"=results1,  "results2"=results2, "graph1"=graph1, "graph2"=graph2)
+}
+
+
 implemented_inequality_heterogeneity <- function(dt) {
   dt <- dt |> mutate(male = gender=="male")
   A1 <- lm(gini ~ timing + timing*age_high + age_high + left + high_edu + high_income + male ,

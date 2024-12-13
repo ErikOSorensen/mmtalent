@@ -217,3 +217,54 @@ survey_regressions <- function(subjective_data) {
   list(without_treatment = list(AB1,AB2,AB3,AB4,AB5),
        with_treatment = list(AB1t,AB2t,AB3t,AB4t,AB5t))
 }
+
+survey_heterogeneity_figure <- function(subjective_data) {
+  subsets <- tibble(
+    group = c("Age", "Age", "Politics", "Politics", "Income", "Income", "Education", "Education", "Gender", "Gender"),
+    subset_name = c("Young", "Old", "Left", "Right", "Low income", "High income", "Low education", "High education", "Male", "Female"),
+    filter_condition = list(
+      subjective_data |> filter(age_high==0),
+      subjective_data |> filter(age_high==1),
+      subjective_data |> filter(left==TRUE),
+      subjective_data |> filter(left==FALSE),
+      subjective_data |> filter(high_income==FALSE),
+      subjective_data |> filter(high_income==TRUE),
+      subjective_data |> filter(high_edu==FALSE),
+      subjective_data |> filter(high_edu==TRUE),
+      subjective_data |> filter(gender=="male"),
+      subjective_data |> filter(gender=="female")
+    )
+  )
+  results <- subsets |>
+    mutate(
+      model_results = map(filter_condition, ~ {
+          estimatr::lm_robust(`Unfair inequality` ~ Talent + Effort + `Belief about individual control`,
+                              data=.x, weights=wgt, clusters=id) |>
+          tidy() |>
+          filter(term == "Talent")
+      })
+    ) |>
+    unnest(model_results) |>
+    dplyr::select(group, subset_name, estimate, std.error)
+  results <- results |>
+    mutate(subset_name = factor(subset_name, levels = unique(subset_name)))
+  graph <- results |> ggplot(aes(x = estimate, y = subset_name)) +
+    geom_vline(xintercept = 0, color = "black", size = 0.5, linetype = "solid") +
+    geom_point() +
+    geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
+    facet_wrap(~ group, scales = "free_y", ncol = 1, switch = "y") +
+    scale_x_continuous(limits = c(-4.2, 0), expand = expansion(mult = c(0.1, 0.1))) +
+    labs(
+      x = "Estimated size of Talent Paradox \u00B1 95% CI",
+      y = element_blank()
+    ) +
+    theme_minimal() +
+    theme(
+      panel.spacing = unit(0, "lines"),
+      strip.text = element_text(size = 12),
+      strip.placement = "outside",
+      strip.text.y.left = element_text(angle = 0),
+    )
+
+  list("data"=results, "graph"=graph)
+}

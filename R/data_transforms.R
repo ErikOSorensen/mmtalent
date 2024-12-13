@@ -15,6 +15,9 @@ prepare_data <- function(df) {
           treatment %in% c("ExAnteImpersonal","ExPostImpersonal") ~ "Impersonal",
         )
       ),
+      treatment = relevel(treatment, ref="ExPostImpersonal"),
+      timing = relevel(timing, ref="ExPost"),
+      personal = relevel(personal, ref="Impersonal"),
       gender = sjlabelled::as_label(gender),
       age_high = as.numeric( age> median(age) ),
       left = (polpref < 3),

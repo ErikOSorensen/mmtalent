@@ -114,7 +114,7 @@ survey_names <- c('Talent'='Talent (d)',
                   'high_eduTRUE' = 'High education (d)',
                   'maleTRUE' = 'Male (d)',
                   'treatmentExAntePersonal' = "Treatment: Ex Ante Personal (d)",
-                  'treatmentExPostImpersonal'	= "Treatment: Ex Post Impersonal (d)",
+                  'treatmentExAnteImpersonal'	= "Treatment: Ex Ante Impersonal (d)",
                   'treatmentExPostPersonal' = "Treatment: Ex Post Personal (d)",
                   '(Intercept)'='(Intercept)')
 ```
@@ -142,23 +142,23 @@ We test for joint significance of the treatment dummies.
 surv_joint_tests <- c(car::linearHypothesis(survey_regressions_list$with_treatment[[1]], 
                             c("treatmentExAntePersonal = 0",
                               "treatmentExPostPersonal = 0",
-                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                              "treatmentExAnteImpersonal = 0"))$`Pr(>Chisq)`[2],
                       car::linearHypothesis(survey_regressions_list$with_treatment[[2]], 
                             c("treatmentExAntePersonal = 0",
                               "treatmentExPostPersonal = 0",
-                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                              "treatmentExAnteImpersonal = 0"))$`Pr(>Chisq)`[2],
                       car::linearHypothesis(survey_regressions_list$with_treatment[[3]], 
                             c("treatmentExAntePersonal = 0",
                               "treatmentExPostPersonal = 0",
-                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                              "treatmentExAnteImpersonal = 0"))$`Pr(>Chisq)`[2],
                       car::linearHypothesis(survey_regressions_list$with_treatment[[4]], 
                             c("treatmentExAntePersonal = 0",
                               "treatmentExPostPersonal = 0",
-                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2],
+                              "treatmentExAnteImpersonal = 0"))$`Pr(>Chisq)`[2],
                       car::linearHypothesis(survey_regressions_list$with_treatment[[5]], 
                             c("treatmentExAntePersonal = 0",
                               "treatmentExPostPersonal = 0",
-                              "treatmentExPostImpersonal = 0"))$`Pr(>Chisq)`[2])
+                              "treatmentExAnteImpersonal = 0"))$`Pr(>Chisq)`[2])
 surv_joint_tests_wrow <- tibble::tribble(~v, ~p1, ~p2, ~p3, ~p4, ~p5,
                         "Joint p-value on treatment dummies:",
                         sprintf("%4.3f", surv_joint_tests[1]),
@@ -190,27 +190,27 @@ effects for each of the 6 outcomes.
 A1 <- lm(luck_fair ~ treatment, data = mmtalent)
 A1w <- car::linearHypothesis(A1, c("treatmentExAntePersonal = 0",
                           "treatmentExPostPersonal = 0",
-                          "treatmentExPostImpersonal = 0"))
+                          "treatmentExAnteImpersonal = 0"))
 A2 <- lm(talent_fair ~ treatment, data = mmtalent)
 A2w <- car::linearHypothesis(A2, c("treatmentExAntePersonal = 0",
                           "treatmentExPostPersonal = 0",
-                          "treatmentExPostImpersonal = 0"))
+                          "treatmentExAnteImpersonal = 0"))
 A3 <- lm(effort_fair ~ treatment, data = mmtalent)
 A3w <- car::linearHypothesis(A3, c("treatmentExAntePersonal = 0",
                           "treatmentExPostPersonal = 0",
-                          "treatmentExPostImpersonal = 0"))
+                          "treatmentExAnteImpersonal = 0"))
 B1 <- lm(luck_control ~ treatment, data = mmtalent)
 B1w <- car::linearHypothesis(B1, c("treatmentExAntePersonal = 0",
                           "treatmentExPostPersonal = 0",
-                          "treatmentExPostImpersonal = 0"))
+                          "treatmentExAnteImpersonal = 0"))
 B2 <- lm(talent_control ~ treatment, data = mmtalent)
 B2w <- car::linearHypothesis(B2, c("treatmentExAntePersonal = 0",
                           "treatmentExPostPersonal = 0",
-                          "treatmentExPostImpersonal = 0"))
+                          "treatmentExAnteImpersonal = 0"))
 B3 <- lm(effort_control ~ treatment, data = mmtalent)
 B3w <- car::linearHypothesis(B3, c("treatmentExAntePersonal = 0",
                           "treatmentExPostPersonal = 0",
-                          "treatmentExPostImpersonal = 0"))
+                          "treatmentExAnteImpersonal = 0"))
 
 wrow <- tibble::tribble(~v, ~p1, ~p2, ~p3, ~p4, ~p5, ~p6,
                         "Joint p-value on treatment dummies:", 
@@ -230,5 +230,15 @@ modelsummary::modelsummary(list("A.luck"=A1, "A.talent"=A2, "A.effort"=A3, "B.lu
   gt::tab_spanner(label="Belief about individual control", columns = 5:7)
 ```
 
-We see that 3 out of 18 treatment effects are significant at the 10% level, which is not surprising
-even under the null of no true effect.
+We see that 2 out of 18 treatment effects are significant at the 10% level, which is not surprising
+even under the null of no true effect, and the joint p-values are all above 10%.
+
+
+## Heterogeneity of talent paradox estimates
+
+```{r}
+tar_load(survey_heterogeneity)
+survey_heterogeneity$graph
+ggsave(here::here("figures","survey_heterogeneity.pdf"), width=16, height =10, units="cm")
+```
+
