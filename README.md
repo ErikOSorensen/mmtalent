@@ -43,9 +43,9 @@ All data are publicly available.
 | Data.Name       | Data.Files         | Location                | Provided | Citation                  |
 |-----------------|--------------------|--------------------------|----------|----------------------------|
 | Replication Data | mmtalent_df.dta       | Harvard Dataverse      | Yes      | Bartling et al. (2024)          |
-| Education distribution | sc-est2017-alldata6.csv | raw-data/   | Yes | U.S. Census Bureau (2017) |
-| Income distribution | finc_07.xls   | raw-data/                 | Yes | U.S. Census Bureau (2018a) |
-| Geographic distribution | table-1-1.xlsx | raw-data/ | Yes | U.S. Census Bureau (2018b) |
+| Education distribution | sc-est2017-alldata6.csv | external-data/   | Yes | U.S. Census Bureau (2017) |
+| Income distribution | finc_07.xls   | external-data/                 | Yes | U.S. Census Bureau (2018a) |
+| Geographic distribution | table-1-1.xlsx | external-data/ | Yes | U.S. Census Bureau (2018b) |
 
 # 2. Computational requirements
 
