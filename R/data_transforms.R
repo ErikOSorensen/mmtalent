@@ -22,6 +22,7 @@ prepare_data <- function(df) {
       age_high = as.numeric( age> median(age) ),
       left = (polpref < 3),
       nothingtw = 1*(payment_low_worker %in% c(2, 8)),
+      noredistribution = as.numeric(payment_low_worker==2),
       gini = abs(payment_low_worker - payment_high_worker)/10,
       income_category = sjlabelled::as_label(income),
       edu_category = sjlabelled::as_label(education),

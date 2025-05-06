@@ -28,6 +28,27 @@ before going into the individual level data.
 long_attitudes(mmtalent) %>% survey_bars(numobs = FALSE, ylimits = c(0,8))
 ggsave(here::here("figures","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
 ```
+Testing differences, unfairness:
+
+```{r}
+mmtalent |> pivot_longer(cols=c("luck_fair", "talent_fair"), names_to="a", values_to="unfairness") |>
+  lm(unfairness ~ a, weight=wgt, data=_) |> summary()
+mmtalent |> pivot_longer(cols=c("effort_fair", "talent_fair"), names_to="b", values_to="unfairness") |>
+  lm(unfairness ~ b, weight=wgt, data=_) |> summary()
+```
+
+
+
+Testing differences, control:
+
+```{r}
+mmtalent |> pivot_longer(cols=c("luck_control", "talent_control"), names_to="a", values_to="control") |>
+  lm(control ~ a, weight=wgt, data=_) |> summary()
+mmtalent |> pivot_longer(cols=c("effort_control", "talent_control"), names_to="b", values_to="control") |>
+  lm(control ~ b, weight=wgt, data=_) |> summary()
+```
+
+
 
 ```{r}
 long_attitudes(mmtalent) |>
@@ -95,7 +116,7 @@ tar_load(subjectives_dt)
 subjectives_dt %>% sample_n(3) 
 ```
 
-Now, it should be possible to run the regression 
+Now, it is possible to run the regression 
 $$ A_{i,t} = \beta_0 + \beta_1 B_{i,t} + \beta_2 X_i +  \phi_t + \epsilon_{i,t}, $$
 where $i$ index the individual, and $t\in\{ \mathrm{effort}, \mathrm{talent}, \mathrm{luck}\}$, 
 $A_{i,t}\in[0,10]$ is the fairness attitude, $B_{i,t}\in[0,10]$ is the control belief, 
@@ -130,6 +151,15 @@ t1
 t1 |> as_latex() |>
     cat(file=here::here("tables","attitudes_controlbelief_regression.tex"))
 ```
+
+
+```{r}
+names(survey_regressions_list$without_treatment[[4]]$coefficients) <- make.names(names(survey_regressions_list$without_treatment[[4]]$coefficients))
+car::linearHypothesis(survey_regressions_list$without_treatment[[4]], c("Talent - Effort = 0",
+                                                                        "X.Belief.about.individual.control. - Effort..Belief.about.individual.control. = 0"))
+
+```
+
 
 
 # Are there treatment effects on attitudes?

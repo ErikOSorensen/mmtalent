@@ -7,12 +7,18 @@ implemented_inequality <- function(dt) {
   R4 <- lm(nothingtw ~ treatment + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
 
-  list(R1,R2,R3,R4)
+  R5 <- lm(noredistribution ~ treatment, data = dt, weights=wgt)
+  R6 <- lm(noredistribution ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+
+
+  list(R1,R2,R3,R4,R5,R6)
 }
 
 
 inequality_heterogeneity_graph <- function(mmtalent) {
-  dt <- mmtalent |> mutate(exante = as.numeric(timing =="ExAnte"))
+  dt <- mmtalent |> mutate(exante = as.numeric(timing =="ExAnte"),
+                           person = as.numeric(personal=="Personal"))
   subsets <- tibble(
     group = c("Age", "Age", "Politics", "Politics", "Income", "Income", "Education", "Education", "Gender", "Gender"),
     subset_name = c("Young", "Old", "Left", "Right", "Low income", "High income", "Low education", "High education", "Male", "Female"),
@@ -53,6 +59,31 @@ inequality_heterogeneity_graph <- function(mmtalent) {
     dplyr::select(group, subset_name, estimate, std.error)
   results2 <- results2 |>
     mutate(subset_name = factor(subset_name, levels = unique(subset_name)))
+  results3 <- subsets |>
+    mutate(
+      model_results = map(filter_condition, ~ {
+        lm(gini ~ person, data=.x, weights=wgt) |>
+          tidy() |>
+          filter(term == "person")
+      })
+    ) |>
+    unnest(model_results) |>
+    dplyr::select(group, subset_name, estimate, std.error)
+  results3 <- results3 |>
+    mutate(subset_name = factor(subset_name, levels = unique(subset_name)))
+  results4 <- subsets |>
+    mutate(
+      model_results = map(filter_condition, ~ {
+        lm(nothingtw ~ person, data=.x, weights=wgt) |>
+          tidy() |>
+          filter(term == "person")
+      })
+    ) |>
+    unnest(model_results) |>
+    dplyr::select(group, subset_name, estimate, std.error)
+  results4 <- results4 |>
+    mutate(subset_name = factor(subset_name, levels = unique(subset_name)))
+
 
   graph1 <- results1 |> ggplot(aes(x = estimate, y = subset_name)) +
     geom_vline(xintercept = 0, color = "black", size = 0.5, linetype = "solid") +
@@ -62,7 +93,7 @@ inequality_heterogeneity_graph <- function(mmtalent) {
     scale_x_continuous(limits = c(-0.03, 0.25), expand = expansion(mult = c(0.1, 0.1)),
                        breaks = c(0,0.05,0.10,0.15,0.20)) +
     labs(
-      x = "Estimated effect of Ex Ante timing \u00B1 95% CI",
+      x = "Estimated effect of ex ante vs. ex post \u00B1 95% CI",
       y = element_blank(),
       title = "Effects on Gini"
     ) +
@@ -83,7 +114,7 @@ inequality_heterogeneity_graph <- function(mmtalent) {
     scale_x_continuous(limits = c(-0.03, 0.25), expand = expansion(mult = c(0.1, 0.1)),
                        breaks = c(0,0.05,0.10,0.15,0.20)) +
     labs(
-      x = "Estimated effect of Ex Ante timing \u00B1 95% CI",
+      x = "Estimated effect of ex ante vs. ex post \u00B1 95% CI",
       y = element_blank(),
       title = "Effects on share that implements maximum inequality"
     ) +
@@ -95,12 +126,59 @@ inequality_heterogeneity_graph <- function(mmtalent) {
       strip.text.y.left = element_text(angle = 0),
       plot.title.position = "plot")
 
-  list("results1"=results1,  "results2"=results2, "graph1"=graph1, "graph2"=graph2)
+  graph3 <- results3 |> ggplot(aes(x = estimate, y = subset_name)) +
+    geom_vline(xintercept = 0, color = "black", size = 0.5, linetype = "solid") +
+    geom_point() +
+    geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
+    facet_wrap(~ group, scales = "free_y", ncol = 1, switch = "y") +
+    scale_x_continuous(limits = c(-0.2, 0.08), expand = expansion(mult = c(0.1, 0.1)),
+                       breaks = c(-0.2, -0.15, -0.1, -0.05, 0, 0.05)) +
+    labs(
+      x = "Estimated effect of personal vs. impersonal \u00B1 95% CI",
+      y = element_blank(),
+      title = "Effects on Gini"
+    ) +
+    theme_minimal() +
+    theme(
+      panel.spacing = unit(0, "lines"),
+      strip.text = element_text(size = 12),
+      strip.placement = "outside",
+      strip.text.y.left = element_text(angle = 0),
+      plot.title.position = "plot"
+    )
+
+  graph4 <- results4 |> ggplot(aes(x = estimate, y = subset_name)) +
+    geom_vline(xintercept = 0, color = "black", size = 0.5, linetype = "solid") +
+    geom_point() +
+    geom_errorbarh(aes(xmin = estimate - 1.96 * std.error, xmax = estimate + 1.96 * std.error), height = 0.2) +
+    facet_wrap(~ group, scales = "free_y", ncol = 1, switch = "y") +
+    scale_x_continuous(limits = c(-0.2, 0.08), expand = expansion(mult = c(0.1, 0.1)),
+                       breaks = c(-0.2, -0.15, -0.1, -0.05, 0, 0.05)) +
+    labs(
+      x = "Estimated effect of personal vs. impersonal \u00B1 95% CI",
+      y = element_blank(),
+      title = "Effects on share that implements maximum inequality"
+    ) +
+    theme_minimal() +
+    theme(
+      panel.spacing = unit(0, "lines"),
+      strip.text = element_text(size = 12),
+      strip.placement = "outside",
+      strip.text.y.left = element_text(angle = 0),
+      plot.title.position = "plot")
+
+
+
+
+  list("results1"=results1,  "results2"=results2, "results3"=results3,  "results4"=results4,
+       "graph1"=graph1, "graph2"=graph2, "graph3"=graph3, "graph4"=graph4)
+
 }
 
 
 implemented_inequality_heterogeneity <- function(dt) {
-  dt <- dt |> mutate(male = gender=="male")
+  dt <- dt |> mutate(male = gender=="male",
+                     person = personal=="Personal")
   A1 <- lm(gini ~ timing + timing*age_high + age_high + left + high_edu + high_income + male ,
            data = dt, weights=wgt)
   A2 <- lm(gini ~ timing + timing*left + age_high + left + high_edu + high_income + male,
@@ -127,7 +205,36 @@ implemented_inequality_heterogeneity <- function(dt) {
 
   All <- c(Alist,Blist)
 
-  list("A"=Alist, "B"=Blist, "All"=All)
+
+  C1 <- lm(gini ~ person + person*age_high + age_high + left + high_edu + high_income + male ,
+           data = dt, weights=wgt)
+  C2 <- lm(gini ~ person + person*left + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  C3 <- lm(gini ~ person + person*high_edu + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  C4 <- lm(gini ~ person + person*high_income + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  C5 <- lm(gini ~ person + person*male + left + age_high + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  Clist <- list(C1,C2,C3,C4,C5)
+
+  D1 <- lm(nothingtw ~ person + person*age_high + age_high + left + high_edu + high_income + male ,
+           data = dt, weights=wgt)
+  D2 <- lm(nothingtw ~ person + person*left + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  D3 <- lm(nothingtw ~ person + person*high_edu + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  D4 <- lm(nothingtw ~ person + person*high_income + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  D5 <- lm(nothingtw ~ person + person*male + left + age_high + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  Dlist <- list(D1,D2,D3,D4,D5)
+
+  DAll <- c(Clist,Dlist)
+
+
+  list("A"=Alist, "B"=Blist, "All"=All, "DAll" = DAll)
+
 }
 
 

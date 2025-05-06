@@ -92,12 +92,20 @@ reg1 <- modelsummary::modelsummary(implemented_inequality_list,
                            output = "gt",
                            gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") |>
   tab_spanner(label="Gini", columns=2:3) |> 
-  tab_spanner(label="Nothing to worst of", columns = 4:5)
+  tab_spanner(label="Nothing to worst of", columns = 4:5) |>
+  tab_spanner(label="No redistribution", columns=6:7)
 reg1
 reg1 |> as_latex() |>
   cat(file=here::here("tables","inequality_treatment_regression.tex"))
 ```
 
+Testing interaction effects:
+```{r}
+car::linearHypothesis(implemented_inequality_list[[2]], c("treatmentExAntePersonal - treatmentExAnteImpersonal - treatmentExPostPersonal = 0"))
+car::linearHypothesis(implemented_inequality_list[[4]], c("treatmentExAntePersonal - treatmentExAnteImpersonal - treatmentExPostPersonal = 0"))
+car::linearHypothesis(implemented_inequality_list[[6]], c("treatmentExAntePersonal - treatmentExAnteImpersonal - treatmentExPostPersonal = 0"))
+
+```
 
 
 ## Heterogeneity in treatment outcomefs
@@ -111,6 +119,12 @@ outcome_names_het1 <- c('timingExAnte' = 'Ex Ante (d)',
                    'timingExAnte:high_eduTRUE' = "Ex Ante X High education",
                    'timingExAnte:high_incomeTRUE' = "Ex Ante X High income",
                    'timingExAnte:maleTRUE' = "Ex Ante X male",
+                   'personTRUE' = 'Personal (d)',
+                   'personTRUE:age_high' = "Personal X High age",
+                   'personTRUE:leftTRUE' = "Personal X Left",
+                   'personTRUE:high_eduTRUE' = "Personal X High education",
+                   'personTRUE:high_incomeTRUE' = "Personal X High income",
+                   'personTRUE:maleTRUE' = "Personal X male",
                   'age_high' = 'High age (d)',
                   'leftTRUE' = 'Left (d)',
                   'high_incomeTRUE' = 'High income (d)',
@@ -134,6 +148,25 @@ lst3 |> as_latex() |>
   cat(file=here::here("tables","inequality_treatment_regression_het3.tex"))
 ```
 
+And for personal:
+
+```{r}
+lst4 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$DAll,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names_het1,
+                           output = "gt",
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
+  tab_spanner(label="Gini", columns=2:6) |>
+  tab_spanner(label="Maximum Inequality", columns=7:11)
+lst4
+lst4 |> as_latex() |>
+  cat(file=here::here("tables","inequality_treatment_regression_het4.tex"))
+```
+
+
+
+
+
 Presenting heterogeneity in a figure instead:
 
 ```{r}
@@ -145,11 +178,9 @@ ggsave(here::here("figures","experiment_heterogeneity.pdf"), width = 16, height=
 ```
 
 
+The same heterogeneity figure, but for "personal" (for appendix).
 
-# Graph of shares at extreme distributions (appendix)
-
-```{r Fraction of spectators choosing no and full redistribution (Appendix), echo=FALSE}
-tar_load(extreme_shares_graph)
-extreme_shares_graph$a + extreme_shares_graph$b + plot_annotation(tag_levels = 'a')
-ggsave(here::here("figures", "extreme_shares.pdf"), width = 16, height = 10, units = 'cm')
+```{r}
+L$graph3 / L$graph4 + plot_annotation(tag_levels = "a") + plot_layout(nrow=2)
+ggsave(here::here("figures","experiment_heterogeneity_personal.pdf"), width = 16, height=14, units="cm")
 ```
