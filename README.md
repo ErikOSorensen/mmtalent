@@ -54,7 +54,11 @@ All data are publicly available.
 The analysis is written in R, relying on the `targets` for automation, and
 `renv` for controlling the version of packages. The exact version used of each
 included package is documented in the `renv.lock` file managed by the `renv` package. 
+For bootstrapping the `renv.lock` specified packages, the latest run
+used:
 
+- `R`, version 4.4.2 on Windows 11.
+- `renv`, version 1.1.4.
 
 
 # 2.2 Controlled Randomness
