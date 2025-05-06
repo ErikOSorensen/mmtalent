@@ -43,9 +43,9 @@ survey_bars <- function(mmtalent_long, gtitle = NULL, numobs = TRUE, ylimits = c
 
 survey_bars_by_subgroup <- function(mmtalent_long) {
   list(
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE)) |>
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE)) |>
       survey_bars(gtitle="Young", numobs = FALSE, ylimits = c(0,8)),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE)) |>
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE)) |>
       survey_bars(gtitle="Old", numobs = FALSE, ylimits = c(0,8)),
     mmtalent_long |> filter(left==TRUE) |> survey_bars(gtitle="Left", numobs = FALSE, ylimits = c(0,8)),
     mmtalent_long |> filter(left==FALSE) |> survey_bars(gtitle="Right", numobs = FALSE, ylimits = c(0,8)),
@@ -60,110 +60,110 @@ survey_bars_by_subgroup <- function(mmtalent_long) {
 
 survey_bars_by_subgroup_cross <- function(mmtalent_long) {
   list(
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Young/left/low.inc/low.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Young/left/low.inc/low.edu/male"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Young/left/low.inc/high.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Young/left/low.inc/high.edu/male"),
 
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Young/left/high.inc/low.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Young/left/high.inc/low.edu/male"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Young/left/high.inc/high.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Young/left/high.inc/high.edu/male"),
 
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Young/right/low.inc/low.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Young/right/low.inc/low.edu/male"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Young/right/low.inc/high.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Young/right/low.inc/high.edu/male"),
 
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Young/right/high.inc/low.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Young/right/high.inc/low.edu/male"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Young/right/high.inc/high.edu/female"),
-    mmtalent_long |> filter( age < spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age < matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Young/right/high.inc/high.edu/male"),
 
 
 
 
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Old/left/low.inc/low.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Old/left/low.inc/low.edu/male"),
-    mmtalent_long |> filter( age  >=  spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age  >=  matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Old/left/low.inc/high.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==FALSE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Old/left/low.inc/high.edu/male"),
 
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Old/left/high.inc/low.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Old/left/high.inc/low.edu/male"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Old/left/high.inc/high.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==TRUE, high_income==TRUE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Old/left/high.inc/high.edu/male"),
 
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Old/right/low.inc/low.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Old/right/low.inc/low.edu/male"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Old/right/low.inc/high.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==FALSE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Old/right/low.inc/high.edu/male"),
 
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==FALSE, gender=="female") |>
       survey_bars(gtitle="Old/right/high.inc/low.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==FALSE, gender=="male") |>
       survey_bars(gtitle="Old/right/high.inc/low.edu/male"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==TRUE, gender=="female") |>
       survey_bars(gtitle="Old/right/high.inc/high.edu/female"),
-    mmtalent_long |> filter( age >= spatstat.geom::weighted.median(age,wgt, na.rm=TRUE),
+    mmtalent_long |> filter( age >= matrixStats::weightedMedian(age,wgt, na.rm=TRUE),
                               left==FALSE, high_income==TRUE, high_edu==TRUE, gender=="male") |>
       survey_bars(gtitle="Old/right/high.inc/high.edu/male")
 

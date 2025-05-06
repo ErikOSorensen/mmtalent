@@ -1,5 +1,6 @@
-\setlength{\LTpost}{0mm}
-\begin{longtable}{lccccc}
+\begin{table}[t]
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccccc}
 \toprule
  & \multicolumn{5}{c}{Unfairness of Talent,Effort,Luck determining income} \\ 
 \cmidrule(lr){2-6}
@@ -26,7 +27,7 @@ High education (d) &  &  &  & -0.195* & -0.197* \\
 Male (d) &  &  &  & 0.175* & 0.178* \\ 
  &  &  &  & (0.101) & (0.101) \\ 
 (Intercept) & 6.944*** & 7.381*** & 7.306*** & 7.619*** & 7.642*** \\ 
- & (0.075) & (0.102) & (0.121) & (0.148) & (0.127) \\ 
+{} & {(0.075)} & {(0.102)} & {(0.121)} & {(0.148)} & {(0.127)} \\ 
 Num.Obs. & 6003 & 6003 & 6003 & 6003 & 6003 \\ 
 R2 & 0.277 & 0.288 & 0.288 & 0.294 & 0.294 \\ 
 AIC & 30947.7 & 30855.8 & 30856.4 & 30819.2 & 30816.5 \\ 
@@ -34,7 +35,8 @@ BIC & 30974.5 & 30889.3 & 30903.3 & 30899.6 & 30883.5 \\
 RMSE & 3.02 & 3.01 & 3.01 & 3.00 & 3.00 \\ 
 Std.Errors & by: id & by: id & by: id & by: id & by: id \\ 
 \bottomrule
-\end{longtable}
+\end{tabular*}
 \begin{minipage}{\linewidth}
 * p < 0.1, ** p < 0.05, *** p < 0.01\\
 \end{minipage}
+\end{table}

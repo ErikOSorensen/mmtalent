@@ -1,5 +1,6 @@
-\setlength{\LTpost}{0mm}
-\begin{longtable}{lcccccc}
+\begin{table}[t]
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lcccccc}
 \toprule
  & \multicolumn{2}{c}{Gini} & \multicolumn{2}{c}{Nothing to worst of} & \multicolumn{2}{c}{No redistribution} \\ 
 \cmidrule(lr){2-3} \cmidrule(lr){4-5} \cmidrule(lr){6-7}
@@ -22,12 +23,13 @@ High education (d) &  & -0.024* &  & -0.054** &  & -0.032 \\
 Male (d) &  & 0.023* &  & 0.017 &  & 0.011 \\ 
  &  & (0.012) &  & (0.022) &  & (0.021) \\ 
 (Intercept) & 0.244*** & 0.249*** & 0.331*** & 0.313*** & 0.286*** & 0.243*** \\ 
- & (0.012) & (0.017) & (0.022) & (0.030) & (0.021) & (0.029) \\ 
+{} & {(0.012)} & {(0.017)} & {(0.022)} & {(0.030)} & {(0.021)} & {(0.029)} \\ 
 Num.Obs. & 2001 & 2001 & 2001 & 2001 & 2001 & 2001 \\ 
 R2 & 0.018 & 0.029 & 0.015 & 0.030 & 0.018 & 0.033 \\ 
 RMSE & 0.27 & 0.27 & 0.48 & 0.48 & 0.47 & 0.47 \\ 
 \bottomrule
-\end{longtable}
+\end{tabular*}
 \begin{minipage}{\linewidth}
 * p < 0.1, ** p < 0.05, *** p < 0.01\\
 \end{minipage}
+\end{table}

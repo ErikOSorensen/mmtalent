@@ -1,5 +1,6 @@
-\setlength{\LTpost}{0mm}
-\begin{longtable}{lccccc}
+\begin{table}[t]
+\fontsize{12.0pt}{14.4pt}\selectfont
+\begin{tabular*}{\linewidth}{@{\extracolsep{\fill}}lccccc}
 \toprule
  & \multicolumn{5}{c}{Fairness of Talent,Effort,Luck determining income} \\ 
 \cmidrule(lr){2-6}
@@ -32,7 +33,7 @@ Treatment: Ex Ante Impersonal (d) & 0.068 & 0.066 & 0.066 & 0.055 & 0.054 \\
 Treatment: Ex Post Personal (d) & 0.345** & 0.331** & 0.331** & 0.310** & 0.308** \\ 
  & (0.141) & (0.143) & (0.143) & (0.144) & (0.144) \\ 
 (Intercept) & 6.858*** & 7.291*** & 7.220*** & 7.543*** & 7.562*** \\ 
- & (0.111) & (0.133) & (0.148) & (0.173) & (0.155) \\ 
+{} & {(0.111)} & {(0.133)} & {(0.148)} & {(0.173)} & {(0.155)} \\ 
 Num.Obs. & 6003 & 6003 & 6003 & 6003 & 6003 \\ 
 R2 & 0.279 & 0.290 & 0.290 & 0.296 & 0.296 \\ 
 AIC & 30936.3 & 30846.0 & 30846.5 & 30809.6 & 30807.2 \\ 
@@ -41,7 +42,8 @@ RMSE & 3.02 & 3.01 & 3.01 & 2.99 & 2.99 \\
 Std.Errors & by: id & by: id & by: id & by: id & by: id \\ 
 Joint p-value on treatment dummies: & 0.020 & 0.038 & 0.036 & 0.038 & 0.040 \\ 
 \bottomrule
-\end{longtable}
+\end{tabular*}
 \begin{minipage}{\linewidth}
 * p < 0.1, ** p < 0.05, *** p < 0.01\\
 \end{minipage}
+\end{table}
