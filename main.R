@@ -9,3 +9,4 @@ source("_targets.R")
 # uncomment the following line to delete the cache and calculate everything from
 # scratch
 # tar_destroy()
+tar_make()
