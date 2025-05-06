@@ -17,7 +17,7 @@ tar_option_set(
 list(
   tar_target(
     census_description_file_2017,
-    here::here("raw-data", "sc-est2017-alldata6.csv"),
+    here::here("external-data", "sc-est2017-alldata6.csv"),
     format = "file"
   ),
   tar_target(
@@ -27,12 +27,12 @@ list(
   ),
   tar_target(
     educational_attainment_file_name,
-    here::here("raw-data", "table-1-1.xlsx"),
+    here::here("external-data", "table-1-1.xlsx"),
     format = "file"
   ),
   tar_target(
     income_distribution_file_name,
-    here::here("raw-data", "finc07.xls"),
+    here::here("external-data", "finc07.xls"),
     format = "file"
   ),
   tar_target(survey_df,
