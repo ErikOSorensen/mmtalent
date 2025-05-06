@@ -82,9 +82,11 @@ of storage on any modern computer.
 
 | Display Item     | File name       | Vignette        | Chunk name     | Comment          |
 |------------------|------------------|------------------|------------------|-------------------|
-| Figure 1   |  A  | B     | C  | D  |
-| Figure 2   |   |  |  |  | 
-| Table | | | | | | |
+| Figure 1   |  consort.pdf  | descriptive_balance_tables.Rmd     | Consort diagram|   |
+| Figure 2   | attitudes_beliefs.pdf  | survey-results.Rmd | Fairness views and beliefs about control |  | 
+| Figure 3   | survey_heterogeneity.pdf | survey-results.Rmd | The talent paradox - heterogeneity analysis | |
+| Figure 4   | histogram_transfers.pdf  | experiment-results.Rmd |Dollars redistributed | |
+| Figure 5   | experiment_heterogeneity.pdf | experiment-results.Rmd | Heterogeneity in the treatment effect |
 
 
 # 5. References

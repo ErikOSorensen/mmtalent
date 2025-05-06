@@ -169,7 +169,7 @@ lst4 |> as_latex() |>
 
 Presenting heterogeneity in a figure instead:
 
-```{r}
+```{r Heterogeneity in the treatment effect, echo=FALSE}
 tar_load(inequality_heterogeneity)
 L <- inequality_heterogeneity
 
