@@ -24,7 +24,7 @@ tar_load(mmtalent)
 # Figures on attitudes and belief
 To have the main result on attitudes and belief, we would like to have aggregate patterns 
 before going into the individual level data.
-```{r}
+```{r Fairness views and beliefs about control, echo=FALSE}
 long_attitudes(mmtalent) %>% survey_bars(numobs = FALSE, ylimits = c(0,8))
 ggsave(here::here("figures","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
 ```
@@ -266,7 +266,7 @@ even under the null of no true effect, and the joint p-values are all above 10%.
 
 ## Heterogeneity of talent paradox estimates
 
-```{r}
+```{r The talent paradox - heterogeneity analysis, echo=FALSE}
 tar_load(survey_heterogeneity)
 survey_heterogeneity$graph
 ggsave(here::here("figures","survey_heterogeneity.pdf"), width=16, height =10, units="cm")
