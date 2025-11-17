@@ -290,3 +290,24 @@ extreme_shares <- function(dt) {
     labs(x = element_blank(), y = "Share \u00B1 s.e.", title="Full redistribution")
   list('a'=a,'b'=b)
 }
+
+
+descion_amount_table <- function(dt) {
+  dt <- dt |> mutate(male = gender=="male")
+  R2 <- lm(payment_low_worker==2 ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  R3 <- lm(payment_low_worker==3 ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  R4 <- lm(payment_low_worker==4 ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  R5 <- lm(payment_low_worker==5 ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  R6 <- lm(payment_low_worker==6 ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  R7 <- lm(payment_low_worker==7 ~ treatment + age_high + left + high_edu + high_income + male,
+           data = dt, weights=wgt)
+  R8 <- lm(payment_low_worker==8 ~ treatment + age_high + left + high_edu + high_income + male,
+                                             data = dt, weights=wgt)
+
+  list(R2,R3,R4,R5,R6,R7,R8)
+}

@@ -106,6 +106,8 @@ list(
              extreme_shares(mmtalent)),
   tar_target(consort_diagram,
              mmtalent_consort(survey_df)),
+  tar_target(decision_amount,
+             descion_amount_table(mmtalent)),
   tar_render(experiment_results, here::here("experiment-results.Rmd")),
   tar_render(survey_results, here::here("survey-results.Rmd")),
   tar_render(descriptive_balance_tables, here::here("descriptive_balance_tables.Rmd"))

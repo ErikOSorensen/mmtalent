@@ -184,3 +184,34 @@ The same heterogeneity figure, but for "personal" (for appendix).
 L$graph3 / L$graph4 + plot_annotation(tag_levels = "a") + plot_layout(nrow=2)
 ggsave(here::here("figures","experiment_heterogeneity_personal.pdf"), width = 16, height=14, units="cm")
 ```
+
+
+# Request by referee
+A referee wants more details, effects on each level of transfer 
+I propose a solution in which the outcome is the amount given to the disadvantaged,
+and it varies from no redistribution ($Y=2$), to complete reversal ($Y=8$).
+
+
+```{r}
+tar_load(decision_amount)
+
+dreg <- modelsummary::modelsummary(decision_amount,
+                           stars = c('*'=0.1, '**'=0.05, '***'=0.01),
+                           coef_map = outcome_names,
+                           output = "gt",
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") |>
+  tab_spanner(label="Yb=2", columns=2) |> 
+  tab_spanner(label="Yb=3", columns=3) |> 
+  tab_spanner(label="Yb=4", columns=4) |> 
+  tab_spanner(label="Yb=5", columns=5) |> 
+  tab_spanner(label="Yb=6", columns=6) |> 
+  tab_spanner(label="Yb=7", columns=7) |> 
+  tab_spanner(label="Yb=8", columns=8) |>
+  tab_spanner(label="A is favored", columns=2:4) |> 
+  tab_spanner(label="Equality", columns=5) |> 
+  tab_spanner(label="B is favored", columns=6:8)
+dreg
+dreg |> as_latex() |>
+  cat(file=here::here("tables","decision_amount_regression.tex"))
+```
+
