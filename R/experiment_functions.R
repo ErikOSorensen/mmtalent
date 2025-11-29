@@ -292,7 +292,7 @@ extreme_shares <- function(dt) {
 }
 
 
-descion_amount_table <- function(dt) {
+decision_amount_table <- function(dt) {
   dt <- dt |> mutate(male = gender=="male")
   R2 <- lm(payment_low_worker==2 ~ treatment + age_high + left + high_edu + high_income + male,
            data = dt, weights=wgt)
@@ -311,3 +311,59 @@ descion_amount_table <- function(dt) {
 
   list(R2,R3,R4,R5,R6,R7,R8)
 }
+
+cuddly_data_prep <- function(cuddly_data) {
+  # We are only interested in the (US, Luck) decisions
+  df <- cuddly_data |>
+    filter(us==1) |>
+    filter(luck==1) |>
+    mutate(transfer = worker_b,
+           study = "Alm\u00E5s et al (2020)") |>
+    dplyr::select(c(study,transfer))
+  df
+}
+
+cuddly_comparisons_displays <- function(mmtalent, cuddly_data) {
+  cuddly <- cuddly_data_prep(cuddly_data)
+  all_transfers <- mmtalent |>
+    filter(treatment=="ExPostImpersonal") |>
+    mutate(study="Current study",
+           transfer = payment_low_worker - 2) |>
+    dplyr::select(c(study,transfer)) |>
+    bind_rows(cuddly) |>
+    mutate(study = factor(study, levels=c("Current study","Alm\u00E5s et al (2020)")))
+  g1 <- all_transfers |>
+    ggplot(aes(x=transfer, y = after_stat(prop))) +
+    geom_bar() +
+    theme_minimal() +
+    facet_wrap(.~study) + labs(x = "Transfer from winner to loser",
+                               y = "Proportion")
+
+  prop_table <- all_transfers |>
+    count(study, transfer) |>
+    group_by(study) |>
+    mutate(
+      N = sum(n),
+      p = n / N,
+      se = sqrt(p * (1 - p) / N),
+      cell = sprintf("%.3f<br>(%.3f)", p, se)
+    ) |>
+    ungroup() |>
+    mutate(transfer = factor(transfer, levels = 0:7)) |>
+    dplyr::select(transfer, study, cell) |>
+    pivot_wider(
+      names_from = study,
+      values_from = cell
+    )
+
+  t1 <- prop_table |>
+    gt(rowname_col = NULL) |>
+    tab_header(
+      title = "Proportion of transfer values by study"
+    ) |>
+    cols_align("center") |>
+    fmt_markdown(columns = everything())
+
+  list("graph"=g1, "table"=t1)
+}
+

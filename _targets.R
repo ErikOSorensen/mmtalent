@@ -35,10 +35,16 @@ list(
     here::here("external-data", "finc07.xls"),
     format = "file"
   ),
+  tar_target(
+    cuddly_file_name,
+    here::here("external-data","main_vars.dta")
+  ),
   tar_target(survey_df,
              read_dta(survey_file_name)),
   tar_target(mmtalent,
              prepare_data(survey_df)),
+  tar_target(cuddly_data,
+             read_dta(cuddly_file_name)),
   tar_target(
     descriptive_table_gt,
     descriptive_table(
@@ -107,7 +113,9 @@ list(
   tar_target(consort_diagram,
              mmtalent_consort(survey_df)),
   tar_target(decision_amount,
-             descion_amount_table(mmtalent)),
+             decision_amount_table(mmtalent)),
+  tar_target(cuddly_comparisons,
+             cuddly_comparisons_displays(mmtalent, cuddly_data)),
   tar_render(experiment_results, here::here("experiment-results.Rmd")),
   tar_render(survey_results, here::here("survey-results.Rmd")),
   tar_render(descriptive_balance_tables, here::here("descriptive_balance_tables.Rmd"))

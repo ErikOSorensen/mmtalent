@@ -192,14 +192,14 @@ I propose a solution in which the outcome is the amount given to the disadvantag
 and it varies from no redistribution ($Y=2$), to complete reversal ($Y=8$).
 
 
-```{r}
+```{r Decision amounts, echo=FALSE, message=FALSE, warning=FALSE}
 tar_load(decision_amount)
 
 dreg <- modelsummary::modelsummary(decision_amount,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            coef_map = outcome_names,
                            output = "gt",
-                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") |>
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE") |>
   tab_spanner(label="Yb=2", columns=2) |> 
   tab_spanner(label="Yb=3", columns=3) |> 
   tab_spanner(label="Yb=4", columns=4) |> 
@@ -214,4 +214,29 @@ dreg
 dreg |> as_latex() |>
   cat(file=here::here("tables","decision_amount_regression.tex"))
 ```
+
+
+We compare the transfers in our experiment with those in the *“Cuddly Socialism”* study
+(Almås et al., *Journal of Political Economy*, 2020). The most comparable treatments are
+the **Luck** treatment in Almås et al., which corresponds most closely to the  **Ex Post Impersonal** treatment in the current study.
+The range of possible allocations differs slightly across the two settings.  In our study, allocations range from **(8, 2)** to **(2, 8)**, while in the
+Almås et al. study the range is **(6, 0)** to **(0, 6)**. Thus, the range of the *transfer* variable is identical across studies.
+Because the data from Almås et al. do not include post-stratification weights, we base the comparison on **unweighted** shares.
+
+```{r Cuddly comparisons: graph, echo=FALSE, message=FALSE, warning=FALSE}
+tar_load(cuddly_comparisons)
+cuddly_comparisons$graph
+ggsave(here::here("figures","cuddly_comparisons_graph.pdf"), width=16, height = 10, units="cm")
+```
+
+*Note:* For the current study, the figure shows the distribution of transfers in the
+**Ex Post Impersonal** treatment. For the Almås et al. (2020) study, it shows the
+distribution of transfers in the United States in the **Luck** treatment. 
+
+The estimated proportions are:
+
+```{r Cuddly comparisons: table, echo=FALSE, message=FALSE, warning=FALSE}
+cuddly_comparisons$table
+```
+
 
