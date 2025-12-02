@@ -58,15 +58,14 @@ mmtalent |> lm(nothingtw ~ timing*personal, weights=wgt, data=_) |>summary()
 ```
 
 
-Testing 
-
 
 # Regressions
 
-We look at two different outcomes. The first is the gini coefficient, which (as before) is between 0 and 0.6 (there is a
+We look at three different outcomes. 
+The first is the gini coefficient, which (as before) is between 0 and 0.6 (there is a
 base income of (2,2) that cannot be lowered, so max inequality is (8,2) or (2,8)). 
-The second outcome is a dummy indicator for maximum inequality (or giving nothing to the 
-worst off, "nothingtw" in the table below). 
+The second outcome is a dummy indicator for maximum inequality.
+The third outcome is no redistribution (so the allocation will remain (8,2).
 
 
 ```{r Label mappings (main), include=FALSE}
@@ -80,17 +79,30 @@ outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
                   'high_eduTRUE' = 'High education (d)',
                   'maleTRUE' = 'Male (d)',
                   '(Intercept)'='(Intercept)')
+
 ```
 
 
 
 ```{r Implemented Inequality regressed on treatments, echo=FALSE}
 tar_load(implemented_inequality_list)
+tests <- sapply(implemented_inequality_list, function(m) {
+  car::linearHypothesis(
+    m, "treatmentExAntePersonal = treatmentExAnteImpersonal"
+  )[2, "Pr(>F)"]
+})
+row_to_add <- data.frame(
+  term = "p-value: Personal = Impersonal",
+  t(tests),                     # transpose → becomes one row
+  check.names = FALSE
+)
 reg1 <- modelsummary::modelsummary(implemented_inequality_list,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            coef_map = outcome_names,
                            output = "gt",
-                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F") |>
+                           gof_omit = "R2 Adj.|se_type|AIC|BIC|Log.Lik.|F|RMSE",
+                           add_rows = row_to_add
+) |>
   tab_spanner(label="Gini", columns=2:3) |> 
   tab_spanner(label="Nothing to worst of", columns = 4:5) |>
   tab_spanner(label="No redistribution", columns=6:7)
