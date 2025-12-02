@@ -61,6 +61,10 @@ long_attitudes(mmtalent) |>
 And the corresponding histograms:
 ```{r}
 long_attitudes(mmtalent) %>% 
+  mutate(outcometype = fct_recode(
+    outcometype,
+    "Belief about control" = "Belief about individual control"
+  )) %>%
   group_by(outcometype, fo) %>% 
   summarize(weighted.bars(value, wgt)) %>%
   ggplot(aes(x=v, y=proportion)) +
@@ -77,6 +81,10 @@ First for the division of all data into binary groups:
 
 ```{r}
 long_attitudes(mmtalent) %>% 
+  mutate(outcometype = fct_recode(
+    outcometype,
+    "Belief about control" = "Belief about individual control"
+  )) %>%
   survey_bars_by_subgroup() %>% 
   patchwork::wrap_plots() + plot_layout(ncol=2) + plot_annotation(tag_levels = "a")
 ggsave(here::here("figures","attitudes_beliefs_by_subgroups.pdf"), width = 30, height = 50, units="cm")
@@ -85,7 +93,11 @@ ggsave(here::here("figures","attitudes_beliefs_by_subgroups.pdf"), width = 30, h
 Now with all the $2^5$ combinations:
 
 ```{r}
-long_attitudes(mmtalent) %>% 
+long_attitudes(mmtalent) %>%
+  mutate(outcometype = fct_recode(
+    outcometype,
+    "Belief about control" = "Belief about individual control"
+  )) %>%
   survey_bars_by_subgroup_cross() %>% 
   patchwork::wrap_plots() + plot_layout(ncol=4) + plot_annotation(tag_levels = "1")
 ggsave(here::here("figures","attitudes_beliefs_by_subgroups_cross.pdf"), width = 30, height = 50, units="cm")
