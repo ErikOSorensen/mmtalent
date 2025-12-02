@@ -25,10 +25,10 @@ disposition_data <- function(data) {
       allocated = ifelse(completion_state>3, observationid, NA),
       treatment = as.character(sjlabelled::as_label(treatment)),
       treatment = case_when(
-        treatment == "ExAnteImpersonal" ~ "Trt. EAI",
-        treatment == "ExAntePersonal" ~ "Trt. EAP",
-        treatment == "ExPostImpersonal" ~ "Trt. EPI",
-        treatment == "ExPostPersonal" ~ "trt. EPP"
+        treatment == "ExAnteImpersonal" ~ "Treatment\nEx Ante Impersonal",
+        treatment == "ExAntePersonal" ~ "Treatment\nEx Ante Personal",
+        treatment == "ExPostImpersonal" ~ "Treatment\nEx Post Impersonal",
+        treatment == "ExPostPersonal" ~ "Treatment\nEx Post Personal"
       ),
       final = ifelse(completion_state==5, observationid, NA)) |>
     dplyr::select(c("observationid", "demographics", "allocated", "treatment", "final", "exclusion1", "exclusion2", "exclusion3"))
