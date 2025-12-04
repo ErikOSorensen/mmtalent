@@ -22,6 +22,41 @@ histogram_distribution_graph
 ggsave(here::here("figures","histogram_transfers.pdf"), width = 16, height = 10, units = "cm")
 ```
 
+Average transfers:
+```{r}
+mean(mmtalent$payment_low_worker-2)
+```
+
+Modal choice pooled across treatments:
+```{r}
+mmtalent %>%
+  mutate(transfer = payment_low_worker-2) |>
+  group_by(transfer) %>%
+  summarise(weighted_count = sum(wgt), .groups = "drop") %>%
+  mutate(prop = weighted_count / sum(weighted_count)) |>
+  dplyr::select(c(transfer,prop)) |> 
+  gt() |> 
+  fmt_number(decimals = 3, columns = 2)
+```
+
+Choice proportions by treatment:
+
+```{r}
+mmtalent %>%
+  mutate(transfer = payment_low_worker-2) |>
+  group_by(treatment, transfer) %>%
+  summarise(weighted_count = sum(wgt)) %>%
+  mutate(prop = weighted_count / sum(weighted_count)) |>
+  dplyr::select(c(treatment,transfer,prop)) |> 
+  pivot_wider(
+    names_from = treatment,
+    values_from = prop
+  ) |>
+  gt() |> 
+  fmt_number(decimals = 3, columns = 2:5)
+```
+
+
 
 # Graph with average outcomes
 ```{r Mean Gini implemented by treatments, echo=FALSE}
