@@ -220,11 +220,11 @@ summarize_political <- function(df) {
 
 background_balance_rows <- function(df) {
   bt <- df |> group_by(treatment) |>
-    summarize(Age = weighted.mean(age, wgt, na.rm=TRUE),
-           Female = weighted.mean(gender=="female", wgt, na.rm=TRUE),
-           Left = weighted.mean(left, wgt, na.rm=TRUE),
-           `High education`= weighted.mean(high_edu, wgt, na.rm=TRUE),
-           `High income` = weighted.mean(high_income, wgt, na.rm=TRUE),
+    summarize(Age = mean(age,  na.rm=TRUE),
+           Female = mean(gender=="female",  na.rm=TRUE),
+           Left = mean(left,  na.rm=TRUE),
+           `High education`= mean(high_edu,  na.rm=TRUE),
+           `High income` = mean(high_income,  na.rm=TRUE),
            `Number of observations` = n())
   bt.T <- as.data.frame(as.matrix(t(bt[,-1])))
   colnames(bt.T) <- as.character(bt$treatment)

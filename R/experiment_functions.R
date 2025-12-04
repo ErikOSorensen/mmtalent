@@ -21,7 +21,7 @@ inequality_heterogeneity_graph <- function(mmtalent) {
                            person = as.numeric(personal=="Personal"))
   subsets <- tibble(
     group = c("Age", "Age", "Politics", "Politics", "Income", "Income", "Education", "Education", "Gender", "Gender"),
-    subset_name = c("Young", "Old", "Left", "Right", "Low income", "High income", "Low education", "High education", "Male", "Female"),
+    subset_name = c("Low age", "High age", "Left", "Right", "Low income", "High income", "Low education", "High education", "Male", "Female"),
     filter_condition = list(
       dt |> filter(age_high==0),
       dt |> filter(age_high==1),
@@ -237,17 +237,26 @@ implemented_inequality_heterogeneity <- function(dt) {
 
 }
 
-
 histogram_distributions <- function(dt) {
-  dt |> ggplot(aes(x=payment_low_worker-2,y = (..count..)/tapply(..count..,..PANEL..,sum)[..PANEL..]) ) +
-    geom_bar() +
+  dt |>
+    mutate(treatment = factor(treatment, levels = c("ExAnteImpersonal",
+                                                    "ExAntePersonal",
+                                                    "ExPostImpersonal",
+                                                    "ExPostPersonal"))) |>
+        mutate(bin = factor(payment_low_worker - 2, levels = 0:6)) |>
+    group_by(treatment, bin) |>
+    summarise(w = sum(wgt), .groups = "drop") |>
+    group_by(treatment) |>
+    mutate(p = w / sum(w)) |>
+    ggplot(aes(x = factor(bin), y = p)) +
+    geom_col() +
+    facet_wrap(~ treatment) +
     theme_minimal() +
-    facet_wrap(. ~ treatment) +
-    scale_x_discrete(limits=c(0,1,2,3,4,5,6)) +
-    labs(x = "Transfer to loser",
-         y = "Fraction")
+    labs(
+      x = "Transfer to loser",
+      y = "Fraction"
+    )
 }
-
 
 
 average_distributions <- function(dt) {
