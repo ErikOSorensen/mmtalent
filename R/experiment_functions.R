@@ -239,15 +239,15 @@ implemented_inequality_heterogeneity <- function(dt) {
 
 histogram_distributions <- function(dt) {
   dt |>
-    mutate(treatment = factor(treatment, levels = c("ExAnteImpersonal",
-                                                    "ExAntePersonal",
-                                                    "ExPostImpersonal",
-                                                    "ExPostPersonal"))) |>
-        mutate(bin = factor(payment_low_worker - 2, levels = 0:6)) |>
+    mutate(bin = factor(payment_low_worker - 2, levels = 0:6)) |>
     group_by(treatment, bin) |>
     summarise(w = sum(wgt), .groups = "drop") |>
     group_by(treatment) |>
     mutate(p = w / sum(w)) |>
+    mutate(treatment = factor(treatment, levels = c("ExAnteImpersonal",
+                                                    "ExAntePersonal",
+                                                    "ExPostImpersonal",
+                                                    "ExPostPersonal"))) |>
     ggplot(aes(x = factor(bin), y = p)) +
     geom_col() +
     facet_wrap(~ treatment) +
