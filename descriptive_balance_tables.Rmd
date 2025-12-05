@@ -34,6 +34,40 @@ background_balance_formatted %>% as_latex() %>%
   cat(file=here::here("tables","background_balance_table.tex"))
 ```
 
+The distributions. First for education.
+
+```{r}
+tar_load(mmtalent)
+edu_table <- mmtalent %>%
+  count(edu_category, name = "Frequency") %>%
+  mutate(
+    Proportion = Frequency / sum(Frequency),
+    Cumulative_Proportion = cumsum(Proportion)
+  )
+edu_table |> gt() |> fmt_number(decimals = 3, columns = 3:4)
+```
+So above median education means Bachelor and above.
+
+Income: 
+
+```{r}
+income_table <- mmtalent %>%
+  count(income_category, name = "Frequency") %>%
+  mutate(
+    Proportion = Frequency / sum(Frequency),
+    Cumulative_Proportion = cumsum(Proportion)
+  )
+income_table |> gt() |> fmt_number(decimals = 3, columns = 3:4)
+```
+
+Age:
+```{r}
+median(mmtalent$age)
+```
+
+
+
+
 # Balance on survey outcomes
 The survey was run after the experiment, so should not be influenced to any great degree
 by treatment assignment.

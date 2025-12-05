@@ -220,7 +220,7 @@ summarize_political <- function(df) {
 
 background_balance_rows <- function(df) {
   bt <- df |> group_by(treatment) |>
-    summarize(Age = mean(age,  na.rm=TRUE),
+    summarize(`High age` = mean(age_high,  na.rm=TRUE),
            Female = mean(gender=="female",  na.rm=TRUE),
            Left = mean(left,  na.rm=TRUE),
            `High education`= mean(high_edu,  na.rm=TRUE),

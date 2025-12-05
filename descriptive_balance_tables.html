@@ -351,7 +351,7 @@ display: none;
 
 <h1 class="title toc-ignore">Descriptive and balance tables</h1>
 <h4 class="author">Erik Ø. Sørensen</h4>
-<h4 class="date">04 desember, 2025</h4>
+<h4 class="date">05 desember, 2025</h4>
 
 </div>
 
@@ -1318,11 +1318,11 @@ height: 0px !important;
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="Outcome" class="gt_row gt_left">Age</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">43.3</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">42.6</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">43.3</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">43.4</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">High age</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">0.499</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">0.475</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">0.497</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">0.484</td></tr>
     <tr><td headers="Outcome" class="gt_row gt_left">Female</td>
 <td headers="ExAnteImpersonal" class="gt_row gt_right">0.543</td>
 <td headers="ExAntePersonal" class="gt_row gt_right">0.467</td>
@@ -1356,14 +1356,16 @@ height: 0px !important;
 <pre class="r"><code>background_balance_formatted %&gt;% as_latex() %&gt;%
   as.character() %&gt;%
   cat(file=here::here(&quot;tables&quot;,&quot;background_balance_table.tex&quot;))</code></pre>
-</div>
-<div id="balance-on-survey-outcomes" class="section level1">
-<h1>Balance on survey outcomes</h1>
-<p>The survey was run after the experiment, so should not be influenced
-to any great degree by treatment assignment.</p>
-<pre class="r"><code>tar_load(survey_balance_formatted)</code></pre>
+<p>The distributions. First for education.</p>
+<pre class="r"><code>tar_load(mmtalent)</code></pre>
 <pre><code>## → reading _targets/meta/meta</code></pre>
-<pre class="r"><code>survey_balance_formatted</code></pre>
+<pre class="r"><code>edu_table &lt;- mmtalent %&gt;%
+  count(edu_category, name = &quot;Frequency&quot;) %&gt;%
+  mutate(
+    Proportion = Frequency / sum(Frequency),
+    Cumulative_Proportion = cumsum(Proportion)
+  )
+edu_table |&gt; gt() |&gt; fmt_number(decimals = 3, columns = 3:4)</code></pre>
 <div id="pvkhbxbaar" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#pvkhbxbaar table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -1762,79 +1764,60 @@ height: 0px !important;
 </style>
 <table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
   <thead>
-    <tr class="gt_col_headings gt_spanner_row">
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Outcome">Outcome</th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="ExAnte">
-        <div class="gt_column_spanner">ExAnte</div>
-      </th>
-      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="ExPost">
-        <div class="gt_column_spanner">ExPost</div>
-      </th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="P-value-(F)">P-value (F)</th>
-    </tr>
     <tr class="gt_col_headings">
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExAnteImpersonal">Impersonal</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExAntePersonal">Personal</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExPostImpersonal">Impersonal</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExPostPersonal">Personal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="edu_category">Highest completed education</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Frequency">Frequency</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Proportion">Proportion</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Cumulative_Proportion">Cumulative_Proportion</th>
     </tr>
   </thead>
   <tbody class="gt_table_body">
-    <tr><td headers="Outcome" class="gt_row gt_left">Luck (unfair)</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">6.83</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">6.83</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">6.96</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">7.15</td>
-<td headers="P-value (F)" class="gt_row gt_right">0.284</td></tr>
-    <tr><td headers="Outcome" class="gt_row gt_left">Talent (unfair)</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">3.21</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">3.00</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">3.07</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">3.56</td>
-<td headers="P-value (F)" class="gt_row gt_right">0.049</td></tr>
-    <tr><td headers="Outcome" class="gt_row gt_left">Effort (unfair)</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">2.93</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">2.70</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">2.73</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">3.10</td>
-<td headers="P-value (F)" class="gt_row gt_right">0.225</td></tr>
-    <tr><td headers="Outcome" class="gt_row gt_left">Luck (control)</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">3.49</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">3.58</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">3.34</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">3.47</td>
-<td headers="P-value (F)" class="gt_row gt_right">1.000</td></tr>
-    <tr><td headers="Outcome" class="gt_row gt_left">Talent (control)</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">6.17</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">6.55</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">6.40</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">6.04</td>
-<td headers="P-value (F)" class="gt_row gt_right">0.068</td></tr>
-    <tr><td headers="Outcome" class="gt_row gt_left">Effort (control)</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">7.46</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">7.35</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">7.43</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">7.33</td>
-<td headers="P-value (F)" class="gt_row gt_right">1.000</td></tr>
-    <tr><td headers="Outcome" class="gt_row gt_left">Should society aim to equalize incomes</td>
-<td headers="ExAnteImpersonal" class="gt_row gt_right">2.74</td>
-<td headers="ExAntePersonal" class="gt_row gt_right">2.72</td>
-<td headers="ExPostImpersonal" class="gt_row gt_right">2.83</td>
-<td headers="ExPostPersonal" class="gt_row gt_right">2.66</td>
-<td headers="P-value (F)" class="gt_row gt_right">0.216</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">No High School</td>
+<td headers="Frequency" class="gt_row gt_right">75</td>
+<td headers="Proportion" class="gt_row gt_right">0.037</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.037</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">High School/GED</td>
+<td headers="Frequency" class="gt_row gt_right">471</td>
+<td headers="Proportion" class="gt_row gt_right">0.235</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.273</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">Some college</td>
+<td headers="Frequency" class="gt_row gt_right">425</td>
+<td headers="Proportion" class="gt_row gt_right">0.212</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.485</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">Associate&#39;s Degree</td>
+<td headers="Frequency" class="gt_row gt_right">209</td>
+<td headers="Proportion" class="gt_row gt_right">0.104</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.590</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">Bachelor</td>
+<td headers="Frequency" class="gt_row gt_right">512</td>
+<td headers="Proportion" class="gt_row gt_right">0.256</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.846</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">Masters</td>
+<td headers="Frequency" class="gt_row gt_right">225</td>
+<td headers="Proportion" class="gt_row gt_right">0.112</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.958</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">Professional (JD/MD)</td>
+<td headers="Frequency" class="gt_row gt_right">40</td>
+<td headers="Proportion" class="gt_row gt_right">0.020</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.978</td></tr>
+    <tr><td headers="edu_category" class="gt_row gt_center">PhD</td>
+<td headers="Frequency" class="gt_row gt_right">44</td>
+<td headers="Proportion" class="gt_row gt_right">0.022</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">1.000</td></tr>
   </tbody>
   
   
 </table>
 </div>
-<pre class="r"><code>survey_balance_formatted %&gt;% 
-  as_latex() %&gt;%
-  as.character() %&gt;%
-  cat(file=here::here(&quot;tables&quot;,&quot;survey_balance_table.tex&quot;))</code></pre>
-<p>What happens if we merge the personal/impersonal treatment?</p>
-<pre class="r"><code>tar_load(survey_balance_formatted_timing)</code></pre>
-<pre><code>## → reading _targets/meta/meta</code></pre>
-<pre class="r"><code>survey_balance_formatted_timing</code></pre>
+<p>So above median education means Bachelor and above.</p>
+<p>Income:</p>
+<pre class="r"><code>income_table &lt;- mmtalent %&gt;%
+  count(income_category, name = &quot;Frequency&quot;) %&gt;%
+  mutate(
+    Proportion = Frequency / sum(Frequency),
+    Cumulative_Proportion = cumsum(Proportion)
+  )
+income_table |&gt; gt() |&gt; fmt_number(decimals = 3, columns = 3:4)</code></pre>
 <div id="tvuzkmurll" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#tvuzkmurll table {
 font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
@@ -2228,6 +2211,919 @@ display: inline-flex !important;
 margin-bottom: 0.75em !important;
 }
 #tvuzkmurll div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="income_category">Household income before taxes</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Frequency">Frequency</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Proportion">Proportion</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="Cumulative_Proportion">Cumulative_Proportion</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="income_category" class="gt_row gt_center">Less than 29 999</td>
+<td headers="Frequency" class="gt_row gt_right">484</td>
+<td headers="Proportion" class="gt_row gt_right">0.242</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.242</td></tr>
+    <tr><td headers="income_category" class="gt_row gt_center">30k- 59 999</td>
+<td headers="Frequency" class="gt_row gt_right">610</td>
+<td headers="Proportion" class="gt_row gt_right">0.305</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.547</td></tr>
+    <tr><td headers="income_category" class="gt_row gt_center">60k - 99 999</td>
+<td headers="Frequency" class="gt_row gt_right">510</td>
+<td headers="Proportion" class="gt_row gt_right">0.255</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.802</td></tr>
+    <tr><td headers="income_category" class="gt_row gt_center">100k - 149 999</td>
+<td headers="Frequency" class="gt_row gt_right">264</td>
+<td headers="Proportion" class="gt_row gt_right">0.132</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">0.934</td></tr>
+    <tr><td headers="income_category" class="gt_row gt_center">150k +</td>
+<td headers="Frequency" class="gt_row gt_right">133</td>
+<td headers="Proportion" class="gt_row gt_right">0.066</td>
+<td headers="Cumulative_Proportion" class="gt_row gt_right">1.000</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<p>Age:</p>
+<pre class="r"><code>median(mmtalent$age)</code></pre>
+<pre><code>## [1] 42</code></pre>
+</div>
+<div id="balance-on-survey-outcomes" class="section level1">
+<h1>Balance on survey outcomes</h1>
+<p>The survey was run after the experiment, so should not be influenced
+to any great degree by treatment assignment.</p>
+<pre class="r"><code>tar_load(survey_balance_formatted)</code></pre>
+<pre><code>## → reading _targets/meta/meta</code></pre>
+<pre class="r"><code>survey_balance_formatted</code></pre>
+<div id="nophalfovz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nophalfovz table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#nophalfovz thead, #nophalfovz tbody, #nophalfovz tfoot, #nophalfovz tr, #nophalfovz td, #nophalfovz th {
+border-style: none;
+}
+#nophalfovz p {
+margin: 0;
+padding: 0;
+}
+#nophalfovz .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#nophalfovz .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#nophalfovz .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#nophalfovz .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#nophalfovz .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#nophalfovz .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#nophalfovz .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#nophalfovz .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#nophalfovz .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#nophalfovz .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#nophalfovz .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#nophalfovz .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#nophalfovz .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#nophalfovz .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#nophalfovz .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#nophalfovz .gt_from_md > :first-child {
+margin-top: 0;
+}
+#nophalfovz .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#nophalfovz .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#nophalfovz .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#nophalfovz .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#nophalfovz .gt_row_group_first td {
+border-top-width: 2px;
+}
+#nophalfovz .gt_row_group_first th {
+border-top-width: 2px;
+}
+#nophalfovz .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#nophalfovz .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#nophalfovz .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#nophalfovz .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#nophalfovz .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#nophalfovz .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#nophalfovz .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#nophalfovz .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#nophalfovz .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#nophalfovz .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#nophalfovz .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#nophalfovz .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#nophalfovz .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#nophalfovz .gt_left {
+text-align: left;
+}
+#nophalfovz .gt_center {
+text-align: center;
+}
+#nophalfovz .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#nophalfovz .gt_font_normal {
+font-weight: normal;
+}
+#nophalfovz .gt_font_bold {
+font-weight: bold;
+}
+#nophalfovz .gt_font_italic {
+font-style: italic;
+}
+#nophalfovz .gt_super {
+font-size: 65%;
+}
+#nophalfovz .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#nophalfovz .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#nophalfovz .gt_indent_1 {
+text-indent: 5px;
+}
+#nophalfovz .gt_indent_2 {
+text-indent: 10px;
+}
+#nophalfovz .gt_indent_3 {
+text-indent: 15px;
+}
+#nophalfovz .gt_indent_4 {
+text-indent: 20px;
+}
+#nophalfovz .gt_indent_5 {
+text-indent: 25px;
+}
+#nophalfovz .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#nophalfovz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings gt_spanner_row">
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" scope="col" id="Outcome">Outcome</th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="ExAnte">
+        <div class="gt_column_spanner">ExAnte</div>
+      </th>
+      <th class="gt_center gt_columns_top_border gt_column_spanner_outer" rowspan="1" colspan="2" scope="colgroup" id="ExPost">
+        <div class="gt_column_spanner">ExPost</div>
+      </th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="2" colspan="1" scope="col" id="P-value-(F)">P-value (F)</th>
+    </tr>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExAnteImpersonal">Impersonal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExAntePersonal">Personal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExPostImpersonal">Impersonal</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ExPostPersonal">Personal</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="Outcome" class="gt_row gt_left">Luck (unfair)</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">6.83</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">6.83</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">6.96</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">7.15</td>
+<td headers="P-value (F)" class="gt_row gt_right">0.284</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">Talent (unfair)</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">3.21</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">3.00</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">3.07</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">3.56</td>
+<td headers="P-value (F)" class="gt_row gt_right">0.049</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">Effort (unfair)</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">2.93</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">2.70</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">2.73</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">3.10</td>
+<td headers="P-value (F)" class="gt_row gt_right">0.225</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">Luck (control)</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">3.49</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">3.58</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">3.34</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">3.47</td>
+<td headers="P-value (F)" class="gt_row gt_right">1.000</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">Talent (control)</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">6.17</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">6.55</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">6.40</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">6.04</td>
+<td headers="P-value (F)" class="gt_row gt_right">0.068</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">Effort (control)</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">7.46</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">7.35</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">7.43</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">7.33</td>
+<td headers="P-value (F)" class="gt_row gt_right">1.000</td></tr>
+    <tr><td headers="Outcome" class="gt_row gt_left">Should society aim to equalize incomes</td>
+<td headers="ExAnteImpersonal" class="gt_row gt_right">2.74</td>
+<td headers="ExAntePersonal" class="gt_row gt_right">2.72</td>
+<td headers="ExPostImpersonal" class="gt_row gt_right">2.83</td>
+<td headers="ExPostPersonal" class="gt_row gt_right">2.66</td>
+<td headers="P-value (F)" class="gt_row gt_right">0.216</td></tr>
+  </tbody>
+  
+  
+</table>
+</div>
+<pre class="r"><code>survey_balance_formatted %&gt;% 
+  as_latex() %&gt;%
+  as.character() %&gt;%
+  cat(file=here::here(&quot;tables&quot;,&quot;survey_balance_table.tex&quot;))</code></pre>
+<p>What happens if we merge the personal/impersonal treatment?</p>
+<pre class="r"><code>tar_load(survey_balance_formatted_timing)</code></pre>
+<pre><code>## → reading _targets/meta/meta</code></pre>
+<pre class="r"><code>survey_balance_formatted_timing</code></pre>
+<div id="kuxcrfylgl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kuxcrfylgl table {
+font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
+}
+#kuxcrfylgl thead, #kuxcrfylgl tbody, #kuxcrfylgl tfoot, #kuxcrfylgl tr, #kuxcrfylgl td, #kuxcrfylgl th {
+border-style: none;
+}
+#kuxcrfylgl p {
+margin: 0;
+padding: 0;
+}
+#kuxcrfylgl .gt_table {
+display: table;
+border-collapse: collapse;
+line-height: normal;
+margin-left: auto;
+margin-right: auto;
+color: #333333;
+font-size: 16px;
+font-weight: normal;
+font-style: normal;
+background-color: #FFFFFF;
+width: auto;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #A8A8A8;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #A8A8A8;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_caption {
+padding-top: 4px;
+padding-bottom: 4px;
+}
+#kuxcrfylgl .gt_title {
+color: #333333;
+font-size: 125%;
+font-weight: initial;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-color: #FFFFFF;
+border-bottom-width: 0;
+}
+#kuxcrfylgl .gt_subtitle {
+color: #333333;
+font-size: 85%;
+font-weight: initial;
+padding-top: 3px;
+padding-bottom: 5px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-color: #FFFFFF;
+border-top-width: 0;
+}
+#kuxcrfylgl .gt_heading {
+background-color: #FFFFFF;
+text-align: center;
+border-bottom-color: #FFFFFF;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_bottom_border {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_col_headings {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_col_heading {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 6px;
+padding-left: 5px;
+padding-right: 5px;
+overflow-x: hidden;
+}
+#kuxcrfylgl .gt_column_spanner_outer {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: normal;
+text-transform: inherit;
+padding-top: 0;
+padding-bottom: 0;
+padding-left: 4px;
+padding-right: 4px;
+}
+#kuxcrfylgl .gt_column_spanner_outer:first-child {
+padding-left: 0;
+}
+#kuxcrfylgl .gt_column_spanner_outer:last-child {
+padding-right: 0;
+}
+#kuxcrfylgl .gt_column_spanner {
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: bottom;
+padding-top: 5px;
+padding-bottom: 5px;
+overflow-x: hidden;
+display: inline-block;
+width: 100%;
+}
+#kuxcrfylgl .gt_spanner_row {
+border-bottom-style: hidden;
+}
+#kuxcrfylgl .gt_group_heading {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+text-align: left;
+}
+#kuxcrfylgl .gt_empty_group_heading {
+padding: 0.5px;
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+vertical-align: middle;
+}
+#kuxcrfylgl .gt_from_md > :first-child {
+margin-top: 0;
+}
+#kuxcrfylgl .gt_from_md > :last-child {
+margin-bottom: 0;
+}
+#kuxcrfylgl .gt_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+margin: 10px;
+border-top-style: solid;
+border-top-width: 1px;
+border-top-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 1px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 1px;
+border-right-color: #D3D3D3;
+vertical-align: middle;
+overflow-x: hidden;
+}
+#kuxcrfylgl .gt_stub {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+}
+#kuxcrfylgl .gt_stub_row_group {
+color: #333333;
+background-color: #FFFFFF;
+font-size: 100%;
+font-weight: initial;
+text-transform: inherit;
+border-right-style: solid;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+padding-left: 5px;
+padding-right: 5px;
+vertical-align: top;
+}
+#kuxcrfylgl .gt_row_group_first td {
+border-top-width: 2px;
+}
+#kuxcrfylgl .gt_row_group_first th {
+border-top-width: 2px;
+}
+#kuxcrfylgl .gt_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#kuxcrfylgl .gt_first_summary_row {
+border-top-style: solid;
+border-top-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_first_summary_row.thick {
+border-top-width: 2px;
+}
+#kuxcrfylgl .gt_last_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_grand_summary_row {
+color: #333333;
+background-color: #FFFFFF;
+text-transform: inherit;
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#kuxcrfylgl .gt_first_grand_summary_row {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-top-style: double;
+border-top-width: 6px;
+border-top-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_last_grand_summary_row_top {
+padding-top: 8px;
+padding-bottom: 8px;
+padding-left: 5px;
+padding-right: 5px;
+border-bottom-style: double;
+border-bottom-width: 6px;
+border-bottom-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_striped {
+background-color: rgba(128, 128, 128, 0.05);
+}
+#kuxcrfylgl .gt_table_body {
+border-top-style: solid;
+border-top-width: 2px;
+border-top-color: #D3D3D3;
+border-bottom-style: solid;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_footnotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_footnote {
+margin: 0px;
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#kuxcrfylgl .gt_sourcenotes {
+color: #333333;
+background-color: #FFFFFF;
+border-bottom-style: none;
+border-bottom-width: 2px;
+border-bottom-color: #D3D3D3;
+border-left-style: none;
+border-left-width: 2px;
+border-left-color: #D3D3D3;
+border-right-style: none;
+border-right-width: 2px;
+border-right-color: #D3D3D3;
+}
+#kuxcrfylgl .gt_sourcenote {
+font-size: 90%;
+padding-top: 4px;
+padding-bottom: 4px;
+padding-left: 5px;
+padding-right: 5px;
+}
+#kuxcrfylgl .gt_left {
+text-align: left;
+}
+#kuxcrfylgl .gt_center {
+text-align: center;
+}
+#kuxcrfylgl .gt_right {
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+#kuxcrfylgl .gt_font_normal {
+font-weight: normal;
+}
+#kuxcrfylgl .gt_font_bold {
+font-weight: bold;
+}
+#kuxcrfylgl .gt_font_italic {
+font-style: italic;
+}
+#kuxcrfylgl .gt_super {
+font-size: 65%;
+}
+#kuxcrfylgl .gt_footnote_marks {
+font-size: 75%;
+vertical-align: 0.4em;
+position: initial;
+}
+#kuxcrfylgl .gt_asterisk {
+font-size: 100%;
+vertical-align: 0;
+}
+#kuxcrfylgl .gt_indent_1 {
+text-indent: 5px;
+}
+#kuxcrfylgl .gt_indent_2 {
+text-indent: 10px;
+}
+#kuxcrfylgl .gt_indent_3 {
+text-indent: 15px;
+}
+#kuxcrfylgl .gt_indent_4 {
+text-indent: 20px;
+}
+#kuxcrfylgl .gt_indent_5 {
+text-indent: 25px;
+}
+#kuxcrfylgl .katex-display {
+display: inline-flex !important;
+margin-bottom: 0.75em !important;
+}
+#kuxcrfylgl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
 height: 0px !important;
 }
 </style>
