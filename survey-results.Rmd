@@ -26,7 +26,7 @@ To have the main result on attitudes and belief, we would like to have aggregate
 before going into the individual level data.
 ```{r Fairness views and beliefs about control, echo=FALSE}
 long_attitudes(mmtalent) %>% survey_bars(numobs = FALSE, ylimits = c(0,8))
-ggsave(here::here("figures","attitudes_beliefs.pdf"), width = 16, height =10, units = "cm")
+ggsave(here::here("figures","EEREV-D-24-01375_Figure_2.pdf"), width = 16, height =10, units = "cm")
 ```
 Testing differences, unfairness:
 
@@ -152,7 +152,7 @@ survey_names <- c('Talent'='Talent (d)',
                   '(Intercept)'='(Intercept)')
 ```
 
-```{r echo=FALSE}
+```{r echo=FALSE, Attitudes Control Beliefs}
 t1 <- modelsummary::modelsummary(survey_regressions_list$without_treatment,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            gof_omit = "R2 Adj.|se_type",
@@ -281,6 +281,6 @@ even under the null of no true effect, and the joint p-values are all above 10%.
 ```{r The talent paradox - heterogeneity analysis, echo=FALSE}
 tar_load(survey_heterogeneity)
 survey_heterogeneity$graph
-ggsave(here::here("figures","survey_heterogeneity.pdf"), width=16, height =10, units="cm")
+ggsave(here::here("figures"," EEREV-D-24-01375_Figure_3.pdf"), width=16, height =10, units="cm")
 ```
 

@@ -14,7 +14,7 @@ library(modelsummary)
 ```
 
 
-```{r}
+```{r Policy Table}
 tar_load(mmtalent)
 df <- mmtalent |>  sjlabelled::remove_all_labels()
 

@@ -19,7 +19,7 @@ tar_load(mmtalent)
 ```{r Dollars redistributed, echo=FALSE}
 tar_load(histogram_distribution_graph)
 histogram_distribution_graph
-ggsave(here::here("figures","histogram_transfers.pdf"), width = 16, height = 10, units = "cm")
+ggsave(here::here("figures","EEREV-D-24-01375_Figure_4.pdf"), width = 16, height = 10, units = "cm")
 ```
 
 Average transfers:
@@ -221,7 +221,7 @@ tar_load(inequality_heterogeneity)
 L <- inequality_heterogeneity
 
 L$graph1 / L$graph2 + plot_annotation(tag_levels = "a") + plot_layout(nrow=2)
-ggsave(here::here("figures","experiment_heterogeneity.pdf"), width = 16, height=14, units="cm")
+ggsave(here::here("figures","EEREV-D-24-01375_Figure_5.pdf"), width = 16, height=14, units="cm")
 ```
 
 

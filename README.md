@@ -28,6 +28,9 @@ people being richer than others.
 
 ## 1.1 Statement About Rights
 
+The authors fully claim the rights to make the data from the experiment
+available in the public domain. 
+
 ## 1.2 License for Data
 
 The data collected as part of the study are available 
@@ -36,7 +39,7 @@ in the public domain at Harvard Dataverse with a Creative Commons CC0 license.
 
 ## 1.3 Summary of Availability
 
-All data are publicly available.
+All data are publicly available and provided as part of this replication package.
 
 ## 1.4 Details on each Data Source
 
@@ -46,6 +49,7 @@ All data are publicly available.
 | Education distribution | sc-est2017-alldata6.csv | external-data/   | Yes | U.S. Census Bureau (2017) |
 | Income distribution | finc_07.xls   | external-data/                 | Yes | U.S. Census Bureau (2018a) |
 | Geographic distribution | table-1-1.xlsx | external-data/ | Yes | U.S. Census Bureau (2018b) |
+| Comparisons to Almås et al. (2020)  | main_vars.dta | external-data/ | Yes | Almås, Cappelen, and Tungodden (2020) | 
 
 # 2. Computational requirements
 
@@ -71,10 +75,14 @@ The estimation of results require only minimal memory and computational
 resources and should take well under 10 minutes and require only a few megabytes
 of storage on any modern computer.
 
-# 2.4. Description of programs/code
 
 # 3. Instructions to Replicators
 
+Replicators need to install `renv` and use the lock file to install 
+other packages. In R, a `tar_make()` command will then calculate
+all results and output all displays. The displays are created as
+side-effects of creating the Vignettes, which also create html pages 
+with narratives surrounding the displays. 
 
 
 
@@ -82,15 +90,22 @@ of storage on any modern computer.
 
 | Display Item     | File name       | Vignette        | Chunk name     | Comment          |
 |------------------|------------------|------------------|------------------|-------------------|
-| Figure 1   |  consort.pdf  | descriptive_balance_tables.Rmd     | Consort diagram|   |
-| Figure 2   | attitudes_beliefs.pdf  | survey-results.Rmd | Fairness views and beliefs about control |  | 
-| Figure 3   | survey_heterogeneity.pdf | survey-results.Rmd | The talent paradox - heterogeneity analysis | |
-| Figure 4   | histogram_transfers.pdf  | experiment-results.Rmd |Dollars redistributed | |
-| Figure 5   | experiment_heterogeneity.pdf | experiment-results.Rmd | Heterogeneity in the treatment effect |
+| Figure 1   | EEREV-D-24-01375_Figure_1.pdf  | descriptive_balance_tables.Rmd     | Consort diagram|   |
+| Figure 2   | EEREV-D-24-01375_Figure_2.pdf  | survey-results.Rmd | Fairness views and beliefs about control |  | 
+| Figure 3   | EEREV-D-24-01375_Figure_3.pdf | survey-results.Rmd | The talent paradox - heterogeneity analysis | |
+| Figure 4   | EEREV-D-24-01375_Figure_4.pdf  | experiment-results.Rmd |Dollars redistributed | |
+| Figure 5   | EEREV-D-24-01375_Figure_5.pdf | experiment-results.Rmd | Heterogeneity in the treatment effect |
+| Table 1    |  descriptive_table.tex        | descriptive_balance_tables.Rmd | Descriptive Table | |
+| Table 2    | background_balance_table.tex  | descriptive_balance_tables.Rmd | Balance Table | | 
+| Table 3    | attitudes_controlbelief_regression.tex | survey-results.Rmd | Attitudes Control Beliefs | |
+| Table 4    | inequality_treatment_regression.tex | experiment-results.Rmd | Implemented Inequality regressed on treatments | |
+| Table 5    | policy_attitudes.tex      | policy-results.Rmd | policy_attitudes | Policy Table | |
+
 
 
 # 5. References
 
+- Almås, Ingvild; Cappelen, Alexander W.; Tungodden, Bertil, 2020, [Supplemental material to:] Cutthroat Capitalism versus Cuddly Socialism: Are Americans More Meritocratic and Efficiency-Seeking than Scandinavians? Journal of Political Economy, 128(5): 1627-2018. https://doi.org/10.1086/705551
 - Bartling, Björn; Cappelen, Alexander W.; Skarpeid, Ingvild L.; Sørensen, Erik Ø.; Tungodden, Bertil, 2024, "Replication Data for: The talent paradox: Why is it fair to reward talent but not luck?", Harvard Dataverse, https://doi.org/10.7910/DVN/20CRBI
 - U.S. Census Bureau (2017). "Educational attainment in the United States." Online, https://www.census.gov/data/tables/2017/demo/education-attainment/cps-detailed-tables.html
 - U.S. Census Bureau (2018a). "Finc-07. Income distribution to $250,000 or more for families." Online, https://www.census.gov/data/tables/time-series/demo/income-poverty/cps-finc/finc-07.2017.html

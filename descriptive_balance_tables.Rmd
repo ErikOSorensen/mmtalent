@@ -16,7 +16,7 @@ require(gt)
 
 # Descriptive table
 
-```{r}
+```{r Descriptive Table}
 tar_load(descriptive_table_gt)
 descriptive_table_gt
 descriptive_table_gt %>% as_latex() %>%
@@ -26,7 +26,7 @@ descriptive_table_gt %>% as_latex() %>%
 
 # Balance table (background characteristics)
 
-```{r}
+```{r Balance Table}
 tar_load(background_balance_formatted)
 background_balance_formatted
 background_balance_formatted %>% as_latex() %>%
@@ -96,7 +96,7 @@ survey_balance_formatted_timing %>%
 ```{r Consort diagram, echo=FALSE}
 tar_load(consort_diagram)
 consort_diagram
-ggsave(here::here("figures","consort.pdf"), plot = consort::build_grid(consort_diagram), width=16, height = 8, units="in")
+ggsave(here::here("figures","EEREV-D-24-01375_Figure_1.pdf"), plot = consort::build_grid(consort_diagram), width=16, height = 8, units="in")
 ```
 
 
