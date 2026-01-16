@@ -118,5 +118,6 @@ list(
              cuddly_comparisons_displays(mmtalent, cuddly_data)),
   tar_render(experiment_results, here::here("experiment-results.Rmd")),
   tar_render(survey_results, here::here("survey-results.Rmd")),
-  tar_render(descriptive_balance_tables, here::here("descriptive_balance_tables.Rmd"))
+  tar_render(descriptive_balance_tables, here::here("descriptive_balance_tables.Rmd")),
+  tar_render(policy_results, here::here("policy-results.Rmd"))
 )
