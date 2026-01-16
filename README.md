@@ -84,7 +84,7 @@ of storage on any modern computer.
 
 Replicators need to install `renv` and use the lock file to install 
 other packages. In R, a `tar_make()` command will then calculate
-all results and output all displays. The displays are created as
+all results and output all displays listed below. The displays are created as
 side-effects of creating the Vignettes, which also create html pages 
 with narratives surrounding the displays. 
 
