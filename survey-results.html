@@ -378,8 +378,14 @@ library(here)</code></pre>
 <pre class="r"><code>library(multcomp)
 library(gt)
 require(targets)
-require(patchwork)
-source(here::here(&quot;R&quot;,&quot;utility.R&quot;))
+require(patchwork)</code></pre>
+<pre><code>## Loading required package: patchwork</code></pre>
+<pre><code>## 
+## Attaching package: &#39;patchwork&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     area</code></pre>
+<pre class="r"><code>source(here::here(&quot;R&quot;,&quot;utility.R&quot;))
 source(here::here(&quot;R&quot;,&quot;data_transforms.R&quot;))
 source(here::here(&quot;R&quot;,&quot;survey_functions.R&quot;))
 tar_load(mmtalent)</code></pre>

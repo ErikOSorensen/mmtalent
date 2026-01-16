@@ -59,7 +59,7 @@ long_attitudes(mmtalent) |>
 
 
 And the corresponding histograms:
-```{r}
+```{r attitude_histograms}
 long_attitudes(mmtalent) %>% 
   mutate(outcometype = fct_recode(
     outcometype,
@@ -79,7 +79,7 @@ ggsave(here::here("figures","attitude_histograms.pdf"), width = 16, height = 10,
 # Subgroups
 First for the division of all data into binary groups:
 
-```{r}
+```{r subgroups}
 long_attitudes(mmtalent) %>% 
   mutate(outcometype = fct_recode(
     outcometype,
@@ -92,7 +92,7 @@ ggsave(here::here("figures","attitudes_beliefs_by_subgroups.pdf"), width = 30, h
 
 Now with all the $2^5$ combinations:
 
-```{r}
+```{r subgroups_crossed}
 long_attitudes(mmtalent) %>%
   mutate(outcometype = fct_recode(
     outcometype,
