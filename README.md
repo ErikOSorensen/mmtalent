@@ -4,11 +4,11 @@ This repository provides data and code to replicate the analysis of the paper.
 
 ## Authors
 
-- Björn Bartling, (https://www.econ.uzh.ch/en/people/faculty/bartling.html)
-- Alexander W. Cappelen (https://sites.google.com/view/alexander-w-cappelen/home)
-- Ingvild L. Skarpeid (https://sites.google.com/site/ingvildskarpeid)
-- Erik Ø. Sørensen (https://www.statsokonomen.no/erik-o-sorensen-cv/)
-- Bertil Tungodden (https://sites.google.com/view/bertiltungodden/home)
+- [Björn Bartling](https://www.econ.uzh.ch/en/people/faculty/bartling.html)
+- [Alexander W. Cappelen](https://sites.google.com/view/alexander-w-cappelen/home)
+- [Ingvild L. Skarpeid](https://sites.google.com/site/ingvildskarpeid)
+- [Erik Ø. Sørensen](https://www.statsokonomen.no/erik-o-sorensen-cv/) (contact for questions on the data)
+- [Bertil Tungodden](https://sites.google.com/view/bertiltungodden/home)
 
 ## Abstract
 
@@ -28,13 +28,14 @@ people being richer than others.
 
 ## 1.1 Statement About Rights
 
-The authors fully claim the rights to make the data from the experiment
+The authors have the rights to make the data from the experiment
 available in the public domain. 
 
 ## 1.2 License for Data
 
-The data collected as part of the study are available 
-in the public domain at Harvard Dataverse with a Creative Commons CC0 license.
+The data collected as part of the study, `mmtalent_df.dta`, are available 
+in the public domain at Harvard Dataverse, https://doi.org/10.7910/DVN/20CRBI,
+with a Creative Commons CC0 license.
 
 
 ## 1.3 Summary of Availability
