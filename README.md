@@ -84,24 +84,46 @@ all results and output all displays. The displays are created as
 side-effects of creating the Vignettes, which also create html pages 
 with narratives surrounding the displays. 
 
+Sometimes it can be difficult to bootstrap renv and the packages. I've found
+that it can help to manually install `renv`, and then, in Rstudio's terminal do:
+
+```
+R --vanilla -q -e "renv::restore(prompt = FALSE)"
+```
 
 
 # 4. List of Display Items and Programs
 
+In main paper:
+
 | Display Item     | File name       | Vignette        | Chunk name     | Comment          |
 |------------------|------------------|------------------|------------------|-------------------|
-| Figure 1   | EEREV-D-24-01375_Figure_1.pdf  | descriptive_balance_tables.Rmd     | Consort diagram|   |
-| Figure 2   | EEREV-D-24-01375_Figure_2.pdf  | survey-results.Rmd | Fairness views and beliefs about control |  | 
-| Figure 3   | EEREV-D-24-01375_Figure_3.pdf | survey-results.Rmd | The talent paradox - heterogeneity analysis | |
-| Figure 4   | EEREV-D-24-01375_Figure_4.pdf  | experiment-results.Rmd |Dollars redistributed | |
-| Figure 5   | EEREV-D-24-01375_Figure_5.pdf | experiment-results.Rmd | Heterogeneity in the treatment effect |
-| Table 1    |  descriptive_table.tex        | descriptive_balance_tables.Rmd | Descriptive Table | |
-| Table 2    | background_balance_table.tex  | descriptive_balance_tables.Rmd | Balance Table | | 
+| Figure 1   | EEREV-D-24-01375_Figure_1.pdf          | descriptive_balance_tables.Rmd     | Consort diagram|   |
+| Figure 2   | EEREV-D-24-01375_Figure_2.pdf          | survey-results.Rmd | Fairness views and beliefs about control |  | 
+| Figure 3   | EEREV-D-24-01375_Figure_3.pdf          | survey-results.Rmd | The talent paradox - heterogeneity analysis | |
+| Figure 4   | EEREV-D-24-01375_Figure_4.pdf          | experiment-results.Rmd |Dollars redistributed | |
+| Figure 5   | EEREV-D-24-01375_Figure_5.pdf          | experiment-results.Rmd | Heterogeneity in the treatment effect |
+| Table 1    | descriptive_table.tex                  | descriptive_balance_tables.Rmd | Descriptive Table | |
+| Table 2    | background_balance_table.tex           | descriptive_balance_tables.Rmd | Balance Table | | 
 | Table 3    | attitudes_controlbelief_regression.tex | survey-results.Rmd | Attitudes Control Beliefs | |
-| Table 4    | inequality_treatment_regression.tex | experiment-results.Rmd | Implemented Inequality regressed on treatments | |
-| Table 5    | policy_attitudes.tex      | policy-results.Rmd | policy_attitudes | Policy Table | |
+| Table 4    | inequality_treatment_regression.tex    | experiment-results.Rmd | Implemented Inequality regressions | |
+| Table 5    | policy_attitudes.tex                   | policy-results.Rmd | policy_attitudes | Policy Table | |
 
 
+In the supplementary material:
+
+
+| Display Item     | File name       | Vignette        | Chunk name     | Comment          |
+|------------------|------------------|------------------|------------------|-------------------|
+| Figure A1        | attitude_histograms.pdf |  | 
+| Figure A2        | attitudes_beliefs_by_subgroups.pdf  | 
+| Figure A3        | attitudes_beliefs_by_subgroups_cross.pdf | 
+| Figure A4        | experiment_heterogeneity_personal.pdf | experiment-results.Rmd | Heterogeneity figure personal | |
+| Figure A5        | cuddly_comparisons_graph.pdf | experiment-results.Rmd | Cuddly comparisons: graph  | | 
+| Table A1         | attitudes_controlbelief_regression_withT.tex | survey-results.Rmd | Controlbeliefs with treatment | |
+| Table A2         | inequality_treatment_regression_het3.tex | experiment-results.Rmd | Heterogeneity in treatment effects | |
+| Table A3         | inequality_treatment_regression_het4.tex | experiment-results.Rmd | Heterogeneity personal | |
+| Table A4         | decision_amount_regression.tex | experiment-results.Rmd | Decision amounts | |
 
 # 5. References
 

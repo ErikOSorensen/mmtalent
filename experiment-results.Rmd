@@ -58,24 +58,6 @@ mmtalent %>%
 
 
 
-# Graph with average outcomes
-```{r Mean Gini implemented by treatments, echo=FALSE}
-tar_load(average_distributions_graph)
-average_distributions_graph$graph
-ggsave(here::here("figures","average_ginis.pdf"), width = 16, height = 10, units = "cm")
-```
-Means broken down by timing:
-
-```{r means broken down by timing, echo=FALSE}
-mmtalent |> group_by(timing) |> summarize(meanGINI = weighted.mean(gini, weights=wgt),
-                                          share_nothingtw = weighted.mean( nothingtw, weights=wgt)) 
-
-mmtalent |> lm(gini ~ timing, data=_, weights=wgt) |> summary() 
-mmtalent |> lm(nothingtw ~ timing, data=_, weights=wgt) |> summary()
-```
-
-
-
 
 Means broken down by personal.
 ```{r means broken down by personal, echo=FALSE}
@@ -119,7 +101,7 @@ outcome_names <- c('treatmentExAntePersonal' = 'Ex Ante Personal (d)',
 
 
 
-```{r Implemented Inequality regressed on treatments, echo=FALSE}
+```{r Implemented Inequality regressions, echo=FALSE}
 tar_load(implemented_inequality_list)
 tests <- sapply(implemented_inequality_list, function(m) {
   car::linearHypothesis(
@@ -181,7 +163,7 @@ outcome_names_het1 <- c('timingExAnte' = 'Ex Ante (d)',
 ```
 
 
-```{r Heterogeneity in treatment effects on implemented inequality, echo=FALSE}
+```{r Heterogeneity in treatment effects, echo=FALSE}
 tar_load(implemented_inequality_heterogeneity_list)
 lst3 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$All,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
@@ -197,7 +179,7 @@ lst3 |> as_latex() |>
 
 And for personal:
 
-```{r}
+```{r Heterogeneity personal}
 lst4 <- modelsummary::modelsummary(implemented_inequality_heterogeneity_list$DAll,
                            stars = c('*'=0.1, '**'=0.05, '***'=0.01),
                            coef_map = outcome_names_het1,
@@ -227,7 +209,7 @@ ggsave(here::here("figures","EEREV-D-24-01375_Figure_5.pdf"), width = 16, height
 
 The same heterogeneity figure, but for "personal" (for appendix).
 
-```{r}
+```{r Heterogeneity figure personal}
 L$graph3 / L$graph4 + plot_annotation(tag_levels = "a") + plot_layout(nrow=2)
 ggsave(here::here("figures","experiment_heterogeneity_personal.pdf"), width = 16, height=14, units="cm")
 ```
