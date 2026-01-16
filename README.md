@@ -41,6 +41,9 @@ with a Creative Commons CC0 license.
 ## 1.3 Summary of Availability
 
 All data are publicly available and provided as part of this replication package.
+The main source for the data is Harvard Dataverse at https://doi.org/10.7910/DVN/20CRBI. The
+raw data was prepped and metadata applied in the package available at https://doi.org/10.5281/zenodo.17434528, 
+(Bartling et al 2025). 
 
 ## 1.4 Details on each Data Source
 
@@ -130,6 +133,7 @@ In the supplementary material:
 
 - Almås, Ingvild; Cappelen, Alexander W.; Tungodden, Bertil, 2020, [Supplemental material to:] Cutthroat Capitalism versus Cuddly Socialism: Are Americans More Meritocratic and Efficiency-Seeking than Scandinavians? Journal of Political Economy, 128(5): 1627-2018. https://doi.org/10.1086/705551
 - Bartling, Björn; Cappelen, Alexander W.; Skarpeid, Ingvild L.; Sørensen, Erik Ø.; Tungodden, Bertil, 2024, "Replication Data for: The talent paradox: Why is it fair to reward talent but not luck?", Harvard Dataverse, https://doi.org/10.7910/DVN/20CRBI
+- Bartling, B., Cappelen, A. W., Skarpeid, I. L., Sørensen, E. Ø., & Tungodden, B. (2025). Data preparation (assembly, application of metadata) for "The talent paradox: Why is it fair to reward talent but not luck?" (v1.0.0). Zenodo. https://doi.org/10.5281/zenodo.17434528
 - U.S. Census Bureau (2017). "Educational attainment in the United States." Online, https://www.census.gov/data/tables/2017/demo/education-attainment/cps-detailed-tables.html
 - U.S. Census Bureau (2018a). "Finc-07. Income distribution to $250,000 or more for families." Online, https://www.census.gov/data/tables/time-series/demo/income-poverty/cps-finc/finc-07.2017.html
 - U.S. Census Bureau (2018b). "Population and housing unit estimates. Annual state resident population estimates for 6 race groups (6 race alone or in combination groups) by age, sex, and hispanic origin." Online, https://www2.census.gov/programs-surveys/popest/datasets/2010-2017/state/asrh/sc-est2017-alldata6.csv
