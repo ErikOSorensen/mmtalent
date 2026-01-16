@@ -42,8 +42,8 @@ with a Creative Commons CC0 license.
 
 All data are publicly available and provided as part of this replication package.
 The main source for the data is Harvard Dataverse at https://doi.org/10.7910/DVN/20CRBI. The
-raw data was prepped and metadata applied in the package available at https://doi.org/10.5281/zenodo.17434528, 
-(Bartling et al 2025). 
+raw data was prepped and metadata was applied in the package 
+available at https://doi.org/10.5281/zenodo.17434528,  (Bartling et al 2025). 
 
 ## 1.4 Details on each Data Source
 
@@ -129,7 +129,18 @@ In the supplementary material:
 | Table A3         | inequality_treatment_regression_het4.tex | experiment-results.Rmd | Heterogeneity personal |
 | Table A4         | decision_amount_regression.tex | experiment-results.Rmd | Decision amounts |
 
-# 5. References
+
+# 5. Programs for running the experiment
+
+In the `software_for_data_collection` directory, the programs used for 
+collecting the experimental data are enclosed. These are survey specification files for
+the commercial software Qualtrics (`.qsf`-files), and can be uploaded to the 
+Qualtrics platform to re-run the experiment.
+
+- `2017_mmtalent_spectators.qsf`: Collecting survey and experimental spectator decisions.
+- `2017_mmtalent_workers.qsf`: Collecting data on the workers that spectator decisions applied to.
+
+# 6. References
 
 - Almås, Ingvild; Cappelen, Alexander W.; Tungodden, Bertil, 2020, [Supplemental material to:] Cutthroat Capitalism versus Cuddly Socialism: Are Americans More Meritocratic and Efficiency-Seeking than Scandinavians? Journal of Political Economy, 128(5): 1627-2018. https://doi.org/10.1086/705551
 - Bartling, Björn; Cappelen, Alexander W.; Skarpeid, Ingvild L.; Sørensen, Erik Ø.; Tungodden, Bertil, 2024, "Replication Data for: The talent paradox: Why is it fair to reward talent but not luck?", Harvard Dataverse, https://doi.org/10.7910/DVN/20CRBI
